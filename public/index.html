@@ -11,11 +11,74 @@
 </head>
 <body>
 
-<div class="app-layout">
+<!-- =========================================================================
+     1. REAL UNIVERSITY SSO LOGIN SCREEN (شاشة الدخول والمصادقة المركزية)
+     ========================================================================= -->
+<div id="loginScreen" class="login-screen-wrapper">
+  <div class="login-card">
+    
+    <div class="login-header">
+      <div class="login-brand-icon">SAMS</div>
+      <h2 class="login-title" data-i18n="login_title">بوابة تسجيل الدخول الأكاديمية</h2>
+      <p class="login-subtitle" data-i18n="login_subtitle">المعهد العالي للحاسبات ونظم المعلومات الإدارية - التجمع الأول</p>
+    </div>
 
-  <!-- =========================================================================
-       SIDEBAR NAVIGATION
-       ========================================================================= -->
+    <form onsubmit="handleRealLogin(event)">
+      <div class="login-field">
+        <label data-i18n="login_user_label">اسم المستخدم / الكود الجامعي</label>
+        <input type="text" id="loginUsername" class="login-input" required placeholder="مثال: farouk أو 202411586">
+      </div>
+
+      <div class="login-field">
+        <label data-i18n="login_pass_label">كلمة المرور السرية</label>
+        <input type="password" id="loginPassword" class="login-input" required placeholder="••••••••">
+      </div>
+
+      <button type="submit" class="login-btn" data-i18n="login_btn">
+        🔐 تسجيل الدخول الآمن
+      </button>
+    </form>
+
+    <!-- Quick-Fill Test Accounts for Faculty & Students -->
+    <div class="demo-accounts-box">
+      <div class="demo-title" data-i18n="demo_accounts_title">⚡ حسابات اختبار واقعية معتمدة بالمشروع</div>
+      <div class="demo-chips-grid">
+        <div class="demo-chip" onclick="quickFillCredentials('farouk', 'dr123456')">
+          <strong>👨‍🏫 أ.د / فاروق عبد العزيز</strong>
+          <small>أستاذ المقرر ورئيس القسم</small>
+        </div>
+        <div class="demo-chip" onclick="quickFillCredentials('202411586', 'ragda@2026')">
+          <strong>👩‍🎓 رغدة ابراهيم (امتياز 3.92)</strong>
+          <small>طالبة - كود: 202411586</small>
+        </div>
+        <div class="demo-chip" onclick="quickFillCredentials('202411531', 'caroline@2026')">
+          <strong>👩‍🎓 كارولين عاطف (معدل 3.85)</strong>
+          <small>طالبة - كود: 202411531</small>
+        </div>
+        <div class="demo-chip" onclick="quickFillCredentials('202411601', 'ahmed@2026')">
+          <strong>⚠️ أحمد الشناوي (متعثر)</strong>
+          <small>طالب تحت الإنذار والغياب</small>
+        </div>
+        <div class="demo-chip" onclick="quickFillCredentials('staff_eman', 'staff123')">
+          <strong>💼 أ/ إيمان صبري</strong>
+          <small>مسئول شئون الطلاب</small>
+        </div>
+        <div class="demo-chip" onclick="quickFillCredentials('finance_tarek', 'fin123')">
+          <strong>💰 أ/ طارق السيد</strong>
+          <small>مسئول الخزينة والحسابات</small>
+        </div>
+      </div>
+    </div>
+
+  </div>
+</div>
+
+<!-- =========================================================================
+     2. MAIN APPLICATION WORKSPACE (بعد تسجيل الدخول)
+     ========================================================================= -->
+<div class="app-layout" id="appLayout" style="display: none;">
+
+  <!-- SIDEBAR NAVIGATION -->
   <aside class="sidebar" id="appSidebar">
     
     <!-- Institute Branding -->
@@ -27,90 +90,18 @@
       </div>
     </div>
 
-    <!-- Active User & Role Switcher Card -->
-    <div class="user-role-card" onclick="openModal('switchUserModal')" title="تبديل الصلاحية / Switch Role">
+    <!-- Active User Card -->
+    <div class="user-role-card">
       <div class="role-avatar" id="sideUserAvatar">👨‍🏫</div>
       <div class="role-meta">
         <div class="role-name" id="sideUserName">أ.د / فاروق عبد العزيز</div>
         <div class="role-pill" id="sideUserRole">أستاذ المقرر ورئيس القسم</div>
       </div>
-      <svg style="width: 14px; height: 14px; color: #94a3b8;" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"/>
-      </svg>
     </div>
 
-    <!-- Navigation Menu Items -->
+    <!-- Dynamic Navigation Menu Items (Populated based on User Role) -->
     <nav class="sidebar-nav" id="sidebarMenu">
-      <div class="nav-group-title" data-i18n="nav_academic_ops">العمليات الأكاديمية (Processes)</div>
-
-      <a class="nav-link active" onclick="switchView('dashboard')">
-        <svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6"/></svg>
-        <span data-i18n="nav_dashboard">لوحة التحكم والمؤشرات</span>
-      </a>
-
-      <a class="nav-link" id="navStudents" onclick="switchView('students')">
-        <svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M12 4.354a4 4 0 110 5.292M15 21H3v-1a6 6 0 0112 0v1zm0 0h6v-1a6 6 0 00-9-5.197M13 7a4 4 0 11-8 0 4 4 0 018 0z"/></svg>
-        <span data-i18n="nav_students">بيانات وقيد الطلاب (P 2.0)</span>
-        <span class="nav-badge blue">6</span>
-      </a>
-
-      <a class="nav-link" id="navCourses" onclick="switchView('courses')">
-        <svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.747 0 3.332.477 4.5 1.253v13C19.832 18.477 18.247 18 16.5 18c-1.746 0-3.332.477-4.5 1.253"/></svg>
-        <span data-i18n="nav_courses">تسجيل المقررات (P 3.0)</span>
-      </a>
-
-      <a class="nav-link" id="navSchedule" onclick="switchView('schedule')">
-        <svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"/></svg>
-        <span data-i18n="nav_schedule">الجدول الدراسي والمواعيد</span>
-      </a>
-
-      <a class="nav-link" id="navAttendance" onclick="switchView('attendance')">
-        <svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>
-        <span data-i18n="nav_attendance">الحضور والغياب والإنذار (P 4.0)</span>
-        <span class="nav-badge amber">إنذار</span>
-      </a>
-
-      <a class="nav-link" id="navGrades" onclick="switchView('grades')">
-        <svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z"/></svg>
-        <span data-i18n="nav_grades">الكنترول والدرجات و GPA (P 5.0)</span>
-      </a>
-
-      <a class="nav-link" id="navFees" onclick="switchView('fees')">
-        <svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M3 10h18M7 15h1m4 0h1m-7 4h12a3 3 0 003-3V8a3 3 0 00-3-3H6a3 3 0 00-3 3v8a3 3 0 003 3z"/></svg>
-        <span data-i18n="nav_fees">المصروفات والخزينة (P 6.0)</span>
-      </a>
-
-      <a class="nav-link" id="navDocuments" onclick="switchView('documents')">
-        <svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"/></svg>
-        <span data-i18n="nav_documents">إصدار الشهادات والوثائق (P 7.0)</span>
-      </a>
-
-      <a class="nav-link" id="navIdCard" onclick="switchView('id_card')">
-        <svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M10 6H5a2 2 0 00-2 2v9a2 2 0 002 2h14a2 2 0 002-2V8a2 2 0 00-2-2h-5m-4 0V5a2 2 0 114 0v1m-4 0a2 2 0 104 0m-5 8a2 2 0 100-4 2 2 0 000 4zm0 0c1.306 0 2.417.835 2.83 2M9 14a3.001 3.001 0 00-2.83 2M15 11h3m-3 4h2"/></svg>
-        <span data-i18n="nav_id_card">كارنيه الطالب الذكي (Smart ID)</span>
-      </a>
-
-      <div class="nav-group-title" data-i18n="nav_engineering_mgmt">الهندسة والإدارة المركزية</div>
-
-      <a class="nav-link" id="navReports" onclick="switchView('reports')">
-        <svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M11 3.055A9.001 9.001 0 1020.945 13H11V3.055z"/><path stroke-linecap="round" stroke-linejoin="round" d="M20.488 9H15V3.512A9.025 9.025 0 0120.488 9z"/></svg>
-        <span data-i18n="nav_reports">التقارير الإحصائية (P 8.0)</span>
-      </a>
-
-      <a class="nav-link" onclick="switchView('architecture')">
-        <svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M4 5a1 1 0 011-1h14a1 1 0 011 1v2a1 1 0 01-1 1H5a1 1 0 01-1-1V5zM4 13a1 1 0 011-1h6a1 1 0 011 1v6a1 1 0 01-1 1H5a1 1 0 01-1-1v-6zM16 13a1 1 0 011-1h2a1 1 0 011 1v6a1 1 0 01-1 1h-2a1 1 0 01-1-1v-6z"/></svg>
-        <span data-i18n="nav_architecture">مخططات DFD و ERD وقاموس البيانات</span>
-      </a>
-
-      <a class="nav-link" onclick="switchView('oop')">
-        <svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M10 20l4-16m4 4l4 4-4 4M6 16l-4-4 4-4"/></svg>
-        <span data-i18n="nav_oop">كلاسات Java OOP وهيكلية الكود</span>
-      </a>
-
-      <a class="nav-link" id="navAudit" onclick="switchView('audit')">
-        <svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2m-6 9l2 2 4-4"/></svg>
-        <span data-i18n="nav_audit">سجل الحركات والأمان (Audit Log)</span>
-      </a>
+      <!-- Populated dynamically via JS -->
     </nav>
 
     <div class="sidebar-footer">
@@ -118,15 +109,13 @@
     </div>
   </aside>
 
-  <!-- =========================================================================
-       MAIN CONTENT CONTAINER
-       ========================================================================= -->
+  <!-- MAIN AREA -->
   <div class="main-area">
 
-    <!-- Top Navigation Bar -->
+    <!-- Top App Navigation -->
     <header class="top-nav">
       
-      <!-- Search Input -->
+      <!-- Global Quick Search -->
       <div class="top-left">
         <div class="search-wrapper">
           <svg class="search-icon" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -136,10 +125,10 @@
         </div>
       </div>
 
-      <!-- Header Controls: Language, Theme, Role Switcher -->
+      <!-- Controls: Language, Theme, User Menu, Logout -->
       <div class="top-right">
         
-        <!-- Language Switcher Button (AR / EN) -->
+        <!-- Language Switcher Button -->
         <button type="button" class="action-btn lang-switch-btn" onclick="toggleLanguage()" title="Switch Language / تبديل اللغة">
           <span id="langFlag">🇬🇧</span>
           <span id="langLabel">English</span>
@@ -152,19 +141,23 @@
           </svg>
         </button>
 
-        <!-- Role Switcher Button -->
-        <button type="button" class="btn btn-secondary btn-sm" onclick="openModal('switchUserModal')">
-          <span id="topUserIcon">👨‍🏫</span>
-          <span id="topUserName">أ.د / فاروق عبد العزيز</span>
-          <span style="font-size: 0.75rem; color: var(--primary-600); margin-inline-start: 4px;">▼</span>
-        </button>
+        <!-- Active User Badge & Logout -->
+        <div style="display: flex; align-items: center; gap: 8px;">
+          <div style="text-align: end; display: flex; flex-direction: column;">
+            <span style="font-size: 0.82rem; font-weight: 800;" id="topUserName">أ.د / فاروق</span>
+            <small style="font-size: 0.68rem; color: var(--primary-600); font-weight: bold;" id="topUserRole">أستاذ المقرر</small>
+          </div>
+          <button type="button" class="btn btn-danger btn-sm" onclick="handleLogout()" title="تسجيل الخروج / Logout">
+            🚪 <span data-i18n="btn_logout">خروج</span>
+          </button>
+        </div>
 
       </div>
     </header>
 
     <!-- Dynamic Content Body -->
     <main class="view-container" id="contentView">
-      <!-- Injected dynamically via JS -->
+      <!-- Injected dynamically via JS based on role and active view -->
     </main>
 
   </div>
@@ -172,46 +165,10 @@
 </div>
 
 <!-- =========================================================================
-     MODALS & DIALOGS
+     3. INTERACTIVE MODALS & DIALOGS
      ========================================================================= -->
 
-<!-- Modal: تبديل الحسابات وتجربة كافة الأدوار -->
-<div id="switchUserModal" class="modal-overlay">
-  <div class="modal-dialog">
-    <div class="modal-header">
-      <h3 class="modal-title" data-i18n="modal_switch_user_title">🔐 تسجيل الدخول وتبديل صلاحيات المستخدم</h3>
-      <button type="button" class="modal-close-btn" onclick="closeModal('switchUserModal')">&times;</button>
-    </div>
-    <p style="font-size: 0.85rem; color: var(--text-muted); margin-bottom: 16px;" data-i18n="modal_switch_user_desc">
-      اختر الحساب الذي ترغب في الدخول به لاختبار صلاحيات النظام والتحقق من قواعد العمل الصارمة:
-    </p>
-    <div style="display: flex; flex-direction: column; gap: 10px;">
-      <button class="btn btn-secondary" style="justify-content: flex-start; text-align: start;" onclick="switchUserAccount('dr_farouk')">
-        👨‍🏫 <div><strong>أ.د / فاروق عبد العزيز</strong><br><small style="color: var(--text-muted);">أستاذ مقرر تحليل النظم ورئيس القسم (Dean / Dept Head)</small></div>
-      </button>
-      <button class="btn btn-secondary" style="justify-content: flex-start; text-align: start;" onclick="switchUserAccount('202411586')">
-        👩‍🎓 <div><strong>رغدة ابراهيم عبد الخالق</strong> (كود: 202411586)<br><small style="color: var(--accent-emerald); font-weight: bold;">طالبة بالفرقة 3 - معدل ممتاز 3.92 ومصروفات مسددة بالكامل</small></div>
-      </button>
-      <button class="btn btn-secondary" style="justify-content: flex-start; text-align: start;" onclick="switchUserAccount('202411531')">
-        👩‍🎓 <div><strong>كارولين عاطف عطاالله</strong> (كود: 202411531)<br><small style="color: var(--text-muted);">طالبة بالفرقة 3 - معدل 3.85 ومصروفات مسددة بالكامل</small></div>
-      </button>
-      <button class="btn btn-secondary" style="justify-content: flex-start; text-align: start; border-inline-start: 4px solid var(--accent-rose);" onclick="switchUserAccount('202411601')">
-        ⚠️ <div><strong>أحمد محمد الشناوي</strong> (كود: 202411601)<br><small style="color: var(--accent-rose); font-weight: bold;">طالب متعثر - تجاوز نسبة الغياب 25% وعليه متأخرات مالية</small></div>
-      </button>
-      <button class="btn btn-secondary" style="justify-content: flex-start; text-align: start;" onclick="switchUserAccount('staff')">
-        💼 <div><strong>أ/ إيمان صبري</strong> (موظف شئون الطلاب - Student Affairs Officer)<br><small style="color: var(--text-muted);">قيد الطلاب واعتماد وطباعة الشهادات الرسمية</small></div>
-      </button>
-      <button class="btn btn-secondary" style="justify-content: flex-start; text-align: start;" onclick="switchUserAccount('finance')">
-        💰 <div><strong>أ/ طارق السيد</strong> (مسئول الخزينة - Treasury & Finance Officer)<br><small style="color: var(--text-muted);">تحصيل المصروفات وإصدار إيصالات التوريد الرسمية</small></div>
-      </button>
-      <button class="btn btn-secondary" style="justify-content: flex-start; text-align: start;" onclick="switchUserAccount('admin')">
-        ⚙️ <div><strong>مدير النظام المركزي (System Administrator)</strong><br><small style="color: var(--text-muted);">إدارة الخوادم والصلاحيات وقواعد البيانات</small></div>
-      </button>
-    </div>
-  </div>
-</div>
-
-<!-- Modal: قيد طالب جديد (خوارزمية 1.2) مع فحص الرقم القومي 14 رقم -->
+<!-- Modal: قيد طالب جديد (خوارزمية 1.2) -->
 <div id="addStudentModal" class="modal-overlay">
   <div class="modal-dialog">
     <div class="modal-header">
@@ -257,7 +214,7 @@
   </div>
 </div>
 
-<!-- Modal: رصد الدرجات وحساب التقدير والـ GPA (Process 5.0) -->
+<!-- Modal: رصد الدرجات وحساب الـ GPA (Process 5.0) -->
 <div id="gradeEntryModal" class="modal-overlay">
   <div class="modal-dialog">
     <div class="modal-header">
@@ -498,6 +455,45 @@
     <div style="display: flex; justify-content: flex-end; gap: 10px; margin-top: 20px;">
       <button type="button" class="btn btn-secondary" onclick="closeModal('receiptModal')" data-i18n="btn_close">إغلاق</button>
       <button type="button" class="btn btn-primary" onclick="window.print()" data-i18n="btn_print_receipt">🖨️ طباعة الإيصال</button>
+    </div>
+  </div>
+</div>
+
+<!-- Modal: توليد كود الحضور الذكي للمحاضرة (خاص بالدكتور فاروق) -->
+<div id="doctorQrModal" class="modal-overlay">
+  <div class="modal-dialog" style="max-width: 500px;">
+    <div class="modal-header">
+      <h3 class="modal-title">📲 جلسة تسجيل الحضور الذكية للمحاضرة</h3>
+      <button type="button" class="modal-close-btn" onclick="closeModal('doctorQrModal')">&times;</button>
+    </div>
+    <div class="attendance-qr-box">
+      <p style="font-size: 0.9rem;">أ.د / فاروق عبد العزيز &bull; مقرر تحليل وتصميم نظم المعلومات (MIS301)</p>
+      <div class="qr-code-graphic">
+        <!-- SVG Graphic for QR -->
+        <svg viewBox="0 0 100 100" width="100%" height="100%">
+          <rect width="100" height="100" fill="#ffffff"/>
+          <rect x="10" y="10" width="30" height="30" fill="#0f172a"/>
+          <rect x="15" y="15" width="20" height="20" fill="#ffffff"/>
+          <rect x="20" y="20" width="10" height="10" fill="#0f172a"/>
+          <rect x="60" y="10" width="30" height="30" fill="#0f172a"/>
+          <rect x="65" y="15" width="20" height="20" fill="#ffffff"/>
+          <rect x="70" y="20" width="10" height="10" fill="#0f172a"/>
+          <rect x="10" y="60" width="30" height="30" fill="#0f172a"/>
+          <rect x="15" y="65" width="20" height="20" fill="#ffffff"/>
+          <rect x="20" y="70" width="10" height="10" fill="#0f172a"/>
+          <rect x="50" y="20" width="5" height="10" fill="#0f172a"/>
+          <rect x="50" y="45" width="15" height="15" fill="#0f172a"/>
+          <rect x="70" y="55" width="20" height="5" fill="#0f172a"/>
+          <rect x="65" y="70" width="15" height="20" fill="#0f172a"/>
+        </svg>
+      </div>
+      <p style="font-size: 0.85rem; color: #cbd5e1;">رمز جلسة الحضور التلقائية (PIN Code):</p>
+      <div class="session-pin-code" id="sessionPinCode">8492</div>
+      <small style="color: #93c5fd;">صالح لمدة 15 دقيقة فقط خلال توقيت المحاضرة</small>
+    </div>
+    <div style="display: flex; justify-content: flex-end; gap: 10px; margin-top: 20px;">
+      <button type="button" class="btn btn-secondary" onclick="closeModal('doctorQrModal')">إغلاق</button>
+      <button type="button" class="btn btn-primary" onclick="refreshSessionPin()">توليد رمز جديد 🔄</button>
     </div>
   </div>
 </div>

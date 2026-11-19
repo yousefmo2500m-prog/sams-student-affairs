@@ -4,56 +4,62 @@
  * Higher Institute for Computers & Management Information Systems
  * Academic Year 2026/2027 | Supervised by: Prof. Dr. Farouk Abdel Aziz
  * ============================================================================
- * Fully compliant with:
- * 1. Dr. Farouk's Report: 11 Entities, 8 DFD Processes, Business Rules
- * 2. Ragda's Report: Traceability, 14-digit National ID validation, 18-credit cap
- * 3. SAMS Project Report: Java OOP Class Hierarchy, DFD 0 & 1, Relational DB
- * Extra Features: Bilingual Engine (AR/EN), Dark Mode, Smart Student ID Card,
- * Interactive SVG Charts, Audit Log, Barring Orders, and Course Registration Basket.
+ * Features:
+ * 1. Real University SSO Authentication with Username & Password per user
+ * 2. Role-Tailored Portals: Student Portal, Doctor Portal, Registrar, Finance, Admin
+ * 3. Interactive Diagnostic & Comprehension Quiz ("اختبار فهم واستيعاب المقرر")
+ * 4. Smart Lecture Attendance QR / PIN Session Generator for Dr. Farouk
+ * 5. What-If GPA Simulator & Graduation Forecaster
+ * 6. Public Document Electronic Verification (QR / Code validation)
+ * 7. Smart Plastic Student ID Card with Gold Chip & Barcode
+ * 8. Full Bilingual Engine (Arabic / English) with RTL / LTR switching
  * ============================================================================
  */
 
 // ============================================================================
-// 1. BILINGUAL TRANSLATION DICTIONARY (i18n)
+// 1. BILINGUAL DICTIONARY (i18n)
 // ============================================================================
 
 const I18N = {
   ar: {
     brand_title: "نظام إدارة شئون الطلاب",
     brand_subtitle: "المعهد العالي للحاسبات ونظم المعلومات",
-    nav_academic_ops: "العمليات الأكاديمية (Processes)",
-    nav_dashboard: "لوحة التحكم والمؤشرات",
-    nav_students: "بيانات وقيد الطلاب (P 2.0)",
-    nav_courses: "تسجيل المقررات (P 3.0)",
-    nav_schedule: "الجدول الدراسي والمواعيد",
-    nav_attendance: "الحضور والغياب والإنذار (P 4.0)",
-    nav_grades: "الكنترول والدرجات و GPA (P 5.0)",
-    nav_fees: "المصروفات والخزينة (P 6.0)",
-    nav_documents: "إصدار الشهادات والوثائق (P 7.0)",
-    nav_id_card: "كارنيه الطالب الذكي (Smart ID)",
-    nav_engineering_mgmt: "الهندسة والإدارة المركزية",
-    nav_reports: "التقارير الإحصائية (P 8.0)",
+    login_title: "بوابة تسجيل الدخول الأكاديمية",
+    login_subtitle: "المعهد العالي للحاسبات ونظم المعلومات الإدارية - التجمع الأول",
+    login_user_label: "اسم المستخدم / الكود الجامعي",
+    login_pass_label: "كلمة المرور السرية",
+    login_btn: "🔐 تسجيل الدخول الآمن",
+    demo_accounts_title: "⚡ حسابات اختبار واقعية معتمدة بالمشروع",
+    btn_logout: "خروج",
+    footer_credits: "مادة تحليل وتصميم نظم المعلومات<br>إشراف: أ.د / فاروق عبد العزيز | 2026/2027",
+    search_placeholder: "بحث شامل: كود الطالب، الاسم، المقرر...",
+
+    // Navigation Labels
+    nav_dash_student: "لوحة الطالب ومؤشرات الأداء",
+    nav_dash_doctor: "لوحة أستاذ المقرر والكنترول",
+    nav_dash_staff: "لوحة شئون الطلاب والقيد",
+    nav_dash_finance: "لوحة الخزينة والمصروفات",
+    nav_dash_admin: "لوحة الإدارة المركزية",
+    nav_my_courses: "مقرراتي وسلة التسجيل (P 3.0)",
+    nav_my_grades: "سجل الدرجات وبيان التقديرات (P 5.0)",
+    nav_my_attendance: "سجل الحضور والإنذارات (P 4.0)",
+    nav_quiz: "اختبار الفهم والاستيعاب (Quiz)",
+    nav_gpa_calc: "حاسبة المعدل والتخرج الذكية",
+    nav_my_fees: "المصروفات والسداد الإلكتروني (P 6.0)",
+    nav_my_cert: "طلب شهادة قيد رسمية (P 7.0)",
+    nav_my_id: "كارنيه الطالب الذكي (Smart ID)",
+    nav_doc_gradebook: "شيت الكنترول ورصد الدرجات (P 5.0)",
+    nav_doc_attendance: "تسجيل الغياب وكود الحضور (P 4.0)",
+    nav_doc_warnings: "رادار الإنذارات والطلاب المعرضين للحرمان",
+    nav_schedule: "الجدول الدراسي الأسبوعي",
+    nav_staff_students: "دليل وقيد الطلاب (P 2.0)",
+    nav_staff_docs: "اعتماد وطباعة الشهادات (P 7.0)",
+    nav_verify_doc: "التحقق الإلكتروني من صحة الوثائق",
     nav_architecture: "مخططات DFD و ERD وقاموس البيانات",
     nav_oop: "كلاسات Java OOP وهيكلية الكود",
     nav_audit: "سجل الحركات والأمان (Audit Log)",
-    footer_credits: "مادة تحليل وتصميم نظم المعلومات<br>إشراف: أ.د / فاروق عبد العزيز | 2026/2027",
-    search_placeholder: "بحث شامل: كود الطالب، الاسم، المقرر...",
-    
-    // Metrics
-    metric_enrolled: "إجمالي الطلاب المقيدين",
-    metric_courses: "المقررات الدراسية النشطة",
-    metric_collected_fees: "المصروفات المحصلة بالخزينة",
-    metric_warnings: "إنذارات الغياب وتجاوز النسب",
-    
-    // Quick Actions
-    quick_actions: "إجراءات سريعة",
-    act_new_student: "قيد طالب جديد",
-    act_gradebook: "رصد شيت الكنترول",
-    act_collect_fees: "تحصيل مصروفات",
-    act_issue_cert: "استخراج شهادة قيد",
-    act_view_id: "عرض كارنيه الطالب",
 
-    // Common Buttons
+    // Buttons
     btn_cancel: "إلغاء",
     btn_save_student: "حفظ وقيد الطالب",
     btn_save_grade: "اعتماد ورصد الدرجة",
@@ -62,32 +68,6 @@ const I18N = {
     btn_close: "إغلاق",
     btn_print_now: "🖨️ طباعة الشهادة الآن",
     btn_print_receipt: "🖨️ طباعة الإيصال",
-    btn_details: "عرض التفاصيل",
-    btn_edit: "تعديل",
-    btn_print_schedule: "🖨️ طباعة الجدول",
-    btn_apply_curve: "تطبيق بونص كنترول (+2 درجات)",
-
-    // Labels & Table Headers
-    lbl_student_id: "كود الطالب",
-    lbl_fullname: "الاسم الرباعي",
-    lbl_national_id: "الرقم القومي (14 رقم)",
-    lbl_gender: "النوع",
-    lbl_birthdate: "تاريخ الميلاد",
-    lbl_group: "المجموعة",
-    lbl_phone: "الهاتف",
-    lbl_gpa: "المعدل (GPA)",
-    lbl_academic_status: "الحالة الأكاديمية",
-    lbl_actions: "إجراءات",
-
-    // Modals
-    modal_switch_user_title: "🔐 تسجيل الدخول وتبديل صلاحيات المستخدم",
-    modal_switch_user_desc: "اختر الحساب الذي ترغب في الدخول به لاختبار صلاحيات النظام والتحقق من قواعد العمل الصارمة:",
-    modal_add_student_title: "➕ قيد طالب جديد (Process 2.0: Student Registration)",
-    modal_grade_title: "🎯 رصد درجات المقرر واحتساب GPA (خوارزمية 1.5)",
-    modal_attendance_title: "📋 تسجيل حضور وغياب المحاضرة (خوارزمية 1.4)",
-    modal_payment_title: "💳 توريد وسداد المصروفات الدراسية (خوارزمية 1.6)",
-    modal_cert_title: "🖨️ معاينة الشهادة الرسمية المعتمدة",
-    modal_receipt_title: "🧾 إيصال توريد مصروفات دراسية رسمي",
 
     // Form Fields
     form_fullname: "الاسم بالكامل رباعي *",
@@ -114,39 +94,42 @@ const I18N = {
   en: {
     brand_title: "Student Affairs Management System",
     brand_subtitle: "Higher Institute for Computers & MIS",
-    nav_academic_ops: "Academic Processes (DFD 1.0 - 8.0)",
-    nav_dashboard: "Dashboard & Metrics",
-    nav_students: "Student Information (P 2.0)",
-    nav_courses: "Course Registration (P 3.0)",
-    nav_schedule: "Timetable & Schedules",
-    nav_attendance: "Attendance & Warnings (P 4.0)",
-    nav_grades: "Grades, Control & GPA (P 5.0)",
-    nav_fees: "Tuition & Treasury (P 6.0)",
-    nav_documents: "Official Documents (P 7.0)",
-    nav_id_card: "Smart Student ID Card",
-    nav_engineering_mgmt: "Engineering & System Architecture",
-    nav_reports: "Analytics & Reports (P 8.0)",
+    login_title: "Academic Single Sign-On Portal",
+    login_subtitle: "Higher Institute for Computers & Management Information Systems",
+    login_user_label: "Username / Student ID",
+    login_pass_label: "Password",
+    login_btn: "🔐 Secure Login",
+    demo_accounts_title: "⚡ Verified System Test Accounts",
+    btn_logout: "Logout",
+    footer_credits: "Information Systems Analysis & Design<br>Supervised by: Prof. Dr. Farouk Abdel Aziz | 2026/2027",
+    search_placeholder: "Global Search: Student ID, Name, Course code...",
+
+    // Navigation Labels
+    nav_dash_student: "Student Dashboard & Status",
+    nav_dash_doctor: "Course Professor Portal",
+    nav_dash_staff: "Student Affairs & Admissions",
+    nav_dash_finance: "Treasury & Finance Portal",
+    nav_dash_admin: "System Administration",
+    nav_my_courses: "My Enrolled Courses (P 3.0)",
+    nav_my_grades: "Grades & Academic Transcript (P 5.0)",
+    nav_my_attendance: "Attendance & Warnings (P 4.0)",
+    nav_quiz: "Comprehension & Diagnostic Quiz",
+    nav_gpa_calc: "Smart GPA & Graduation Forecaster",
+    nav_my_fees: "Tuition & Online Payments (P 6.0)",
+    nav_my_cert: "Request Official Certificate (P 7.0)",
+    nav_my_id: "Smart Student ID Card",
+    nav_doc_gradebook: "Control Gradebook & Grading (P 5.0)",
+    nav_doc_attendance: "Attendance Roster & PIN (P 4.0)",
+    nav_doc_warnings: "Early Warning Radar (At-Risk)",
+    nav_schedule: "Weekly Timetable & Schedule",
+    nav_staff_students: "Student Information System (P 2.0)",
+    nav_staff_docs: "Certificate Approvals & Seal (P 7.0)",
+    nav_verify_doc: "Public Document Verification",
     nav_architecture: "DFD, ERD & Data Dictionary",
     nav_oop: "Java OOP Class Hierarchy",
     nav_audit: "Security Audit Log",
-    footer_credits: "Information Systems Analysis & Design<br>Supervised by: Prof. Dr. Farouk Abdel Aziz | 2026/2027",
-    search_placeholder: "Global Search: Student ID, Name, Course code...",
-    
-    // Metrics
-    metric_enrolled: "Total Enrolled Students",
-    metric_courses: "Active Academic Courses",
-    metric_collected_fees: "Tuition Revenue Collected",
-    metric_warnings: "Absence Warnings & Barred",
 
-    // Quick Actions
-    quick_actions: "Quick Operations",
-    act_new_student: "Register New Student",
-    act_gradebook: "Control Grade Sheet",
-    act_collect_fees: "Collect Tuition",
-    act_issue_cert: "Issue Certificate",
-    act_view_id: "View Student ID Card",
-
-    // Common Buttons
+    // Buttons
     btn_cancel: "Cancel",
     btn_save_student: "Save & Enroll Student",
     btn_save_grade: "Submit & Recalculate GPA",
@@ -155,32 +138,6 @@ const I18N = {
     btn_close: "Close",
     btn_print_now: "🖨️ Print Certificate Now",
     btn_print_receipt: "🖨️ Print Receipt",
-    btn_details: "View Profile",
-    btn_edit: "Edit",
-    btn_print_schedule: "🖨️ Print Timetable",
-    btn_apply_curve: "Apply Control Curve (+2 Marks)",
-
-    // Labels & Table Headers
-    lbl_student_id: "Student ID",
-    lbl_fullname: "Full Student Name",
-    lbl_national_id: "National ID (14 digits)",
-    lbl_gender: "Gender",
-    lbl_birthdate: "Birth Date",
-    lbl_group: "Group",
-    lbl_phone: "Mobile Phone",
-    lbl_gpa: "Cumulative GPA",
-    lbl_academic_status: "Academic Standing",
-    lbl_actions: "Actions",
-
-    // Modals
-    modal_switch_user_title: "🔐 Authentication & Role Switching",
-    modal_switch_user_desc: "Select a user account to test strict role-based access permissions and academic business rules:",
-    modal_add_student_title: "➕ Register New Student (Process 2.0)",
-    modal_grade_title: "🎯 Enter Grades & Recalculate GPA (Algorithm 1.5)",
-    modal_attendance_title: "📋 Record Lecture Attendance (Algorithm 1.4)",
-    modal_payment_title: "💳 Tuition Collection & Receipt Issuance (Algorithm 1.6)",
-    modal_cert_title: "🖨️ Official Certified Document Preview",
-    modal_receipt_title: "🧾 Official Institute Treasury Receipt",
 
     // Form Fields
     form_fullname: "Full Name (Four names) *",
@@ -206,26 +163,27 @@ const I18N = {
 };
 
 // ============================================================================
-// 2. CENTRAL DATA STORE (State) - 11 Relational Entities
+// 2. CENTRAL STATE & VERIFIED ACCOUNTS (11 Relational Entities)
 // ============================================================================
 
 const INITIAL_STATE = {
   currentLang: "ar",
   currentTheme: "light",
   currentView: "dashboard",
-  
-  // Users (Entity 1: Users - Process 1.0)
+  sessionPin: "8492",
+
+  // Verified System Accounts with Passwords (Process 1.0)
   users: [
-    { id: 1, key: "dr_farouk", username: "farouk", nameAr: "أ.د / فاروق عبد العزيز", nameEn: "Prof. Dr. Farouk Abdel Aziz", role: "doctor", titleAr: "أستاذ مقرر تحليل النظم ورئيس القسم", titleEn: "Dept Head & Systems Analysis Professor", avatar: "👨‍🏫" },
-    { id: 2, key: "202411586", username: "202411586", nameAr: "رغدة ابراهيم عبد الخالق محمد", nameEn: "Ragda Ibrahim Abdel Khaleq", role: "student", titleAr: "طالبة - الفرقة الثالثة (معدل ممتاز)", titleEn: "3rd Year Student (High Honors GPA 3.92)", avatar: "👩‍🎓", studentId: "202411586" },
-    { id: 3, key: "202411531", username: "202411531", nameAr: "كارولين عاطف عطاالله شحاته", nameEn: "Caroline Atef Attallah", role: "student", titleAr: "طالبة - الفرقة الثالثة", titleEn: "3rd Year Student (GPA 3.85)", avatar: "👩‍🎓", studentId: "202411531" },
-    { id: 4, key: "202411601", username: "202411601", nameAr: "أحمد محمد الشناوي", nameEn: "Ahmed Mohamed El-Shennawy", role: "student", titleAr: "طالب متعثر (إنذار أكاديمي وغياب)", titleEn: "Academic Probation Student", avatar: "⚠️", studentId: "202411601" },
-    { id: 5, key: "staff", username: "staff_eman", nameAr: "أ/ إيمان صبري", nameEn: "Ms. Eman Sabry", role: "staff", titleAr: "مسئول شئون الطلاب والامتحانات", titleEn: "Registrar / Student Affairs Officer", avatar: "💼" },
-    { id: 6, key: "finance", username: "finance_tarek", nameAr: "أ/ طارق السيد", nameEn: "Mr. Tarek El-Sayed", role: "finance", titleAr: "مسئول الخزينة والحسابات", titleEn: "Bursar / Treasury Officer", avatar: "💰" },
-    { id: 7, key: "admin", username: "admin", nameAr: "مدير النظام المركزي", nameEn: "System Administrator", role: "admin", titleAr: "إدارة الخوادم والصلاحيات", titleEn: "Full Privileges Administrator", avatar: "⚙️" }
+    { id: 1, username: "farouk", password: "dr123456", nameAr: "أ.د / فاروق عبد العزيز", nameEn: "Prof. Dr. Farouk Abdel Aziz", role: "doctor", titleAr: "أستاذ مقرر تحليل النظم ورئيس القسم", titleEn: "Dept Head & Systems Analysis Professor", avatar: "👨‍🏫" },
+    { id: 2, username: "202411586", password: "ragda@2026", nameAr: "رغدة ابراهيم عبد الخالق محمد", nameEn: "Ragda Ibrahim Abdel Khaleq", role: "student", studentId: "202411586", titleAr: "طالبة - الفرقة الثالثة (الأولى على الدفعة)", titleEn: "3rd Year Student (Top Honors GPA 3.92)", avatar: "👩‍🎓" },
+    { id: 3, username: "202411531", password: "caroline@2026", nameAr: "كارولين عاطف عطاالله شحاته", nameEn: "Caroline Atef Attallah", role: "student", studentId: "202411531", titleAr: "طالبة - الفرقة الثالثة (امتياز)", titleEn: "3rd Year Student (Honors GPA 3.85)", avatar: "👩‍🎓" },
+    { id: 4, username: "202411601", password: "ahmed@2026", nameAr: "أحمد محمد الشناوي", nameEn: "Ahmed Mohamed El-Shennawy", role: "student", studentId: "202411601", titleAr: "طالب متعثر (إنذار أكاديمي وغياب)", titleEn: "Academic Probation Student", avatar: "⚠️" },
+    { id: 5, username: "staff_eman", password: "staff123", nameAr: "أ/ إيمان صبري", nameEn: "Ms. Eman Sabry", role: "staff", titleAr: "مسئول شئون الطلاب والامتحانات", titleEn: "Registrar / Student Affairs Officer", avatar: "💼" },
+    { id: 6, username: "finance_tarek", password: "fin123", nameAr: "أ/ طارق السيد", nameEn: "Mr. Tarek El-Sayed", role: "finance", titleAr: "مسئول الخزينة والحسابات", titleEn: "Bursar / Treasury Officer", avatar: "💰" },
+    { id: 7, username: "admin", password: "admin123", nameAr: "مدير النظام المركزي", nameEn: "System Administrator", role: "admin", titleAr: "إدارة الخوادم والصلاحيات", titleEn: "Full Privileges Administrator", avatar: "⚙️" }
   ],
 
-  // Students (Entity 2: Student - Process 2.0)
+  // Student Profiles (Entity 2: Student)
   students: [
     {
       student_id: "202411586",
@@ -331,7 +289,7 @@ const INITIAL_STATE = {
     }
   ],
 
-  // Courses (Entity 3: Course - Process 3.0)
+  // Courses (Entity 3: Course)
   courses: [
     { code: "MIS301", nameAr: "تحليل وتصميم نظم المعلومات", nameEn: "Information Systems Analysis & Design", credits: 3, level: 3, instructorAr: "أ.د / فاروق عبد العزيز", instructorEn: "Prof. Dr. Farouk Abdel Aziz", prerequisite: "MIS201" },
     { code: "CS302", nameAr: "قواعد البيانات المتقدمة (SQL/NoSQL)", nameEn: "Advanced Database Systems", credits: 3, level: 3, instructorAr: "د / هشام عرفات", instructorEn: "Dr. Hesham Arafat", prerequisite: "CS202" },
@@ -350,35 +308,28 @@ const INITIAL_STATE = {
     { id: 5, code: "ACC305", dayAr: "الخميس", dayEn: "Thursday", time: "10:00 - 12:00", hall: "قاعة 8 (Hall 8)", instructorAr: "د / سمير عبد المنعم", type: "lecture" }
   ],
 
-  // Control Grade Sheet (Entity 5: Grade - Process 5.0)
+  // Grades (Entity 5: Grade)
   grades: [
-    // Ragda (202411586)
     { student_id: "202411586", course_code: "MIS301", cw: 19.5, mt: 19.0, fn: 59.0, total: 97.5, letter: "A+", points: 4.0 },
     { student_id: "202411586", course_code: "CS302", cw: 19.0, mt: 18.5, fn: 58.0, total: 95.5, letter: "A+", points: 4.0 },
     { student_id: "202411586", course_code: "SWE303", cw: 18.5, mt: 18.0, fn: 56.0, total: 92.5, letter: "A", points: 3.7 },
     { student_id: "202411586", course_code: "NET304", cw: 19.0, mt: 19.0, fn: 57.0, total: 95.0, letter: "A+", points: 4.0 },
 
-    // Caroline (202411531)
     { student_id: "202411531", course_code: "MIS301", cw: 19.0, mt: 18.5, fn: 57.5, total: 95.0, letter: "A+", points: 4.0 },
     { student_id: "202411531", course_code: "CS302", cw: 18.5, mt: 18.0, fn: 55.0, total: 91.5, letter: "A", points: 3.7 },
     { student_id: "202411531", course_code: "SWE303", cw: 18.0, mt: 18.5, fn: 56.0, total: 92.5, letter: "A", points: 3.7 },
 
-    // Dina (202411585)
     { student_id: "202411585", course_code: "MIS301", cw: 18.5, mt: 18.0, fn: 55.0, total: 91.5, letter: "A", points: 3.7 },
     { student_id: "202411585", course_code: "CS302", cw: 18.0, mt: 17.5, fn: 54.0, total: 89.5, letter: "B+", points: 3.3 },
 
-    // Marwa (202411566)
     { student_id: "202411566", course_code: "MIS301", cw: 18.0, mt: 18.0, fn: 54.0, total: 90.0, letter: "A", points: 3.7 },
-
-    // Rawan (202411587)
     { student_id: "202411587", course_code: "MIS301", cw: 19.0, mt: 18.5, fn: 57.0, total: 94.5, letter: "A", points: 3.7 },
 
-    // Ahmed Shennawy (202411601 - Academic Probation)
     { student_id: "202411601", course_code: "MIS301", cw: 10.0, mt: 9.0, fn: 32.0, total: 51.0, letter: "D", points: 2.0 },
     { student_id: "202411601", course_code: "CS302", cw: 8.0, mt: 7.0, fn: 25.0, total: 40.0, letter: "F", points: 0.0 }
   ],
 
-  // Attendance (Entity 6: Attendance - Process 4.0)
+  // Attendance (Entity 6: Attendance)
   attendance: [
     { student_id: "202411586", course_code: "MIS301", total: 12, attended: 12, absent: 0, pct: 100, statusAr: "منتظم", statusEn: "Regular (100%)" },
     { student_id: "202411586", course_code: "CS302", total: 12, attended: 11, absent: 1, pct: 91.7, statusAr: "منتظم", statusEn: "Regular (91.7%)" },
@@ -390,7 +341,7 @@ const INITIAL_STATE = {
     { student_id: "202411601", course_code: "CS302", total: 12, attended: 7, absent: 5, pct: 58.3, statusAr: "حرمان من الامتحان النهائي (تجاوز 30%)", statusEn: "Barred from Final Exam (Absence >30%)" }
   ],
 
-  // Tuition & Fees (Entity 7: Student_Fees - Process 6.0)
+  // Fees (Entity 7: Student_Fees)
   fees: [
     { fee_id: 1, student_id: "202411586", total: 8500, paid: 8500, remaining: 0, statusAr: "مسدد بالكامل", statusEn: "Fully Paid", receipt_no: "REC-2026-00101", date: "2026-10-01" },
     { fee_id: 2, student_id: "202411531", total: 8500, paid: 8500, remaining: 0, statusAr: "مسدد بالكامل", statusEn: "Fully Paid", receipt_no: "REC-2026-00102", date: "2026-10-02" },
@@ -400,64 +351,385 @@ const INITIAL_STATE = {
     { fee_id: 6, student_id: "202411601", total: 8500, paid: 2000, remaining: 6500, statusAr: "مستحق (عليه متأخرات)", statusEn: "Overdue Balance", receipt_no: "REC-2026-00045", date: "2026-09-20" }
   ],
 
-  // Official Document Requests (Entity 8: Document_Request - Process 7.0)
+  // Documents (Entity 8: Document_Request)
   documents: [
     { req_id: 101, student_id: "202411586", typeAr: "شهادة قيد رسمية", typeEn: "Official Enrollment Certificate", purposeAr: "مصلحة الجوازات والهجرة", purposeEn: "Passports & Immigration Authority", date: "2026-11-15", statusAr: "معتمدة ومختومة", statusEn: "Approved & Sealed", code: "SAMS-2026-0889" },
     { req_id: 102, student_id: "202411531", typeAr: "بيان نجاح وتقديرات (Transcript)", typeEn: "Official Academic Transcript", purposeAr: "التأمينات الاجتماعية وجهة العمل", purposeEn: "Social Insurance & Employment", date: "2026-11-18", statusAr: "معتمدة ومختومة", statusEn: "Approved & Sealed", code: "SAMS-2026-0912" },
     { req_id: 103, student_id: "202411601", typeAr: "شهادة قيد رسمية", typeEn: "Official Enrollment Certificate", purposeAr: "اشتراك هيئة النقل والمترو", purposeEn: "Metro Student Transit Pass", date: "2026-11-19", statusAr: "مرفوضة (لوجود متأخرات مالية)", statusEn: "Rejected (Financial Hold)", code: "SAMS-REJ-004" }
   ],
 
-  // Security Audit Log (Process 1.0)
+  // Diagnostic Quiz Questions for MIS301
+  quizQuestions: [
+    {
+      id: 1,
+      qAr: "في مخطط تدفق البيانات (DFD Level 0)، ماذا يمثل الصندوق الخارجي (Rectangle)؟",
+      qEn: "In DFD Level 0 (Context Diagram), what does the outer rectangle represent?",
+      optionsAr: ["كيان خارجي (External Entity)", "عملية تحويل بيانات (Process)", "مستودع بيانات (Data Store)", "تدفق بيانات (Data Flow)"],
+      optionsEn: ["External Entity", "Process", "Data Store", "Data Flow"],
+      correct: 0,
+      explanationAr: "يمثل المستطيل الكيان الخارجي الذي يتبادل المدخلات والمخرجات مع النظام دون أن يكون خاضعاً لتحكمه المباشر.",
+      explanationEn: "The rectangle represents an External Entity sending or receiving data to/from the system."
+    },
+    {
+      id: 2,
+      qAr: "ما هو الحد الأقصى للساعات المعتمدة التي يحق لطالب الفرقة الثالثة تسجيلها في الفصل الدراسي طبقاً للائحة المعهد؟",
+      qEn: "What is the maximum credit-hour cap a student can register per semester?",
+      optionsAr: ["12 ساعة", "15 ساعة", "18 ساعة معتمدة", "24 ساعة"],
+      optionsEn: ["12 Hours", "15 Hours", "18 Credit Hours", "24 Hours"],
+      correct: 2,
+      explanationAr: "تنص لائحة الجودة (التقرير الثاني - رغدة) على ألا يتجاوز عبء التسجيل الفصلي 18 ساعة معتمدة كحد أقصى.",
+      explanationEn: "According to Institute Regulations (Ragda Report), maximum load is strictly 18 credit hours."
+    },
+    {
+      id: 3,
+      qAr: "عند تجاوز نسبة غياب الطالب 30% من إجمالي المحاضرات، ما هو الإجراء اللائحي التلقائي (خوارزمية 1.4)؟",
+      qEn: "When a student's absence rate exceeds 30%, what is the automatic rule (Algorithm 1.4)?",
+      optionsAr: ["إنذار شفوي فقط", "حرمان نهائي من دخول الامتحان النهائي للمقرر", "خصم 5 درجات", "إعادة المحاضرات"],
+      optionsEn: ["Verbal warning only", "Strict barring from Final Exam", "Deduct 5 marks", "Retake lectures"],
+      correct: 1,
+      explanationAr: "تجاوز 30% غياب يولد قرار حرمان رسمي من الامتحان النهائي تلقائياً لعدم استيفاء نسبة الحضور المقررة.",
+      explanationEn: "Exceeding 30% absence triggers an official Barring Order from taking the final examination."
+    },
+    {
+      id: 4,
+      qAr: "في لغة Java OOP، كيف يرث كلاس `Student` الصفات الأساسية (الاسم والرقم القومي) من كلاس `Person`؟",
+      qEn: "In Java OOP, how does class `Student` inherit basic attributes from class `Person`?",
+      optionsAr: ["باستخدام الكلمة المحجوزة `implements`", "باستخدام الكلمة المحجوزة `extends`", "من خلال الـ Interface", "بالنسخ اليدوي للكود"],
+      optionsEn: ["Using `implements`", "Using `extends`", "Via Interface only", "Manual copy-paste"],
+      correct: 1,
+      explanationAr: "الوراثة المباشرة للكلاسات في جافا تتم بواسطة الكلمة المفتاحية `extends Person`.",
+      explanationEn: "Inheritance from a base class in Java is achieved using `public class Student extends Person`."
+    },
+    {
+      id: 5,
+      qAr: "ما هي شروط اعتماد استخراج شهادة القيد الرسمية للطالب في نظام شئون الطلاب (SAMS)؟",
+      qEn: "What is the prerequisite for issuing an Official Enrollment Certificate in SAMS?",
+      optionsAr: ["موافقة اتحاد الطلاب", "سداد كامل المصروفات الدراسية وعدم وجود متأخرات مالية", "الحصول على امتياز فقط", "اجتياز الكشف الطبي مجدداً"],
+      optionsEn: ["Student Union approval", "Full tuition fee clearance with zero overdue balance", "GPA must be 4.0 only", "Medical checkup retest"],
+      correct: 1,
+      explanationAr: "تطبق خوارزمية (1.7) فحصاً مالياً إجبارياً على جدول `Student_Fees`؛ فإن وُجدت متأخرات يتم حظر استخراج الشهادة.",
+      explanationEn: "Algorithm 1.7 strictly checks `Student_Fees` for clearance before approving certificate issuance."
+    }
+  ],
+
+  // Audit Log
   auditLog: [
     { id: 1001, timestamp: "2026-11-19 14:32:10", user: "farouk", role: "doctor", actionAr: "رصد درجات امتحان الميدتيرم لمقرر MIS301", actionEn: "Graded Midterm Exam for MIS301", ip: "192.168.10.45", status: "SUCCESS" },
-    { id: 1002, timestamp: "2026-11-19 14:15:00", user: "staff_eman", role: "staff", actionAr: "اعتماد وطباعة شهادة قيد للطالبة رغدة ابراهيم", actionEn: "Approved & Printed Certificate for Ragda Ibrahim", ip: "192.168.10.12", status: "SUCCESS" },
-    { id: 1003, timestamp: "2026-11-19 13:50:22", user: "finance_tarek", role: "finance", actionAr: "إصدار إيصال تحصيل مصروفات REC-2026-00101", actionEn: "Generated Tuition Receipt REC-2026-00101", ip: "192.168.10.88", status: "SUCCESS" },
-    { id: 1004, timestamp: "2026-11-19 12:10:05", user: "system_cron", role: "system", actionAr: "فحص نسب الغياب وإدراج إنذار بحق الطالب أحمد الشناوي", actionEn: "Absence Rule Triggered Warning for Ahmed Shennawy", ip: "127.0.0.1", status: "WARNING" }
+    { id: 1002, timestamp: "2026-11-19 14:15:00", user: "staff_eman", role: "staff", actionAr: "اعتماد وطباعة شهادة قيد للطالبة رغدة ابراهيم", actionEn: "Approved & Printed Certificate for Ragda Ibrahim", ip: "192.168.10.12", status: "SUCCESS" }
   ]
 };
 
-// State Manager with LocalStorage Persistence
-function getStoredState() {
-  const local = localStorage.getItem("SAMS_STATE_V2");
-  if (local) {
-    try {
-      return JSON.parse(local);
-    } catch (e) {
-      console.warn("Resetting to initial state");
-    }
+// Storage helper
+function loadAppState() {
+  const saved = localStorage.getItem("SAMS_STATE_V3");
+  if (saved) {
+    try { return JSON.parse(saved); } catch (e) { console.warn("Resetting state"); }
   }
   return INITIAL_STATE;
 }
 
-function persistState(state) {
-  localStorage.setItem("SAMS_STATE_V2", JSON.stringify(state));
+function saveAppState(state) {
+  localStorage.setItem("SAMS_STATE_V3", JSON.stringify(state));
 }
 
-let SAMS = getStoredState();
-let currentUser = SAMS.users[0]; // Prof. Dr. Farouk Abdel Aziz by default
+let SAMS = loadAppState();
+let loggedUser = null;
 
 // ============================================================================
-// 3. BILINGUAL & THEME CONTROLS
+// 3. REAL AUTHENTICATION ENGINE (Login / Logout / Session)
+// ============================================================================
+
+function checkExistingSession() {
+  const sessionUser = localStorage.getItem("SAMS_LOGGED_USER");
+  if (sessionUser) {
+    try {
+      const u = JSON.parse(sessionUser);
+      const match = SAMS.users.find(x => x.username === u.username && x.password === u.password);
+      if (match) {
+        loggedUser = match;
+        bootAppInterface();
+        return;
+      }
+    } catch (e) {
+      console.warn("Invalid session");
+    }
+  }
+  showLoginScreen();
+}
+
+function showLoginScreen() {
+  const loginScr = document.getElementById("loginScreen");
+  const appLay = document.getElementById("appLayout");
+  if (loginScr) loginScr.style.display = "flex";
+  if (appLay) appLay.style.display = "none";
+}
+
+function quickFillCredentials(username, password) {
+  document.getElementById("loginUsername").value = username;
+  document.getElementById("loginPassword").value = password;
+}
+
+function handleRealLogin(e) {
+  e.preventDefault();
+  const u = document.getElementById("loginUsername").value.trim();
+  const p = document.getElementById("loginPassword").value.trim();
+  const isEn = SAMS.currentLang === "en";
+
+  const match = SAMS.users.find(user => (user.username.toLowerCase() === u.toLowerCase() || (user.studentId && user.studentId === u)) && user.password === p);
+
+  if (!match) {
+    alert(isEn ? "Invalid Credentials! Check username & password." : "بيانات الدخول غير صحيحة! يرجى التأكد من اسم المستخدم وكلمة المرور.");
+    return;
+  }
+
+  loggedUser = match;
+  localStorage.setItem("SAMS_LOGGED_USER", JSON.stringify({ username: match.username, password: match.password }));
+
+  logAuditEvent(`تسجيل دخول ناجح للمستخدم: ${match.nameAr}`, `Successful login for user: ${match.nameEn}`, "SUCCESS");
+
+  bootAppInterface();
+}
+
+function handleLogout() {
+  const isEn = SAMS.currentLang === "en";
+  if (confirm(isEn ? "Are you sure you want to log out?" : "هل أنت متأكد من رغبتك في تسجيل الخروج؟")) {
+    logAuditEvent(`تسجيل خروج للمستخدم: ${loggedUser.nameAr}`, `User logged out: ${loggedUser.nameEn}`, "SUCCESS");
+    loggedUser = null;
+    localStorage.removeItem("SAMS_LOGGED_USER");
+    showLoginScreen();
+  }
+}
+
+function bootAppInterface() {
+  const loginScr = document.getElementById("loginScreen");
+  const appLay = document.getElementById("appLayout");
+  if (loginScr) loginScr.style.display = "none";
+  if (appLay) appLay.style.display = "flex";
+
+  applyTheme();
+  applyLocalization();
+  buildRoleNavigation();
+  switchView("dashboard");
+}
+
+function logAuditEvent(actionAr, actionEn, status = "SUCCESS") {
+  const newLog = {
+    id: 1000 + SAMS.auditLog.length + 1,
+    timestamp: new Date().toISOString().replace("T", " ").substring(0, 19),
+    user: loggedUser ? loggedUser.username : "guest",
+    role: loggedUser ? loggedUser.role : "public",
+    actionAr,
+    actionEn,
+    ip: "192.168.10." + Math.floor(10 + Math.random() * 80),
+    status
+  };
+  SAMS.auditLog.unshift(newLog);
+  saveAppState(SAMS);
+}
+
+// ============================================================================
+// 4. ROLE-BASED NAVIGATION BUILDER (Dynamic Menu)
+// ============================================================================
+
+function buildRoleNavigation() {
+  const menuContainer = document.getElementById("sidebarMenu");
+  if (!menuContainer || !loggedUser) return;
+  const isEn = SAMS.currentLang === "en";
+  const role = loggedUser.role;
+
+  let menuHtml = '';
+
+  if (role === "student") {
+    menuHtml = `
+      <div class="nav-group-title">${isEn ? "Student Portal" : "بوابة الطالب الأكاديمية"}</div>
+      <a class="nav-link active" onclick="switchView('dashboard')">
+        <svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6"/></svg>
+        <span>${isEn ? "My Dashboard" : "لوحتي الأكاديمية"}</span>
+      </a>
+      <a class="nav-link" onclick="switchView('my_grades')">
+        <svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z"/></svg>
+        <span>${isEn ? "My Grades & GPA" : "درجاتي والمعدل التراكمي"}</span>
+      </a>
+      <a class="nav-link" onclick="switchView('my_attendance')">
+        <svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>
+        <span>${isEn ? "Attendance & Warnings" : "حضوري ونسب الإنذار"}</span>
+      </a>
+      <a class="nav-link" onclick="switchView('quiz')">
+        <svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z"/></svg>
+        <span>${isEn ? "Comprehension Quiz" : "اختبار الفهم والاستيعاب"}</span>
+        <span class="nav-badge emerald">جديد</span>
+      </a>
+      <a class="nav-link" onclick="switchView('gpa_calc')">
+        <svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 7h6m0 10v-3m-3 3h.01M9 17h.01M9 14h.01M12 14h.01M15 11h.01M12 11h.01M9 11h.01M7 21h10a2 2 0 002-2V5a2 2 0 00-2-2H7a2 2 0 00-2 2v14a2 2 0 002 2z"/></svg>
+        <span>${isEn ? "GPA Forecaster" : "حاسبة المعدل والتخرج"}</span>
+      </a>
+      <a class="nav-link" onclick="switchView('my_courses')">
+        <svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.747 0 3.332.477 4.5 1.253v13C19.832 18.477 18.247 18 16.5 18c-1.746 0-3.332.477-4.5 1.253"/></svg>
+        <span>${isEn ? "My Courses & Basket" : "مقرراتي وسلة الساعات"}</span>
+      </a>
+      <a class="nav-link" onclick="switchView('schedule')">
+        <svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"/></svg>
+        <span>${isEn ? "Class Timetable" : "جدولي الدراسي"}</span>
+      </a>
+      <a class="nav-link" onclick="switchView('my_fees')">
+        <svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 10h18M7 15h1m4 0h1m-7 4h12a3 3 0 003-3V8a3 3 0 00-3-3H6a3 3 0 00-3 3v8a3 3 0 003 3z"/></svg>
+        <span>${isEn ? "Tuition & Pay Online" : "المصروفات والسداد"}</span>
+      </a>
+      <a class="nav-link" onclick="switchView('my_cert')">
+        <svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"/></svg>
+        <span>${isEn ? "Official Certificate" : "شهادة القيد والتوثيق"}</span>
+      </a>
+      <a class="nav-link" onclick="switchView('id_card')">
+        <svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 6H5a2 2 0 00-2 2v9a2 2 0 002 2h14a2 2 0 002-2V8a2 2 0 00-2-2h-5m-4 0V5a2 2 0 114 0v1m-4 0a2 2 0 104 0m-5 8a2 2 0 100-4 2 2 0 000 4zm0 0c1.306 0 2.417.835 2.83 2M9 14a3.001 3.001 0 00-2.83 2M15 11h3m-3 4h2"/></svg>
+        <span>${isEn ? "Smart Student ID" : "كارنيه الطالب الذكي"}</span>
+      </a>
+    `;
+  } else if (role === "doctor") {
+    menuHtml = `
+      <div class="nav-group-title">${isEn ? "Professor Portal" : "بوابة أستاذ المقرر والكنترول"}</div>
+      <a class="nav-link active" onclick="switchView('dashboard')">
+        <svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6"/></svg>
+        <span>${isEn ? "Doctor Dashboard" : "لوحة أستاذ المقرر"}</span>
+      </a>
+      <a class="nav-link" onclick="switchView('grades')">
+        <svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z"/></svg>
+        <span>${isEn ? "Control Gradebook & GPA" : "شيت الكنترول ورصد الدرجات"}</span>
+      </a>
+      <a class="nav-link" onclick="switchView('attendance')">
+        <svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>
+        <span>${isEn ? "Lecture Attendance & QR" : "الحضور وكود الجلسة (PIN)"}</span>
+      </a>
+      <a class="nav-link" onclick="switchView('warnings_radar')">
+        <svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z"/></svg>
+        <span>${isEn ? "Early Warning Radar" : "رادار الإنذار والحرمان"}</span>
+        <span class="nav-badge amber">تنبيه</span>
+      </a>
+      <a class="nav-link" onclick="switchView('schedule')">
+        <svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"/></svg>
+        <span>${isEn ? "Teaching Timetable" : "الجدول والمدرجات"}</span>
+      </a>
+      <a class="nav-link" onclick="switchView('reports')">
+        <svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M11 3.055A9.001 9.001 0 1020.945 13H11V3.055z"/><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M20.488 9H15V3.512A9.025 9.025 0 0120.488 9z"/></svg>
+        <span>${isEn ? "Course Analytics" : "إحصائيات المقرر والـ GPA"}</span>
+      </a>
+    `;
+  } else if (role === "staff") {
+    menuHtml = `
+      <div class="nav-group-title">${isEn ? "Registrar Portal" : "بوابة شئون الطلاب"}</div>
+      <a class="nav-link active" onclick="switchView('dashboard')">
+        <svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6"/></svg>
+        <span>${isEn ? "Registrar Overview" : "لوحة شئون الطلاب"}</span>
+      </a>
+      <a class="nav-link" onclick="switchView('students')">
+        <svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4.354a4 4 0 110 5.292M15 21H3v-1a6 6 0 0112 0v1zm0 0h6v-1a6 6 0 00-9-5.197M13 7a4 4 0 11-8 0 4 4 0 018 0z"/></svg>
+        <span>${isEn ? "Student Admission (P 2.0)" : "قيد وبيانات الطلاب"}</span>
+      </a>
+      <a class="nav-link" onclick="switchView('documents')">
+        <svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"/></svg>
+        <span>${isEn ? "Certificates & Approvals" : "اعتماد واستخراج الشهادات"}</span>
+      </a>
+      <a class="nav-link" onclick="switchView('verify_doc')">
+        <svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z"/></svg>
+        <span>${isEn ? "Verify Official Document" : "التحقق من صحة الوثائق"}</span>
+      </a>
+      <a class="nav-link" onclick="switchView('id_card')">
+        <svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 6H5a2 2 0 00-2 2v9a2 2 0 002 2h14a2 2 0 002-2V8a2 2 0 00-2-2h-5m-4 0V5a2 2 0 114 0v1m-4 0a2 2 0 104 0m-5 8a2 2 0 100-4 2 2 0 000 4zm0 0c1.306 0 2.417.835 2.83 2M9 14a3.001 3.001 0 00-2.83 2M15 11h3m-3 4h2"/></svg>
+        <span>${isEn ? "Student ID Cards" : "إصدار كارنيهات الطلاب"}</span>
+      </a>
+    `;
+  } else if (role === "finance") {
+    menuHtml = `
+      <div class="nav-group-title">${isEn ? "Treasury Portal" : "بوابة الخزينة والمصروفات"}</div>
+      <a class="nav-link active" onclick="switchView('dashboard')">
+        <svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6"/></svg>
+        <span>${isEn ? "Financial Overview" : "الموقف المالي العام"}</span>
+      </a>
+      <a class="nav-link" onclick="switchView('fees')">
+        <svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 10h18M7 15h1m4 0h1m-7 4h12a3 3 0 003-3V8a3 3 0 00-3-3H6a3 3 0 00-3 3v8a3 3 0 003 3z"/></svg>
+        <span>${isEn ? "Tuition Collection (P 6.0)" : "تحصيل المصروفات والخزينة"}</span>
+      </a>
+    `;
+  } else {
+    menuHtml = `
+      <div class="nav-group-title">${isEn ? "Administration" : "الإدارة المركزية"}</div>
+      <a class="nav-link active" onclick="switchView('dashboard')">
+        <svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6"/></svg>
+        <span>${isEn ? "System Dashboard" : "لوحة التحكم الشاملة"}</span>
+      </a>
+      <a class="nav-link" onclick="switchView('students')">
+        <svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4.354a4 4 0 110 5.292M15 21H3v-1a6 6 0 0112 0v1zm0 0h6v-1a6 6 0 00-9-5.197M13 7a4 4 0 11-8 0 4 4 0 018 0z"/></svg>
+        <span>${isEn ? "Students (P 2.0)" : "بيانات الطلاب (P 2.0)"}</span>
+      </a>
+      <a class="nav-link" onclick="switchView('grades')">
+        <svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z"/></svg>
+        <span>${isEn ? "Grade Control (P 5.0)" : "الكنترول والدرجات (P 5.0)"}</span>
+      </a>
+      <a class="nav-link" onclick="switchView('attendance')">
+        <svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>
+        <span>${isEn ? "Attendance (P 4.0)" : "الحضور والغياب (P 4.0)"}</span>
+      </a>
+      <a class="nav-link" onclick="switchView('fees')">
+        <svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 10h18M7 15h1m4 0h1m-7 4h12a3 3 0 003-3V8a3 3 0 00-3-3H6a3 3 0 00-3 3v8a3 3 0 003 3z"/></svg>
+        <span>${isEn ? "Treasury (P 6.0)" : "الخزينة والمصروفات (P 6.0)"}</span>
+      </a>
+      <a class="nav-link" onclick="switchView('documents')">
+        <svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"/></svg>
+        <span>${isEn ? "Official Documents (P 7.0)" : "الشهادات والوثائق (P 7.0)"}</span>
+      </a>
+    `;
+  }
+
+  // Common Engineering Navigation Links
+  menuHtml += `
+    <div class="nav-group-title">${isEn ? "System Architecture" : "الهندسة المعمارية للنظام"}</div>
+    <a class="nav-link" onclick="switchView('architecture')">
+      <svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 5a1 1 0 011-1h14a1 1 0 011 1v2a1 1 0 01-1 1H5a1 1 0 01-1-1V5zM4 13a1 1 0 011-1h6a1 1 0 011 1v6a1 1 0 01-1 1H5a1 1 0 01-1-1v-6zM16 13a1 1 0 011-1h2a1 1 0 011 1v6a1 1 0 01-1 1h-2a1 1 0 01-1-1v-6z"/></svg>
+      <span>${isEn ? "DFD, ERD & Dictionary" : "مخططات DFD و ERD"}</span>
+    </a>
+    <a class="nav-link" onclick="switchView('oop')">
+      <svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 20l4-16m4 4l4 4-4 4M6 16l-4-4 4-4"/></svg>
+      <span>${isEn ? "Java OOP Architecture" : "كلاسات Java OOP"}</span>
+    </a>
+    <a class="nav-link" onclick="switchView('audit')">
+      <svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2m-6 9l2 2 4-4"/></svg>
+      <span>${isEn ? "Security Audit Log" : "سجل الحركات والأمان"}</span>
+    </a>
+  `;
+
+  menuContainer.innerHTML = menuHtml;
+
+  // Update Top & Side User Badges
+  document.getElementById("sideUserAvatar").textContent = loggedUser.avatar;
+  document.getElementById("sideUserName").textContent = isEn ? loggedUser.nameEn : loggedUser.nameAr;
+  document.getElementById("sideUserRole").textContent = isEn ? loggedUser.titleEn : loggedUser.titleAr;
+  document.getElementById("topUserName").textContent = isEn ? loggedUser.nameEn : loggedUser.nameAr;
+  document.getElementById("topUserRole").textContent = isEn ? loggedUser.titleEn : loggedUser.titleAr;
+}
+
+// ============================================================================
+// 5. LOCALIZATION & THEME ENGINES
 // ============================================================================
 
 function toggleLanguage() {
   SAMS.currentLang = (SAMS.currentLang === "ar") ? "en" : "ar";
-  persistState(SAMS);
+  saveAppState(SAMS);
   applyLocalization();
-  renderActiveView();
+  if (loggedUser) {
+    buildRoleNavigation();
+    renderActiveView();
+  }
 }
 
 function applyLocalization() {
   const isEn = SAMS.currentLang === "en";
   const htmlRoot = document.getElementById("rootHtml");
-  
+
   htmlRoot.setAttribute("lang", SAMS.currentLang);
   htmlRoot.setAttribute("dir", isEn ? "ltr" : "rtl");
 
   document.getElementById("langFlag").textContent = isEn ? "🇪🇬" : "🇬🇧";
   document.getElementById("langLabel").textContent = isEn ? "العربية" : "English";
 
-  // Translate all DOM elements with data-i18n
   document.querySelectorAll("[data-i18n]").forEach(el => {
     const key = el.getAttribute("data-i18n");
     if (I18N[SAMS.currentLang][key]) {
@@ -465,20 +737,17 @@ function applyLocalization() {
     }
   });
 
-  // Translate placeholders
   document.querySelectorAll("[data-i18n-placeholder]").forEach(el => {
     const key = el.getAttribute("data-i18n-placeholder");
     if (I18N[SAMS.currentLang][key]) {
       el.setAttribute("placeholder", I18N[SAMS.currentLang][key]);
     }
   });
-
-  updateUserBadgeUI();
 }
 
 function toggleTheme() {
   SAMS.currentTheme = (SAMS.currentTheme === "light") ? "dark" : "light";
-  persistState(SAMS);
+  saveAppState(SAMS);
   applyTheme();
 }
 
@@ -492,52 +761,12 @@ function applyTheme() {
 }
 
 // ============================================================================
-// 4. USER ROLE & SESSION MANAGEMENT (Process 1.0)
-// ============================================================================
-
-function switchUserAccount(key) {
-  const found = SAMS.users.find(u => u.key === key);
-  if (found) {
-    currentUser = found;
-    updateUserBadgeUI();
-    closeModal("switchUserModal");
-    logAuditEvent(`تبديل جلسة الدخول للمستخدم: ${found.nameAr}`, `Switched session to: ${found.nameEn}`, "SUCCESS");
-    renderActiveView();
-  }
-}
-
-function updateUserBadgeUI() {
-  const isEn = SAMS.currentLang === "en";
-  document.getElementById("sideUserAvatar").textContent = currentUser.avatar;
-  document.getElementById("sideUserName").textContent = isEn ? currentUser.nameEn : currentUser.nameAr;
-  document.getElementById("sideUserRole").textContent = isEn ? currentUser.titleEn : currentUser.titleAr;
-
-  document.getElementById("topUserIcon").textContent = currentUser.avatar;
-  document.getElementById("topUserName").textContent = isEn ? currentUser.nameEn : currentUser.nameAr;
-}
-
-function logAuditEvent(actionAr, actionEn, status = "SUCCESS") {
-  const newLog = {
-    id: 1000 + SAMS.auditLog.length + 1,
-    timestamp: new Date().toISOString().replace("T", " ").substring(0, 19),
-    user: currentUser.username,
-    role: currentUser.role,
-    actionAr,
-    actionEn,
-    ip: "192.168.10." + Math.floor(10 + Math.random() * 80),
-    status
-  };
-  SAMS.auditLog.unshift(newLog);
-  persistState(SAMS);
-}
-
-// ============================================================================
-// 5. VIEW NAVIGATION & ROUTER
+// 6. ROUTER & DYNAMIC VIEW ENGINE
 // ============================================================================
 
 function switchView(viewName) {
   SAMS.currentView = viewName;
-  persistState(SAMS);
+  saveAppState(SAMS);
 
   document.querySelectorAll("#sidebarMenu .nav-link").forEach(link => {
     link.classList.remove("active");
@@ -553,31 +782,726 @@ function switchView(viewName) {
 
 function renderActiveView() {
   const viewEl = document.getElementById("contentView");
-  if (!viewEl) return;
+  if (!viewEl || !loggedUser) return;
+
+  const role = loggedUser.role;
 
   switch (SAMS.currentView) {
-    case "dashboard": renderDashboardView(viewEl); break;
+    case "dashboard":
+      if (role === "student") renderStudentDashboard(viewEl);
+      else if (role === "doctor") renderDoctorDashboard(viewEl);
+      else renderDashboardView(viewEl);
+      break;
+
+    // Student Views
+    case "my_grades": renderStudentGrades(viewEl); break;
+    case "my_attendance": renderStudentAttendance(viewEl); break;
+    case "quiz": renderInteractiveQuiz(viewEl); break;
+    case "gpa_calc": renderGpaForecaster(viewEl); break;
+    case "my_courses": renderStudentCourses(viewEl); break;
+    case "my_fees": renderStudentFees(viewEl); break;
+    case "my_cert": renderStudentCertificateRequest(viewEl); break;
+
+    // Doctor Views
+    case "warnings_radar": renderDoctorWarningRadar(viewEl); break;
+
+    // Shared / Admin Views
     case "students": renderStudentsView(viewEl); break;
-    case "courses": renderCoursesView(viewEl); break;
-    case "schedule": renderScheduleView(viewEl); break;
-    case "attendance": renderAttendanceView(viewEl); break;
     case "grades": renderGradesView(viewEl); break;
+    case "attendance": renderAttendanceView(viewEl); break;
     case "fees": renderFeesView(viewEl); break;
     case "documents": renderDocumentsView(viewEl); break;
+    case "verify_doc": renderVerifyDocumentView(viewEl); break;
+    case "schedule": renderScheduleView(viewEl); break;
     case "id_card": renderIdCardView(viewEl); break;
     case "reports": renderReportsView(viewEl); break;
     case "architecture": renderArchitectureView(viewEl); break;
     case "oop": renderOOPView(viewEl); break;
     case "audit": renderAuditLogView(viewEl); break;
-    default: renderDashboardView(viewEl);
+    default:
+      if (role === "student") renderStudentDashboard(viewEl);
+      else if (role === "doctor") renderDoctorDashboard(viewEl);
+      else renderDashboardView(viewEl);
   }
 }
 
 // ============================================================================
-// 6. VIEW IMPLEMENTATIONS (Process 1.0 - 8.0)
+// 7. SPECIFIC VIEW IMPLEMENTATIONS
 // ============================================================================
 
-// 6.1 Dashboard View
+// 7.1 Student Dedicated Dashboard
+function renderStudentDashboard(container) {
+  const isEn = SAMS.currentLang === "en";
+  const std = SAMS.students.find(s => s.student_id === loggedUser.studentId) || SAMS.students[0];
+  const fee = SAMS.fees.find(f => f.student_id === std.student_id);
+  const myAtt = SAMS.attendance.filter(a => a.student_id === std.student_id);
+
+  const avgAtt = myAtt.length ? (myAtt.reduce((s, a) => s + a.pct, 0) / myAtt.length).toFixed(1) : 100;
+  const isHonors = std.gpa >= 3.7;
+  const isProbation = std.gpa < 2.0;
+
+  container.innerHTML = `
+    <div class="view-header">
+      <div class="view-headline">
+        <h1>${isEn ? "Welcome, " : "أهلاً بك يا، "} ${isEn ? std.full_name_en : std.full_name_ar} 🎓</h1>
+        <p>${isEn ? "Academic Level 3 &bull; Department of Management Information Systems (MIS)" : "الفرقة الثالثة &bull; قسم نظم المعلومات الإدارية &bull; مجموعة 3"}</p>
+      </div>
+      <div class="view-actions">
+        <button class="btn btn-primary" onclick="switchView('quiz')">
+          📝 ${isEn ? "Take MIS301 Quiz" : "اختبار فهم واستيعاب مقرر النظم"}
+        </button>
+      </div>
+    </div>
+
+    ${isProbation ? `
+      <div class="card-panel" style="border-inline-start: 4px solid #ef4444; background: rgba(239, 68, 68, 0.05);">
+        <div class="card-body-content" style="display: flex; align-items: center; gap: 14px;">
+          <div style="font-size: 2rem;">⚠️</div>
+          <div>
+            <strong style="color: #ef4444; font-size: 1.05rem;">${isEn ? "Academic Probation & Absence Warning Notice" : "تنبيه أكاديمي عاجل: إنذار أكاديمي وتجاوز لنسب الغياب"}</strong>
+            <p style="font-size: 0.85rem; color: var(--text-muted); margin-top: 4px;">
+              ${isEn 
+                ? "Your GPA is below 2.00 or absence in CS302 exceeded 30%. You must consult your academic advisor immediately." 
+                : "معدلك التراكمي أقل من 2.00 ونسبة غيابك في مقرر قواعد البيانات تجاوزت 30%. يرجى مراجعة المرشد الأكاديمي وشئون الطلاب فوراً."}
+            </p>
+          </div>
+        </div>
+      </div>
+    ` : `
+      <div class="card-panel" style="border-inline-start: 4px solid #10b981; background: rgba(16, 185, 129, 0.05);">
+        <div class="card-body-content" style="display: flex; align-items: center; gap: 14px;">
+          <div style="font-size: 2rem;">🏆</div>
+          <div>
+            <strong style="color: #10b981; font-size: 1.05rem;">${isEn ? "High Academic Standing (First Class Honors)" : "الموقف الأكاديمي: ممتاز مع مرتبة الشرف (الأولى على الدفعة)"}</strong>
+            <p style="font-size: 0.85rem; color: var(--text-muted); margin-top: 4px;">
+              ${isEn ? "Congratulations! Your Cumulative GPA is 3.92 / 4.00. You are eligible for institute honors and graduate assistantship nomination." : "تهانينا! معدلك التراكمي 3.92 من 4.00 وأنتِ مؤهلة للحصول على شهادات التقدير وجوائز التميز الأكاديمي بالمعهد."}
+            </p>
+          </div>
+        </div>
+      </div>
+    `}
+
+    <div class="metric-row">
+      <div class="stat-box blue">
+        <div class="stat-head">
+          <span class="stat-label">${isEn ? "Cumulative GPA" : "المعدل التراكمي (GPA)"}</span>
+          <div class="stat-icon-wrapper">🎯</div>
+        </div>
+        <div class="stat-value">${std.gpa.toFixed(2)} <small style="font-size: 1rem;">/ 4.00</small></div>
+        <div class="stat-subtext">
+          <span class="trend-pill ${isHonors ? 'up' : 'down'}">${isHonors ? 'A+ Honors' : (isProbation ? 'Probation' : 'Good')}</span>
+          <span>${isEn ? "Scale: 4.00 Points" : "سلم الـ GPA المعتمد"}</span>
+        </div>
+      </div>
+
+      <div class="stat-box emerald">
+        <div class="stat-head">
+          <span class="stat-label">${isEn ? "Completed Credit Hours" : "الساعات المكتسبة"}</span>
+          <div class="stat-icon-wrapper">📚</div>
+        </div>
+        <div class="stat-value">${std.total_credits} <small style="font-size: 1rem;">${isEn ? "Hrs" : "ساعة"}</small></div>
+        <div class="stat-subtext">
+          <span>${isEn ? "Degree Progress: 58% of 132 Hrs" : "أنجزت 58% من متطلبات التخرج (132 ساعة)"}</span>
+        </div>
+      </div>
+
+      <div class="stat-box purple">
+        <div class="stat-head">
+          <span class="stat-label">${isEn ? "Average Attendance" : "متوسط نسبة الحضور"}</span>
+          <div class="stat-icon-wrapper">📋</div>
+        </div>
+        <div class="stat-value">${avgAtt}%</div>
+        <div class="stat-subtext">
+          <span class="trend-pill ${avgAtt >= 75 ? 'up' : 'down'}">${avgAtt >= 75 ? (isEn ? 'Safe Zone' : 'آمن') : (isEn ? 'Warning' : 'إنذار')}</span>
+          <span>${isEn ? "Min required: 75%" : "الحد الأدنى المطلوب: 75%"}</span>
+        </div>
+      </div>
+
+      <div class="stat-box amber">
+        <div class="stat-head">
+          <span class="stat-label">${isEn ? "Tuition Dues" : "المصروفات والمتبقي"}</span>
+          <div class="stat-icon-wrapper">💳</div>
+        </div>
+        <div class="stat-value">${fee ? fee.remaining.toLocaleString() : 0} <small style="font-size: 0.9rem;">EGP</small></div>
+        <div class="stat-subtext">
+          <span class="trend-pill ${fee && fee.remaining === 0 ? 'up' : 'down'}">${fee ? fee.statusAr : 'مسدد'}</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="card-panel">
+      <div class="card-header-bar">
+        <h3 class="card-header-title">⚡ ${isEn ? "Student Self-Service Portal" : "خدمات الطالب الذاتية"}</h3>
+      </div>
+      <div class="card-body-content" style="display: flex; flex-wrap: wrap; gap: 12px;">
+        <button class="btn btn-secondary" onclick="switchView('my_grades')">📊 ${isEn ? "Official Transcript" : "بيان الدرجات التراكمي"}</button>
+        <button class="btn btn-secondary" onclick="switchView('my_attendance')">📋 ${isEn ? "Attendance Record" : "سجل الحضور والمحاضرات"}</button>
+        <button class="btn btn-secondary" onclick="switchView('gpa_calc')">🧮 ${isEn ? "GPA Simulator" : "حاسبة المعدل والتخرج"}</button>
+        <button class="btn btn-secondary" onclick="openCertForStudent('${std.student_id}')">📜 ${isEn ? "Print Enrollment Cert" : "استخراج شهادة القيد"}</button>
+        <button class="btn btn-secondary" onclick="previewSmartIdCard('${std.student_id}')">🪪 ${isEn ? "Smart ID Card" : "كارنيه الطالب الذكي"}</button>
+      </div>
+    </div>
+  `;
+}
+
+// 7.2 Doctor Dedicated Dashboard
+function renderDoctorDashboard(container) {
+  const isEn = SAMS.currentLang === "en";
+  const misGrades = SAMS.grades.filter(g => g.course_code === "MIS301");
+  const enrolledCount = misGrades.length;
+  const warnedStudents = SAMS.attendance.filter(a => a.course_code === "MIS301" && a.pct < 75);
+
+  container.innerHTML = `
+    <div class="view-header">
+      <div class="view-headline">
+        <h1>${isEn ? "Course Professor Portal & Control Sheet" : "بوابة أستاذ المقرر والكنترول - أ.د / فاروق عبد العزيز"}</h1>
+        <p>${isEn ? "Course: MIS301 (Systems Analysis & Design) &bull; 3rd Year MIS Division" : "مقرر: تحليل وتصميم نظم المعلومات (MIS301) &bull; الفرقة الثالثة نظم معلومات"}</p>
+      </div>
+      <div class="view-actions">
+        <button class="btn btn-primary" onclick="openDoctorQrModal()">
+          📲 ${isEn ? "Generate Lecture Attendance PIN" : "توليد كود الحضور للمحاضرة"}
+        </button>
+      </div>
+    </div>
+
+    <div class="metric-row">
+      <div class="stat-box blue">
+        <div class="stat-head">
+          <span class="stat-label">${isEn ? "Enrolled in Course" : "الطلاب المسجلين بالمقرر"}</span>
+          <div class="stat-icon-wrapper">👨‍🎓</div>
+        </div>
+        <div class="stat-value">${enrolledCount}</div>
+        <div class="stat-subtext">
+          <span>${isEn ? "Group 3 - Lecture Hall 4B" : "الفرقة الثالثة - مجموعة 3"}</span>
+        </div>
+      </div>
+
+      <div class="stat-box emerald">
+        <div class="stat-head">
+          <span class="stat-label">${isEn ? "Course Pass Rate" : "نسبة النجاح المتوقعة"}</span>
+          <div class="stat-icon-wrapper">📈</div>
+        </div>
+        <div class="stat-value">83.3%</div>
+        <div class="stat-subtext">
+          <span class="trend-pill up">High</span>
+          <span>${isEn ? "5 Students with Honors" : "5 طلاب بدرجة امتياز"}</span>
+        </div>
+      </div>
+
+      <div class="stat-box rose">
+        <div class="stat-head">
+          <span class="stat-label">${isEn ? "Absence Warnings" : "حالات تجاوز الغياب"}</span>
+          <div class="stat-icon-wrapper">⚠️</div>
+        </div>
+        <div class="stat-value">${warnedStudents.length}</div>
+        <div class="stat-subtext">
+          <span class="trend-pill down">${isEn ? "Intervention Needed" : "يتطلب إنذاراً"}</span>
+        </div>
+      </div>
+
+      <div class="stat-box amber">
+        <div class="stat-head">
+          <span class="stat-label">${isEn ? "Current Lecture PIN" : "رمز المحاضرة النشط"}</span>
+          <div class="stat-icon-wrapper">🔑</div>
+        </div>
+        <div class="stat-value" style="font-family: monospace;">${SAMS.sessionPin}</div>
+        <div class="stat-subtext">
+          <span>${isEn ? "Valid for today's session" : "صالح لمحاضرة اليوم"}</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="card-panel">
+      <div class="card-header-bar">
+        <h3 class="card-header-title">⚡ ${isEn ? "Course Control Quick Actions" : "إجراءات الكنترول السريعة لمقرر MIS301"}</h3>
+      </div>
+      <div class="card-body-content" style="display: flex; flex-wrap: wrap; gap: 12px;">
+        <button class="btn btn-primary" onclick="switchView('grades')">🎯 ${isEn ? "Open Control Grade Sheet" : "شيت الكنترول ورصد الدرجات"}</button>
+        <button class="btn btn-secondary" onclick="openDoctorQrModal()">📲 ${isEn ? "Live QR Code for Attendance" : "شاشة الـ QR الذكية للحضور"}</button>
+        <button class="btn btn-secondary" onclick="applyBonusCurve()">✨ ${isEn ? "Apply Control Curve (+2 Marks)" : "تطبيق بونص الكنترول (+2 درجات)"}</button>
+        <button class="btn btn-secondary" onclick="switchView('warnings_radar')">⚠️ ${isEn ? "Early Warning Radar" : "رادار الطلاب المعرضين للحرمان"}</button>
+        <button class="btn btn-secondary" onclick="window.print()">🖨️ ${isEn ? "Export Official Grade Sheet" : "تصدير وطباعة شيت الكنترول"}</button>
+      </div>
+    </div>
+  `;
+}
+
+// 7.3 Diagnostic Quiz
+function renderInteractiveQuiz(container) {
+  const isEn = SAMS.currentLang === "en";
+
+  container.innerHTML = `
+    <div class="view-header">
+      <div class="view-headline">
+        <h1>📝 ${isEn ? "MIS301 Systems Analysis Comprehension Quiz" : "اختبار الفهم والاستيعاب التفاعلي - تحليل وتصميم النظم (MIS301)"}</h1>
+        <p>${isEn ? "Interactive assessment supervised by Prof. Dr. Farouk Abdel Aziz. High score adds +5 marks to Classwork!" : "اختبار تفاعلي لقياس استيعاب مفاهيم DFD و ERD ودورة حياة النظم. الدرجة المرتفعة تضاف تلقائياً لأعمال السنة!"}</p>
+      </div>
+      <div class="view-actions">
+        <span class="status-pill info">5 ${isEn ? "Questions" : "أسئلة"}</span>
+      </div>
+    </div>
+
+    <form onsubmit="handleQuizSubmit(event)" id="quizForm">
+      ${SAMS.quizQuestions.map((q, qIndex) => `
+        <div class="quiz-card" id="quizCard_${q.id}">
+          <div class="quiz-question-num">${isEn ? "Question " + (qIndex + 1) + " of 5" : "السؤال " + (qIndex + 1) + " من 5"}</div>
+          <div class="quiz-question-text">${isEn ? q.qEn : q.qAr}</div>
+          <div class="quiz-options-list">
+            ${(isEn ? q.optionsEn : q.optionsAr).map((opt, oIndex) => `
+              <label class="quiz-option" id="optLabel_${q.id}_${oIndex}">
+                <input type="radio" name="q_${q.id}" value="${oIndex}" required style="accent-color: var(--primary-600);">
+                <span>${opt}</span>
+              </label>
+            `).join('')}
+          </div>
+          <div class="quiz-explanation" id="quizExp_${q.id}" style="display: none;"></div>
+        </div>
+      `).join('')}
+
+      <div style="display: flex; justify-content: flex-end; gap: 12px; margin-top: 20px;">
+        <button type="submit" class="btn btn-primary" id="btnSubmitQuiz" style="padding: 12px 28px; font-size: 1rem;">
+          🚀 ${isEn ? "Submit & Check Answers" : "تسليم الاختبار وتصحيح الإجابات فـوراً"}
+        </button>
+      </div>
+    </form>
+  `;
+}
+
+function handleQuizSubmit(e) {
+  e.preventDefault();
+  const isEn = SAMS.currentLang === "en";
+  let score = 0;
+
+  SAMS.quizQuestions.forEach(q => {
+    const selected = document.querySelector(`input[name="q_${q.id}"]:checked`);
+    const expBox = document.getElementById(`quizExp_${q.id}`);
+
+    if (selected) {
+      const chosenVal = parseInt(selected.value);
+      const chosenLabel = document.getElementById(`optLabel_${q.id}_${chosenVal}`);
+      const correctLabel = document.getElementById(`optLabel_${q.id}_${q.correct}`);
+
+      if (chosenVal === q.correct) {
+        score += 2;
+        if (chosenLabel) chosenLabel.classList.add("correct");
+      } else {
+        if (chosenLabel) chosenLabel.classList.add("wrong");
+        if (correctLabel) correctLabel.classList.add("correct");
+      }
+
+      if (expBox) {
+        expBox.style.display = "block";
+        expBox.innerHTML = `<strong>${isEn ? "Explanation: " : "الشرح والتوضيح العلمي: "}</strong> ${isEn ? q.explanationEn : q.explanationAr}`;
+      }
+    }
+  });
+
+  const btn = document.getElementById("btnSubmitQuiz");
+  if (btn) {
+    btn.disabled = true;
+    btn.textContent = isEn ? `Score: ${score} / 10 Points` : `النتيجة النهائية: ${score} من 10 درجات`;
+  }
+
+  logAuditEvent(`تسليم اختبار فهم مقرر MIS301 والحصول على ${score}/10`, `Submitted MIS301 Quiz score: ${score}/10`, "SUCCESS");
+
+  alert(isEn 
+    ? `Quiz Completed!
+Your Score: ${score} / 10
+Excellent work! Your grade has been registered into classwork.` 
+    : `تم تصحيح الاختبار بنجاح!
+درجتك: ${score} من 10 درجات.
+تم تسجيل النتيجة وتثبيتها بنجاح.`);
+}
+
+// 7.4 GPA Simulator
+function renderGpaForecaster(container) {
+  const isEn = SAMS.currentLang === "en";
+  const std = (loggedUser && loggedUser.role === "student") 
+    ? (SAMS.students.find(s => s.student_id === loggedUser.studentId) || SAMS.students[0]) 
+    : SAMS.students[0];
+
+  container.innerHTML = `
+    <div class="view-header">
+      <div class="view-headline">
+        <h1>🧮 ${isEn ? "Smart GPA Simulator & Graduation Forecaster" : "حاسبة المعدل والتخرج الذكية (What-If GPA Simulator)"}</h1>
+        <p>${isEn ? "Simulate your grades in the remaining semester courses to forecast your graduation GPA" : "توقع درجاتك في مقررات الفصل الدراسي لمعرفة المعدل التراكمي المستهدف عند التخرج"}</p>
+      </div>
+    </div>
+
+    <div class="card-panel">
+      <div class="card-header-bar">
+        <h3 class="card-header-title">🎯 ${isEn ? "Interactive Course Grade Simulator" : "محاكي التقديرات للمقررات الخمسة الحالية"}</h3>
+        <span class="status-pill success">${isEn ? "Current GPA: " : "المعدل الحالي: "} ${std.gpa.toFixed(2)}</span>
+      </div>
+      <div class="card-body-content">
+        <div style="display: flex; flex-direction: column; gap: 18px;">
+          ${SAMS.courses.slice(0, 5).map((c, i) => `
+            <div style="background: var(--bg-subtle); padding: 14px; border-radius: var(--radius-md); display: flex; align-items: center; justify-content: space-between; gap: 16px; flex-wrap: wrap;">
+              <div>
+                <strong>${c.code} - ${isEn ? c.nameEn : c.nameAr}</strong>
+                <div style="font-size: 0.75rem; color: var(--text-muted);">${c.credits} ${isEn ? "Credit Hours" : "ساعات معتمدة"}</div>
+              </div>
+              <div style="display: flex; align-items: center; gap: 12px;">
+                <label style="font-size: 0.85rem; font-weight: bold;">${isEn ? "Target Grade:" : "التقدير المتوقع:"}</label>
+                <select class="form-control sim-grade-select" onchange="recalculateSimulatedGpa(${std.gpa})" style="min-width: 140px;">
+                  <option value="4.0" ${i < 3 ? 'selected' : ''}>A+ (امتياز مرتفع 4.0)</option>
+                  <option value="3.7" ${i === 3 ? 'selected' : ''}>A (امتياز 3.7)</option>
+                  <option value="3.3">B+ (جيد جداً مرتفع 3.3)</option>
+                  <option value="3.0">B (جيد جداً 3.0)</option>
+                  <option value="2.7">C+ (جيد مرتفع 2.7)</option>
+                  <option value="2.4">C (جيد 2.4)</option>
+                  <option value="2.0">D (مقبول 2.0)</option>
+                </select>
+              </div>
+            </div>
+          `).join('')}
+        </div>
+
+        <div style="background: linear-gradient(135deg, rgba(37, 99, 235, 0.1), rgba(16, 185, 129, 0.1)); border: 2px dashed var(--primary-500); border-radius: var(--radius-lg); padding: 24px; margin-top: 24px; text-align: center;">
+          <small style="color: var(--text-muted); font-size: 0.85rem; text-transform: uppercase; font-weight: bold;">${isEn ? "Forecasted Cumulative GPA" : "المعدل التراكمي المتوقع بعد هذا الفصل"}</small>
+          <div id="simulatedGpaDisplay" style="font-size: 3rem; font-weight: 900; color: var(--primary-700); margin: 6px 0;">3.89</div>
+          <span class="status-pill success" id="simulatedStandingPill" style="font-size: 0.9rem; padding: 6px 16px;">
+            ${isEn ? "First Class Honors (A+)" : "امتياز مع مرتبة الشرف الأولى"}
+          </span>
+        </div>
+      </div>
+    </div>
+  `;
+}
+
+function recalculateSimulatedGpa(baseGpa) {
+  const isEn = SAMS.currentLang === "en";
+  const selects = document.querySelectorAll(".sim-grade-select");
+  let totalPts = 0;
+  selects.forEach(s => {
+    totalPts += parseFloat(s.value);
+  });
+  const avg = totalPts / (selects.length || 1);
+  const forecasted = ((baseGpa * 0.7) + (avg * 0.3)).toFixed(2);
+
+  const disp = document.getElementById("simulatedGpaDisplay");
+  const pill = document.getElementById("simulatedStandingPill");
+
+  if (disp) disp.textContent = forecasted;
+  if (pill) {
+    if (forecasted >= 3.7) {
+      pill.textContent = isEn ? "First Class Honors (A+)" : "امتياز مع مرتبة الشرف الأولى";
+      pill.className = "status-pill success";
+    } else if (forecasted >= 3.0) {
+      pill.textContent = isEn ? "Very Good Standing (B+)" : "تقدير جيد جداً مرتفع";
+      pill.className = "status-pill info";
+    } else {
+      pill.textContent = isEn ? "Good Standing" : "تقدير جيد";
+      pill.className = "status-pill warning";
+    }
+  }
+}
+
+// 7.5 Doctor Early Warning Radar
+function renderDoctorWarningRadar(container) {
+  const isEn = SAMS.currentLang === "en";
+  const barred = SAMS.attendance.filter(a => a.pct < 70);
+
+  container.innerHTML = `
+    <div class="view-header">
+      <div class="view-headline">
+        <h1>⚠️ ${isEn ? "Academic Early Warning Radar (Intervention)" : "رادار الإنذار الأكاديمي المبكر والطلاب المعرضين للحرمان"}</h1>
+        <p>${isEn ? "Identifies students who breached absence thresholds (25% or 30%) or are failing course requirements" : "حصر إلكتروني مباشر للطلاب المتجاوزين لنسب الغياب المقررة (25% و 30%) لاتخاذ الإجراءات اللائحية"}</p>
+      </div>
+    </div>
+
+    <div class="card-panel" style="border-inline-start: 4px solid #ef4444;">
+      <div class="card-header-bar">
+        <h3 class="card-header-title" style="color: #ef4444;">🚨 ${isEn ? "Barred Students (Deprived from Final Exam)" : "كشف الطلاب المحرومين رسمياً من الامتحان النهائي (غياب > 30%)"}</h3>
+        <span class="status-pill danger">${barred.length} ${isEn ? "Students" : "طلاب"}</span>
+      </div>
+      <div class="table-container">
+        <table class="data-grid-table">
+          <thead>
+            <tr>
+              <th>${isEn ? "Student ID" : "كود الطالب"}</th>
+              <th>${isEn ? "Student Name" : "اسم الطالب"}</th>
+              <th>${isEn ? "Course" : "المقرر"}</th>
+              <th>${isEn ? "Absences" : "مرات الغياب"}</th>
+              <th>${isEn ? "Absence Rate" : "نسبة الغياب"}</th>
+              <th>${isEn ? "Official Decision" : "القرار اللائحي"}</th>
+              <th>${isEn ? "Actions" : "إجراء"}</th>
+            </tr>
+          </thead>
+          <tbody>
+            ${barred.map(b => {
+              const std = SAMS.students.find(s => s.student_id === b.student_id);
+              return `
+                <tr>
+                  <td><strong>${b.student_id}</strong></td>
+                  <td>${std ? (isEn ? std.full_name_en : std.full_name_ar) : '--'}</td>
+                  <td><code>${b.course_code}</code></td>
+                  <td><strong>${b.absent} / ${b.total}</strong></td>
+                  <td><strong style="color: #ef4444;">${(100 - b.pct).toFixed(1)}%</strong></td>
+                  <td><span class="status-pill danger">${isEn ? "Barred from Exam" : "حرمان نهائي من الامتحان"}</span></td>
+                  <td>
+                    <button class="btn btn-secondary btn-sm" onclick="alert(isEn ? 'Official Barring Notice printed & sent to Dean office.' : 'تم تصدير إخطار الحرمان الرسمي وإرساله لمكتب عميد المعهد.')">
+                      🖨️ ${isEn ? "Print Barring Notice" : "طباعة قرار الحرمان"}
+                    </button>
+                  </td>
+                </tr>
+              `;
+            }).join('')}
+          </tbody>
+        </table>
+      </div>
+    </div>
+  `;
+}
+
+// 7.6 Public Document Electronic Verification
+function renderVerifyDocumentView(container) {
+  const isEn = SAMS.currentLang === "en";
+
+  container.innerHTML = `
+    <div class="view-header">
+      <div class="view-headline">
+        <h1>🛡️ ${isEn ? "Electronic Document Authenticity Verification" : "بوابة التحقق الإلكتروني من صحة الوثائق والشهادات الرسمية"}</h1>
+        <p>${isEn ? "Public verification engine for embassies, employers & government entities to validate QR/Codes" : "منظومة إلكترونية عامة للجهات الحكومية والسفارات للتحقق الفوري من صحة شهادات القيد والبيانات الرسمية"}</p>
+      </div>
+    </div>
+
+    <div class="card-panel" style="max-width: 650px; margin: 0 auto;">
+      <div class="card-body-content">
+        <label style="font-weight: bold; display: block; margin-bottom: 8px;">${isEn ? "Enter Document Tracking Code (e.g. SAMS-2026-0889):" : "أدخل كود التوثيق المشفر المطبوع على الشهادة (مثال: SAMS-2026-0889):"}</label>
+        <div style="display: flex; gap: 8px;">
+          <input type="text" id="verifyCodeInput" class="form-control" placeholder="SAMS-2026-0889" value="SAMS-2026-0889">
+          <button type="button" class="btn btn-primary" onclick="verifyDocumentCode()">${isEn ? "Verify Now" : "تحقق الآن 🔍"}</button>
+        </div>
+        <div id="verifyResultBox" style="margin-top: 20px;"></div>
+      </div>
+    </div>
+  `;
+}
+
+function verifyDocumentCode() {
+  const isEn = SAMS.currentLang === "en";
+  const code = document.getElementById("verifyCodeInput").value.trim();
+  const box = document.getElementById("verifyResultBox");
+  const doc = SAMS.documents.find(d => d.code.toLowerCase() === code.toLowerCase());
+
+  if (doc) {
+    const std = SAMS.students.find(s => s.student_id === doc.student_id);
+    box.innerHTML = `
+      <div style="background: #ecfdf5; border: 2px solid #10b981; border-radius: var(--radius-md); padding: 20px; color: #065f46;">
+        <div style="display: flex; align-items: center; gap: 10px; margin-bottom: 10px;">
+          <span style="font-size: 1.8rem;">✅</span>
+          <strong style="font-size: 1.15rem;">${isEn ? "OFFICIAL AUTHENTIC DOCUMENT VERIFIED" : "وثيقة رسمية معتمدة وصحيحة ومسجلة بسجلات المعهد"}</strong>
+        </div>
+        <p><strong>${isEn ? "Document Type:" : "نوع الوثيقة:"}</strong> ${isEn ? doc.typeEn : doc.typeAr}</p>
+        <p><strong>${isEn ? "Student Name:" : "اسم الطالب/ة:"}</strong> ${std ? (isEn ? std.full_name_en : std.full_name_ar) : '--'} (كود: ${doc.student_id})</p>
+        <p><strong>${isEn ? "Issuance Date:" : "تاريخ الصدور:"}</strong> ${doc.date}</p>
+        <p><strong>${isEn ? "Addressed To:" : "الجهة الموجه إليها:"}</strong> ${isEn ? doc.purposeEn : doc.purposeAr}</p>
+        <p><strong>${isEn ? "Verification Status:" : "حالة الاعتماد:"}</strong> <span class="status-pill success">${isEn ? "Active & Authenticated" : "معتمدة ومختومة رسمياً"}</span></p>
+      </div>
+    `;
+  } else {
+    box.innerHTML = `
+      <div style="background: #fef2f2; border: 2px solid #ef4444; border-radius: var(--radius-md); padding: 20px; color: #991b1b;">
+        <div style="display: flex; align-items: center; gap: 10px;">
+          <span style="font-size: 1.8rem;">❌</span>
+          <strong style="font-size: 1.1rem;">${isEn ? "INVALID OR UNREGISTERED DOCUMENT CODE" : "كود غير صالح أو غير مسجل بقاعدة بيانات المعهد!"}</strong>
+        </div>
+        <p style="font-size: 0.85rem; margin-top: 6px;">${isEn ? "Please ensure the code is typed correctly without spaces." : "يرجى التأكد من كتابة الكود بدقة كما هو مدون أسفل الشهادة."}</p>
+      </div>
+    `;
+  }
+}
+
+// 7.7 Student Dedicated Views
+function renderStudentGrades(container) {
+  const isEn = SAMS.currentLang === "en";
+  const std = (loggedUser && loggedUser.role === "student") 
+    ? (SAMS.students.find(s => s.student_id === loggedUser.studentId) || SAMS.students[0]) 
+    : SAMS.students[0];
+  const myGrades = SAMS.grades.filter(g => g.student_id === std.student_id);
+
+  container.innerHTML = `
+    <div class="view-header">
+      <div class="view-headline">
+        <h1>📊 ${isEn ? "Official Academic Transcript & Control Sheet" : "سجل الدرجات وبيان التقديرات المعتمد (Transcript)"}</h1>
+        <p>${isEn ? "Student: " : "الطالب/ة: "} <strong>${isEn ? std.full_name_en : std.full_name_ar}</strong> &bull; GPA: <strong>${std.gpa.toFixed(2)}</strong></p>
+      </div>
+      <div class="view-actions">
+        <button class="btn btn-secondary" onclick="window.print()">🖨️ ${isEn ? "Print Transcript" : "طباعة بيان الدرجات"}</button>
+      </div>
+    </div>
+
+    <div class="card-panel">
+      <div class="table-container">
+        <table class="data-grid-table">
+          <thead>
+            <tr>
+              <th>${isEn ? "Course Code" : "كود المقرر"}</th>
+              <th>${isEn ? "Course Title" : "اسم المقرر الدراسي"}</th>
+              <th>${isEn ? "Classwork (20)" : "أعمال السنة (20)"}</th>
+              <th>${isEn ? "Midterm (20)" : "الميدتيرم (20)"}</th>
+              <th>${isEn ? "Final (60)" : "النهائي (60)"}</th>
+              <th>${isEn ? "Total (100)" : "المجموع (100)"}</th>
+              <th>${isEn ? "Letter Grade" : "التقدير الحرفي"}</th>
+              <th>${isEn ? "Points" : "النقاط"}</th>
+            </tr>
+          </thead>
+          <tbody>
+            ${myGrades.map(g => {
+              const c = SAMS.courses.find(crs => crs.code === g.course_code);
+              return `
+                <tr>
+                  <td><strong>${g.course_code}</strong></td>
+                  <td><strong>${c ? (isEn ? c.nameEn : c.nameAr) : g.course_code}</strong></td>
+                  <td>${g.cw.toFixed(1)}</td>
+                  <td>${g.mt.toFixed(1)}</td>
+                  <td>${g.fn.toFixed(1)}</td>
+                  <td><strong style="font-size: 1.1rem; color: var(--primary-700);">${g.total.toFixed(1)}</strong></td>
+                  <td><span class="grade-badge ${g.letter === 'A+' ? 'a-plus' : (g.letter === 'A' ? 'a' : 'b')}">${g.letter}</span></td>
+                  <td><strong>${g.points.toFixed(2)}</strong></td>
+                </tr>
+              `;
+            }).join('')}
+          </tbody>
+        </table>
+      </div>
+    </div>
+  `;
+}
+
+function renderStudentAttendance(container) {
+  const isEn = SAMS.currentLang === "en";
+  const std = (loggedUser && loggedUser.role === "student") 
+    ? (SAMS.students.find(s => s.student_id === loggedUser.studentId) || SAMS.students[0]) 
+    : SAMS.students[0];
+  const myAtt = SAMS.attendance.filter(a => a.student_id === std.student_id);
+
+  container.innerHTML = `
+    <div class="view-header">
+      <div class="view-headline">
+        <h1>📋 ${isEn ? "My Lecture Attendance & Warning Indicators" : "سجل الحضور والغياب ونسب الإنذار"}</h1>
+        <p>${isEn ? "Institute Policy: Absence > 25% triggers Warning 1. Absence > 30% results in Barring from Final Exam." : "لائحة المعهد: غياب أكثر من 25% يولد إنذار أول، وأكثر من 30% يوجب الحرمان من الامتحان النهائي."}</p>
+      </div>
+    </div>
+
+    <div class="card-panel">
+      <div class="table-container">
+        <table class="data-grid-table">
+          <thead>
+            <tr>
+              <th>${isEn ? "Course Code" : "كود المقرر"}</th>
+              <th>${isEn ? "Course Title" : "اسم المقرر"}</th>
+              <th>${isEn ? "Total Lectures" : "إجمالي المحاضرات"}</th>
+              <th>${isEn ? "Attended" : "حضور"}</th>
+              <th>${isEn ? "Absences" : "غياب"}</th>
+              <th>${isEn ? "Attendance %" : "نسبة الحضور"}</th>
+              <th>${isEn ? "Academic Standing" : "الموقف الأكاديمي"}</th>
+            </tr>
+          </thead>
+          <tbody>
+            ${myAtt.map(a => {
+              const c = SAMS.courses.find(crs => crs.code === a.course_code);
+              let pill = "success";
+              if (a.pct < 70) pill = "danger";
+              else if (a.pct < 75) pill = "warning";
+
+              return `
+                <tr>
+                  <td><strong>${a.course_code}</strong></td>
+                  <td>${c ? (isEn ? c.nameEn : c.nameAr) : a.course_code}</td>
+                  <td>${a.total}</td>
+                  <td><strong style="color: #10b981;">${a.attended}</strong></td>
+                  <td><strong style="color: #ef4444;">${a.absent}</strong></td>
+                  <td>
+                    <strong>${a.pct.toFixed(1)}%</strong>
+                    <div style="background: var(--bg-subtle); border-radius: var(--radius-full); height: 8px; width: 120px; margin-top: 4px; overflow: hidden;">
+                      <div style="width: ${a.pct}%; background: ${a.pct < 70 ? '#ef4444' : (a.pct < 75 ? '#f59e0b' : '#10b981')}; height: 100%;"></div>
+                    </div>
+                  </td>
+                  <td><span class="status-pill ${pill}">${isEn ? a.statusEn : a.statusAr}</span></td>
+                </tr>
+              `;
+            }).join('')}
+          </tbody>
+        </table>
+      </div>
+    </div>
+  `;
+}
+
+function renderStudentCourses(container) {
+  renderCoursesView(container);
+}
+
+function renderStudentFees(container) {
+  const isEn = SAMS.currentLang === "en";
+  const std = (loggedUser && loggedUser.role === "student") 
+    ? (SAMS.students.find(s => s.student_id === loggedUser.studentId) || SAMS.students[0]) 
+    : SAMS.students[0];
+  const fee = SAMS.fees.find(f => f.student_id === std.student_id);
+
+  container.innerHTML = `
+    <div class="view-header">
+      <div class="view-headline">
+        <h1>💳 ${isEn ? "Tuition Invoices & Online Payment" : "الموقف المالي للمصروفات والسداد الإلكتروني"}</h1>
+        <p>${isEn ? "Academic Year 2026/2027 &bull; Second Semester" : "العام الجامعي 2026/2027 &bull; الفصل الدراسي الثاني"}</p>
+      </div>
+    </div>
+
+    <div class="card-panel">
+      <div class="card-header-bar">
+        <h3 class="card-header-title">💰 ${isEn ? "Tuition Statement" : "مطالبة المصروفات الدراسية"}</h3>
+        <span class="status-pill ${fee && fee.remaining === 0 ? 'success' : 'danger'}">
+          ${fee ? (isEn ? fee.statusEn : fee.statusAr) : 'مسدد'}
+        </span>
+      </div>
+      <div class="card-body-content">
+        <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 16px; margin-bottom: 24px;">
+          <div><small style="color: var(--text-muted);">${isEn ? "Total Tuition:" : "إجمالي المصروفات:"}</small><div style="font-size: 1.4rem; font-weight: 800;">${fee ? fee.total.toLocaleString() : 8500} EGP</div></div>
+          <div><small style="color: var(--text-muted);">${isEn ? "Amount Settled:" : "المبلغ المسدد:"}</small><div style="font-size: 1.4rem; font-weight: 800; color: #10b981;">${fee ? fee.paid.toLocaleString() : 8500} EGP</div></div>
+          <div><small style="color: var(--text-muted);">${isEn ? "Outstanding Balance:" : "المتبقي المستحق:"}</small><div style="font-size: 1.4rem; font-weight: 800; color: #ef4444;">${fee ? fee.remaining.toLocaleString() : 0} EGP</div></div>
+        </div>
+
+        ${fee && fee.remaining > 0 ? `
+          <div style="background: var(--bg-subtle); padding: 18px; border-radius: var(--radius-md); border: 1px dashed var(--border-color);">
+            <h4>${isEn ? "Instant Electronic Payment Simulation" : "بوابة السداد الإلكتروني الفوري"}</h4>
+            <p style="font-size: 0.85rem; color: var(--text-muted); margin: 6px 0 14px;">${isEn ? "Pay securely using Debit/Credit Card or Fawry" : "سدد الآن عبر الفيزا أو بطاقات ميزة أو فوري لتفعيل خدمات استخراج الشهادات"}</p>
+            <button class="btn btn-primary" onclick="openPaymentModal(${fee.fee_id})">💳 ${isEn ? "Pay Remaining " + fee.remaining + " EGP Now" : "سداد المتبقي (" + fee.remaining + " ج.م.) فـوراً"}</button>
+          </div>
+        ` : `
+          <div style="background: #ecfdf5; border: 1px solid #10b981; border-radius: var(--radius-md); padding: 16px; color: #065f46; display: flex; align-items: center; justify-content: space-between;">
+            <div>
+              <strong>✓ ${isEn ? "Financial Clearance Granted" : "براءة ذمة مالية معتمدة"}</strong>
+              <p style="font-size: 0.85rem; margin-top: 2px;">${isEn ? "Receipt No: " : "رقم آخر إيصال: "} <code>${fee ? fee.receipt_no : 'REC-2026-00101'}</code></p>
+            </div>
+            <button class="btn btn-secondary btn-sm" onclick="showReceiptModal(${fee ? fee.fee_id : 1})">🧾 ${isEn ? "View Receipt" : "عرض الإيصال"}</button>
+          </div>
+        `}
+      </div>
+    </div>
+  `;
+}
+
+function renderStudentCertificateRequest(container) {
+  const std = (loggedUser && loggedUser.role === "student") 
+    ? (SAMS.students.find(s => s.student_id === loggedUser.studentId) || SAMS.students[0]) 
+    : SAMS.students[0];
+  openCertForStudent(std.student_id);
+}
+
+// 7.8 Doctor Attendance PIN Generator
+function openDoctorQrModal() {
+  openModal("doctorQrModal");
+}
+
+function refreshSessionPin() {
+  SAMS.sessionPin = String(Math.floor(1000 + Math.random() * 9000));
+  saveAppState(SAMS);
+  document.getElementById("sessionPinCode").textContent = SAMS.sessionPin;
+}
+
+// 7.9 Shared Admin / Faculty View Renderers
 function renderDashboardView(container) {
   const isEn = SAMS.currentLang === "en";
   const totalStudents = SAMS.students.length;
@@ -591,22 +1515,13 @@ function renderDashboardView(container) {
         <h1>${isEn ? "Academic Executive Dashboard" : "لوحة مؤشرات الأداء الأكاديمي الشاملة"}</h1>
         <p>${isEn ? "Academic Year 2026/2027 | Supervised by: Prof. Dr. Farouk Abdel Aziz" : "المعهد العالي للحاسبات ونظم المعلومات - العام الجامعي 2026/2027"}</p>
       </div>
-      <div class="view-actions">
-        <button class="btn btn-secondary" onclick="openModal('switchUserModal')">
-          <span>${currentUser.avatar}</span>
-          <span>${isEn ? "Switch Role / Test Access" : "تبديل الصلاحية للتجربة"}</span>
-        </button>
-      </div>
     </div>
 
-    <!-- Stat Metrics Cards -->
     <div class="metric-row">
       <div class="stat-box blue">
         <div class="stat-head">
           <span class="stat-label">${isEn ? "Enrolled Students" : "الطلاب المقيدين"}</span>
-          <div class="stat-icon-wrapper">
-            <svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4.354a4 4 0 110 5.292M15 21H3v-1a6 6 0 0112 0v1zm0 0h6v-1a6 6 0 00-9-5.197M13 7a4 4 0 11-8 0 4 4 0 018 0z"/></svg>
-          </div>
+          <div class="stat-icon-wrapper">👨‍🎓</div>
         </div>
         <div class="stat-value">${totalStudents}</div>
         <div class="stat-subtext">
@@ -618,9 +1533,7 @@ function renderDashboardView(container) {
       <div class="stat-box purple">
         <div class="stat-head">
           <span class="stat-label">${isEn ? "Active Courses" : "المقررات النشطة"}</span>
-          <div class="stat-icon-wrapper">
-            <svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.747 0 3.332.477 4.5 1.253v13C19.832 18.477 18.247 18 16.5 18c-1.746 0-3.332.477-4.5 1.253"/></svg>
-          </div>
+          <div class="stat-icon-wrapper">📚</div>
         </div>
         <div class="stat-value">${totalCourses}</div>
         <div class="stat-subtext">
@@ -631,9 +1544,7 @@ function renderDashboardView(container) {
       <div class="stat-box emerald">
         <div class="stat-head">
           <span class="stat-label">${isEn ? "Treasury Collections" : "المصروفات المحصلة"}</span>
-          <div class="stat-icon-wrapper">
-            <svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8c-1.657 0-3 .895-3 2s1.343 2 3 2 3 .895 3 2-1.343 2-3 2m0-8c1.11 0 2.08.402 2.599 1M12 8V7m0 1v8m0 0v1m0-1c-1.11 0-2.08-.402-2.599-1M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>
-          </div>
+          <div class="stat-icon-wrapper">💰</div>
         </div>
         <div class="stat-value">${totalRevenue.toLocaleString()} <small style="font-size: 0.9rem;">EGP</small></div>
         <div class="stat-subtext">
@@ -645,9 +1556,7 @@ function renderDashboardView(container) {
       <div class="stat-box rose">
         <div class="stat-head">
           <span class="stat-label">${isEn ? "Absence Warnings" : "إنذارات الحرمان"}</span>
-          <div class="stat-icon-wrapper">
-            <svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z"/></svg>
-          </div>
+          <div class="stat-icon-wrapper">⚠️</div>
         </div>
         <div class="stat-value">${totalWarnings}</div>
         <div class="stat-subtext">
@@ -657,89 +1566,6 @@ function renderDashboardView(container) {
       </div>
     </div>
 
-    <!-- Quick Action Bar -->
-    <div class="card-panel">
-      <div class="card-header-bar">
-        <h3 class="card-header-title">
-          <svg style="width: 20px; height: 20px; color: var(--primary-600);" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z"/></svg>
-          <span>${isEn ? "Quick System Operations" : "العمليات والإجراءات السريعة"}</span>
-        </h3>
-      </div>
-      <div class="card-body-content" style="display: flex; flex-wrap: wrap; gap: 12px;">
-        <button class="btn btn-primary" onclick="openModal('addStudentModal')">➕ ${isEn ? "Register New Student (P 2.0)" : "قيد طالب جديد (P 2.0)"}</button>
-        <button class="btn btn-secondary" onclick="switchView('grades')">🎯 ${isEn ? "Open Gradebook & GPA (P 5.0)" : "شيت الكنترول والـ GPA (P 5.0)"}</button>
-        <button class="btn btn-secondary" onclick="switchView('attendance')">📋 ${isEn ? "Attendance & Warnings (P 4.0)" : "تسجيل الغياب والإنذارات (P 4.0)"}</button>
-        <button class="btn btn-secondary" onclick="switchView('fees')">💳 ${isEn ? "Treasury Payments (P 6.0)" : "تحصيل المصروفات (P 6.0)"}</button>
-        <button class="btn btn-secondary" onclick="switchView('id_card')">🪪 ${isEn ? "Generate Smart Student ID" : "كارنيه الطالب الذكي"}</button>
-      </div>
-    </div>
-
-    <!-- Interactive Visual Charts Row (Pure SVG) -->
-    <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(320px, 1fr)); gap: 20px; margin-bottom: 24px;">
-      
-      <!-- GPA Distribution Chart -->
-      <div class="card-panel" style="margin-bottom: 0;">
-        <div class="card-header-bar">
-          <h3 class="card-header-title">📊 ${isEn ? "GPA Bands Distribution" : "توزيع الشرائح التراكمية (GPA)"}</h3>
-          <span class="status-pill success">${isEn ? "83.3% Honors" : "83.3% امتياز"}</span>
-        </div>
-        <div class="card-body-content">
-          <div style="display: flex; flex-direction: column; gap: 14px;">
-            <div>
-              <div style="display: flex; justify-content: space-between; font-size: 0.8rem; margin-bottom: 4px;">
-                <span><strong>A+ / A (3.70 - 4.00)</strong> - ${isEn ? "Excellent With Honors" : "امتياز مع مرتبة الشرف"}</span>
-                <span><strong>5 ${isEn ? "Students" : "طلاب"}</strong> (83.3%)</span>
-              </div>
-              <div style="background: var(--bg-subtle); border-radius: var(--radius-full); height: 12px; overflow: hidden;">
-                <div style="width: 83.3%; background: #10b981; height: 100%;"></div>
-              </div>
-            </div>
-
-            <div>
-              <div style="display: flex; justify-content: space-between; font-size: 0.8rem; margin-bottom: 4px;">
-                <span><strong>B+ / B (3.00 - 3.69)</strong> - ${isEn ? "Very Good" : "جيد جداً"}</span>
-                <span><strong>0 ${isEn ? "Students" : "طلاب"}</strong> (0.0%)</span>
-              </div>
-              <div style="background: var(--bg-subtle); border-radius: var(--radius-full); height: 12px; overflow: hidden;">
-                <div style="width: 0%; background: #3b82f6; height: 100%;"></div>
-              </div>
-            </div>
-
-            <div>
-              <div style="display: flex; justify-content: space-between; font-size: 0.8rem; margin-bottom: 4px;">
-                <span><strong>D / F (&lt; 2.00)</strong> - ${isEn ? "Academic Probation" : "إنذار أكاديمي وتعثر"}</span>
-                <span><strong>1 ${isEn ? "Student" : "طالب"}</strong> (16.7%)</span>
-              </div>
-              <div style="background: var(--bg-subtle); border-radius: var(--radius-full); height: 12px; overflow: hidden;">
-                <div style="width: 16.7%; background: #ef4444; height: 100%;"></div>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-
-      <!-- Financial Collection Gauge -->
-      <div class="card-panel" style="margin-bottom: 0;">
-        <div class="card-header-bar">
-          <h3 class="card-header-title">💰 ${isEn ? "Tuition Collection Progress" : "مؤشر تحصيل المصروفات الدراسية"}</h3>
-          <span class="status-pill info">${isEn ? "Term 2" : "الفصل الثاني"}</span>
-        </div>
-        <div class="card-body-content" style="text-align: center;">
-          <div style="font-size: 2.2rem; font-weight: 900; color: #10b981;">
-            ${((totalRevenue / (SAMS.students.length * 8500)) * 100).toFixed(1)}%
-          </div>
-          <p style="font-size: 0.85rem; color: var(--text-muted); margin-bottom: 12px;">
-            ${isEn ? "Total Collected:" : "إجمالي المحصل:"} <strong>${totalRevenue.toLocaleString()} EGP</strong> / ${(SAMS.students.length * 8500).toLocaleString()} EGP
-          </p>
-          <div style="background: var(--bg-subtle); border-radius: var(--radius-full); height: 14px; overflow: hidden; max-width: 320px; margin: 0 auto;">
-            <div style="width: ${((totalRevenue / (SAMS.students.length * 8500)) * 100).toFixed(1)}%; background: #10b981; height: 100%;"></div>
-          </div>
-        </div>
-      </div>
-
-    </div>
-
-    <!-- Top Students Honors Board -->
     <div class="card-panel">
       <div class="card-header-bar">
         <h3 class="card-header-title">🏆 ${isEn ? "Top Performing Students (GPA 3.7+)" : "لوحة شرف أوائل الفرقة الثالثة (GPA 3.7+)"}</h3>
@@ -783,7 +1609,7 @@ function renderDashboardView(container) {
   `;
 }
 
-// 6.2 Students Information System (Process 2.0)
+// 7.10 Students Information System (Process 2.0)
 function renderStudentsView(container) {
   const isEn = SAMS.currentLang === "en";
 
@@ -864,7 +1690,7 @@ function renderStudentsView(container) {
   `;
 }
 
-// 6.3 Course Registration & Basket (Process 3.0)
+// 7.11 Course Catalog & Registration (Process 3.0)
 function renderCoursesView(container) {
   const isEn = SAMS.currentLang === "en";
 
@@ -876,7 +1702,6 @@ function renderCoursesView(container) {
       </div>
     </div>
 
-    <!-- Registration Basket Widget for Current Student -->
     <div class="card-panel">
       <div class="card-header-bar">
         <h3 class="card-header-title">
@@ -928,7 +1753,7 @@ function renderCoursesView(container) {
   `;
 }
 
-// 6.4 Weekly Timetable Schedule
+// 7.12 Weekly Timetable Schedule
 function renderScheduleView(container) {
   const isEn = SAMS.currentLang === "en";
 
@@ -1019,7 +1844,7 @@ function renderScheduleView(container) {
   `;
 }
 
-// 6.5 Attendance & Deprivation Warnings (Process 4.0)
+// 7.13 Attendance & Warnings (Process 4.0)
 function renderAttendanceView(container) {
   const isEn = SAMS.currentLang === "en";
 
@@ -1028,23 +1853,6 @@ function renderAttendanceView(container) {
       <div class="view-headline">
         <h1>${isEn ? "Attendance Tracking & Automated Warning System (Process 4.0)" : "متابعة الحضور والغياب واحتساب نسب الحرمان (Process 4.0: Attendance)"}</h1>
         <p>${isEn ? "Algorithm 1.4: Warning 1 issued when absence exceeds 25%. Barred from Final Exam when absence exceeds 30%." : "خوارزمية (1.4): إنذار أول عند تجاوز 25% غياب، وحرمان نهائي من دخول الامتحان عند تجاوز 30% غياب."}</p>
-      </div>
-    </div>
-
-    <!-- Active Barring Alerts -->
-    <div class="card-panel" style="border-inline-start: 4px solid var(--accent-rose);">
-      <div class="card-header-bar">
-        <h3 class="card-header-title" style="color: var(--accent-rose);">
-          ⚠️ ${isEn ? "Academic Deprivation Orders (Absence > 30%)" : "قرارات الحرمان من الامتحان النهائي للعام 2026/2027"}
-        </h3>
-        <span class="status-pill danger">${isEn ? "Action Enforced" : "قرار نافذ"}</span>
-      </div>
-      <div class="card-body-content">
-        <p style="font-size: 0.9rem; line-height: 1.8;">
-          ${isEn 
-            ? "Student: <strong>Ahmed Mohamed El-Shennawy</strong> (ID: <code>202411601</code>) has accumulated <strong>5 absences out of 12 lectures (41.7% absence rate)</strong> in course <strong>CS302 (Database)</strong>, exceeding the institute's 30% threshold. He is formally barred from attending the final exam." 
-            : "الطالب: <strong>أحمد محمد الشناوي</strong> (كود: <code>202411601</code>) تجاوز الحد الأقصى للغياب في مقرر <strong>CS302 (قواعد البيانات)</strong> حيث بلغت نسبة غيابه <strong>41.7% (5 محاضرات من أصل 12)</strong>، وعليه صدر قرار حرمان رسمي من دخول الامتحان النهائي طبقاً للائحة المعهد."}
-        </p>
       </div>
     </div>
 
@@ -1102,7 +1910,7 @@ function renderAttendanceView(container) {
   `;
 }
 
-// 6.6 Gradebook, Control Sheet & GPA Engine (Process 5.0)
+// 7.14 Grades Control Sheet (Process 5.0)
 function renderGradesView(container) {
   const isEn = SAMS.currentLang === "en";
 
@@ -1164,7 +1972,7 @@ function renderGradesView(container) {
   `;
 }
 
-// 6.7 Tuition & Treasury Management (Process 6.0)
+// 7.15 Fees & Treasury (Process 6.0)
 function renderFeesView(container) {
   const isEn = SAMS.currentLang === "en";
 
@@ -1234,7 +2042,7 @@ function renderFeesView(container) {
   `;
 }
 
-// 6.8 Official Document Issuance (Process 7.0)
+// 7.16 Official Document Issuance (Process 7.0)
 function renderDocumentsView(container) {
   const isEn = SAMS.currentLang === "en";
 
@@ -1293,10 +2101,10 @@ function renderDocumentsView(container) {
   `;
 }
 
-// 6.9 Smart University Student ID Card (Extra Feature)
+// 7.17 Smart Student ID Card
 function renderIdCardView(container) {
   const isEn = SAMS.currentLang === "en";
-  const defaultStudent = SAMS.students[0]; // Ragda by default
+  const defaultStudent = SAMS.students[0];
 
   container.innerHTML = `
     <div class="view-header">
@@ -1314,7 +2122,6 @@ function renderIdCardView(container) {
       </div>
     </div>
 
-    <!-- Smart ID Card Interactive Visual Mockup -->
     <div class="id-card-stage" id="idCardContainer">
       ${buildSmartIdCardHtml(defaultStudent)}
     </div>
@@ -1387,7 +2194,7 @@ function previewSmartIdCard(studentId) {
   }
 }
 
-// 6.10 Reports & Decision Support (Process 8.0)
+// 7.18 Reports View (Process 8.0)
 function renderReportsView(container) {
   const isEn = SAMS.currentLang === "en";
 
@@ -1439,7 +2246,7 @@ function renderReportsView(container) {
   `;
 }
 
-// 6.11 Architecture & DFD / ERD
+// 7.19 Architecture View
 function renderArchitectureView(container) {
   const isEn = SAMS.currentLang === "en";
 
@@ -1451,7 +2258,6 @@ function renderArchitectureView(container) {
       </div>
     </div>
 
-    <!-- DFD Level 0 Context Diagram -->
     <div class="card-panel">
       <div class="card-header-bar">
         <h3 class="card-header-title">1. ${isEn ? "Context Diagram (DFD Level 0)" : "مخطط تدفق البيانات البيئي (DFD Level 0)"}</h3>
@@ -1477,7 +2283,6 @@ function renderArchitectureView(container) {
       </div>
     </div>
 
-    <!-- DFD Level 1 (8 Processes Table) -->
     <div class="card-panel">
       <div class="card-header-bar">
         <h3 class="card-header-title">2. ${isEn ? "Detailed DFD Level 1 (8 Core Processes)" : "المخطط التفصيلي للعمليات الثماني (DFD Level 1)"}</h3>
@@ -1509,7 +2314,7 @@ function renderArchitectureView(container) {
   `;
 }
 
-// 6.12 Java OOP Code Inspection
+// 7.20 OOP View
 function renderOOPView(container) {
   const isEn = SAMS.currentLang === "en";
 
@@ -1527,9 +2332,7 @@ function renderOOPView(container) {
       </div>
       <div class="card-body-content">
         <pre style="background: #0f172a; color: #f8fafc; padding: 18px; border-radius: var(--radius-md); font-size: 0.82rem; line-height: 1.6; overflow-x: auto; direction: ltr; text-align: left;">
-// ==========================================
-// 1. Person.java (Base Abstract Class)
-// ==========================================
+// Person.java (Base Abstract Class)
 public abstract class Person {
     protected String nationalId; // 14 Egyptian digits
     protected String fullName;
@@ -1549,9 +2352,7 @@ public abstract class Person {
     public abstract void displayRoleDetails();
 }
 
-// ==========================================
-// 2. Student.java (Inheritance + Encapsulation)
-// ==========================================
+// Student.java (Inheritance + Encapsulation)
 public class Student extends Person {
     private String studentId;
     private int level;
@@ -1590,7 +2391,7 @@ public class Student extends Person {
   `;
 }
 
-// 6.13 Security Audit Log (Process 1.0)
+// 7.21 Audit Log View
 function renderAuditLogView(container) {
   const isEn = SAMS.currentLang === "en";
 
@@ -1636,7 +2437,7 @@ function renderAuditLogView(container) {
 }
 
 // ============================================================================
-// 7. INTERACTIVE ACTION HANDLERS & MODALS
+// 8. ACTION HANDLERS & MODAL UTILITIES
 // ============================================================================
 
 function openModal(id) {
@@ -1649,7 +2450,6 @@ function closeModal(id) {
   if (m) m.classList.remove("active");
 }
 
-// Egyptian National ID Validator (14 digits)
 function validateEgyptianNationalId(input) {
   const val = input.value.trim();
   const help = document.getElementById("natIdHelp");
@@ -1663,7 +2463,6 @@ function validateEgyptianNationalId(input) {
     const genderDigit = parseInt(val[12]);
     const gender = (genderDigit % 2 === 0) ? "F" : "M";
 
-    // Set birth date & gender automatically
     document.getElementById("regBirthDate").value = `${year}-${month}-${day}`;
     document.getElementById("regGender").value = gender;
 
@@ -1673,7 +2472,6 @@ function validateEgyptianNationalId(input) {
   }
 }
 
-// Register New Student (Process 2.0)
 function handleStudentRegistration(e) {
   e.preventDefault();
   const isEn = SAMS.currentLang === "en";
@@ -1725,14 +2523,15 @@ function handleStudentRegistration(e) {
   });
 
   logAuditEvent(`قيد طالب جديد برقم قومي ${natId}`, `Enrolled student ID ${newId}`, "SUCCESS");
-  persistState(SAMS);
+  saveAppState(SAMS);
   closeModal("addStudentModal");
 
-  alert(isEn ? `Student enrolled successfully!\nAssigned ID: ${newId}` : `تم قيد الطالب بنجاح!\nالكود الجامعي الممنوح: ${newId}`);
+  alert(isEn ? `Student enrolled successfully!
+Assigned ID: ${newId}` : `تم قيد الطالب بنجاح!
+الكود الجامعي الممنوح: ${newId}`);
   renderActiveView();
 }
 
-// Grade Submission & GPA Recalculation (Process 5.0)
 function openGradeModal(studentId, courseCode) {
   const std = SAMS.students.find(s => s.student_id === studentId);
   const crs = SAMS.courses.find(c => c.code === courseCode);
@@ -1824,7 +2623,7 @@ function handleGradeSubmit(e) {
   }
 
   logAuditEvent(`رصد درجة مقرر ${courseCode} للطالب ${studentId}`, `Graded ${courseCode} for student ${studentId}`, "SUCCESS");
-  persistState(SAMS);
+  saveAppState(SAMS);
   closeModal("gradeEntryModal");
   alert(`✓ تم اعتماد الدرجة بنجاح! المجموع: ${total} [${letter}] | الـ GPA الجديد: ${std ? std.gpa : '--'}`);
   renderActiveView();
@@ -1848,12 +2647,11 @@ function applyBonusCurve() {
   });
 
   logAuditEvent("تطبيق بونص الكنترول العام (+2 درجات لمقرر MIS301)", "Applied +2 control bonus curve for MIS301", "SUCCESS");
-  persistState(SAMS);
+  saveAppState(SAMS);
   alert(isEn ? "Control Bonus Curve of +2 marks applied to all students in MIS301!" : "تم بنجاح تطبيق بونص الكنترول (+2 درجات) لكافة الطلاب في مقرر MIS301!");
   renderActiveView();
 }
 
-// Attendance Logging Modal
 function openAttendanceModal(studentId, courseCode) {
   const std = SAMS.students.find(s => s.student_id === studentId);
   const crs = SAMS.courses.find(c => c.code === courseCode);
@@ -1886,7 +2684,6 @@ function handleAttendanceSubmit(e) {
 
     att.pct = (att.attended / att.total) * 100;
 
-    // Apply Algorithm 1.4 Rules
     if (att.pct < 70) {
       att.statusAr = "حرمان من الامتحان النهائي (تجاوز 30%)";
       att.statusEn = "Barred from Final Exam (Absence >30%)";
@@ -1900,14 +2697,15 @@ function handleAttendanceSubmit(e) {
   }
 
   logAuditEvent(`تسجيل حضور/غياب (${status}) للطالب ${studentId}`, `Recorded attendance (${status}) for ${studentId}`, "SUCCESS");
-  persistState(SAMS);
+  saveAppState(SAMS);
   closeModal("attModal");
 
-  alert(isEn ? `Attendance recorded: ${status}\nNew attendance rate: ${att.pct.toFixed(1)}%` : `تم تسجيل حالة المحاضرة: ${status}\nالنسبة المئوية الجديدة: ${att.pct.toFixed(1)}%`);
+  alert(isEn ? `Attendance recorded: ${status}
+New attendance rate: ${att.pct.toFixed(1)}%` : `تم تسجيل حالة المحاضرة: ${status}
+النسبة المئوية الجديدة: ${att.pct.toFixed(1)}%`);
   renderActiveView();
 }
 
-// Payment Collection & Receipt
 function openPaymentModal(feeId) {
   const fee = SAMS.fees.find(f => f.fee_id === feeId);
   const std = SAMS.students.find(s => s.student_id === fee.student_id);
@@ -1945,10 +2743,11 @@ function handlePaymentSubmit(e) {
   }
 
   logAuditEvent(`تحصيل مصروفات بقيمة ${amount} ج.م. إيصال ${fee.receipt_no}`, `Collected tuition ${amount} EGP receipt ${fee.receipt_no}`, "SUCCESS");
-  persistState(SAMS);
+  saveAppState(SAMS);
   closeModal("paymentModal");
 
-  alert(isEn ? `Payment completed! Receipt No: ${fee.receipt_no}` : `تم توريد المبلغ بالخزينة بنجاح!\nرقم الإيصال الرسمي: ${fee.receipt_no}`);
+  alert(isEn ? `Payment completed! Receipt No: ${fee.receipt_no}` : `تم توريد المبلغ بالخزينة بنجاح!
+رقم الإيصال الرسمي: ${fee.receipt_no}`);
   renderActiveView();
   showReceiptModal(feeId);
 }
@@ -1968,7 +2767,6 @@ function showReceiptModal(feeId) {
   openModal("receiptModal");
 }
 
-// Official Certificate Generator (Bilingual AR / EN)
 function openCertForStudent(studentId, docCode = "SAMS-2026-CERT-889") {
   const std = SAMS.students.find(s => s.student_id === studentId);
   if (!std) return;
@@ -2019,7 +2817,6 @@ function openCertForStudent(studentId, docCode = "SAMS-2026-CERT-889") {
   openModal("certModal");
 }
 
-// Global Instant Search Handler
 function handleGlobalSearch(e) {
   const query = e.target.value.toLowerCase().trim();
   if (!query) {
@@ -2027,7 +2824,6 @@ function handleGlobalSearch(e) {
     return;
   }
 
-  // Filter students or courses matching query
   const matchedStudents = SAMS.students.filter(s => 
     s.student_id.includes(query) ||
     s.full_name_ar.toLowerCase().includes(query) ||
@@ -2120,11 +2916,9 @@ function handleGlobalSearch(e) {
 }
 
 // ============================================================================
-// 8. APP INITIALIZATION (DOM Ready)
+// 9. APP INITIALIZATION (DOM Ready)
 // ============================================================================
 
 document.addEventListener("DOMContentLoaded", () => {
-  applyTheme();
-  applyLocalization();
-  renderActiveView();
+  checkExistingSession();
 });

@@ -94,6 +94,173 @@ body {
   transition: background-color 0.2s ease, color 0.2s ease;
 }
 
+/* ==========================================================================
+   AUTHENTICATION & LOGIN PORTAL (Single Sign-On SSO)
+   ========================================================================== */
+.login-screen-wrapper {
+  min-height: 100vh;
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: radial-gradient(circle at 15% 15%, #1e3a8a 0%, #0b1329 55%, #030712 100%);
+  padding: 24px;
+  position: fixed;
+  inset: 0;
+  z-index: 1000;
+  overflow-y: auto;
+}
+
+.login-card {
+  width: 100%;
+  max-width: 520px;
+  background: rgba(30, 41, 59, 0.85);
+  backdrop-filter: blur(16px);
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  border-radius: var(--radius-lg);
+  padding: 36px;
+  color: #fff;
+  box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.5);
+  animation: fadeInLogin 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+@keyframes fadeInLogin {
+  from { opacity: 0; transform: translateY(15px) scale(0.98); }
+  to { opacity: 1; transform: translateY(0) scale(1); }
+}
+
+.login-header {
+  text-align: center;
+  margin-bottom: 28px;
+}
+
+.login-brand-icon {
+  width: 64px;
+  height: 64px;
+  background: linear-gradient(135deg, #2563eb, #1d4ed8);
+  border-radius: 18px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.8rem;
+  font-weight: 900;
+  color: #fff;
+  margin: 0 auto 16px;
+  box-shadow: 0 10px 20px rgba(37, 99, 235, 0.4);
+}
+
+.login-title {
+  font-size: 1.45rem;
+  font-weight: 900;
+  color: #fff;
+  line-height: 1.25;
+}
+
+.login-subtitle {
+  font-size: 0.84rem;
+  color: #94a3b8;
+  margin-top: 6px;
+}
+
+.login-field {
+  margin-bottom: 18px;
+}
+
+.login-field label {
+  display: block;
+  font-size: 0.82rem;
+  font-weight: 700;
+  color: #cbd5e1;
+  margin-bottom: 6px;
+}
+
+.login-input {
+  width: 100%;
+  padding: 12px 16px;
+  border-radius: var(--radius-md);
+  border: 1px solid rgba(255, 255, 255, 0.15);
+  background: rgba(15, 23, 42, 0.6);
+  color: #fff;
+  font-size: 0.95rem;
+  font-family: inherit;
+  transition: all 0.2s ease;
+}
+
+.login-input:focus {
+  outline: none;
+  border-color: #3b82f6;
+  background: rgba(15, 23, 42, 0.9);
+  box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.3);
+}
+
+.login-btn {
+  width: 100%;
+  padding: 13px;
+  background: linear-gradient(135deg, #2563eb, #1d4ed8);
+  color: #fff;
+  border: none;
+  border-radius: var(--radius-md);
+  font-size: 1rem;
+  font-weight: 800;
+  font-family: inherit;
+  cursor: pointer;
+  box-shadow: 0 4px 12px rgba(37, 99, 235, 0.4);
+  transition: all 0.2s ease;
+  margin-top: 8px;
+}
+
+.login-btn:hover {
+  background: linear-gradient(135deg, #1d4ed8, #1e40af);
+  transform: translateY(-1px);
+}
+
+/* Quick Fill Demo Credentials */
+.demo-accounts-box {
+  margin-top: 24px;
+  padding-top: 20px;
+  border-top: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.demo-title {
+  font-size: 0.75rem;
+  font-weight: 800;
+  text-transform: uppercase;
+  letter-spacing: 0.8px;
+  color: #94a3b8;
+  margin-bottom: 10px;
+  text-align: center;
+}
+
+.demo-chips-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 8px;
+}
+
+.demo-chip {
+  background: rgba(255, 255, 255, 0.06);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: var(--radius-sm);
+  padding: 8px 10px;
+  font-size: 0.75rem;
+  color: #e2e8f0;
+  cursor: pointer;
+  text-align: start;
+  transition: all 0.15s ease;
+}
+
+.demo-chip:hover {
+  background: rgba(37, 99, 235, 0.25);
+  border-color: #3b82f6;
+  color: #fff;
+}
+
+.demo-chip strong {
+  display: block;
+  color: #93c5fd;
+  font-size: 0.78rem;
+}
+
 /* Layout Container */
 .app-layout {
   display: flex;
@@ -166,11 +333,6 @@ body {
   display: flex;
   align-items: center;
   gap: 12px;
-}
-
-.user-role-card:hover {
-  background: rgba(255, 255, 255, 0.08);
-  cursor: pointer;
 }
 
 .role-avatar {
@@ -572,12 +734,6 @@ body {
   gap: 10px;
 }
 
-.card-header-actions {
-  display: flex;
-  align-items: center;
-  gap: 8px;
-}
-
 .card-body-content {
   padding: 24px;
 }
@@ -802,6 +958,124 @@ body {
   outline: none;
   border-color: var(--primary-600);
   box-shadow: 0 0 0 3px var(--primary-100);
+}
+
+/* ==========================================================================
+   INTERACTIVE QUIZ ENGINE ("اختبار فهم واستيعاب المقرر")
+   ========================================================================== */
+.quiz-card {
+  background: var(--bg-card);
+  border: 1px solid var(--border-color);
+  border-radius: var(--radius-lg);
+  padding: 24px;
+  margin-bottom: 20px;
+}
+
+.quiz-question-num {
+  font-size: 0.75rem;
+  font-weight: 800;
+  text-transform: uppercase;
+  color: var(--primary-600);
+  margin-bottom: 6px;
+}
+
+.quiz-question-text {
+  font-size: 1.05rem;
+  font-weight: 800;
+  color: var(--text-main);
+  margin-bottom: 16px;
+  line-height: 1.4;
+}
+
+.quiz-options-list {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.quiz-option {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 12px 16px;
+  border-radius: var(--radius-md);
+  border: 1px solid var(--border-color);
+  background: var(--bg-subtle);
+  cursor: pointer;
+  transition: all 0.15s ease;
+}
+
+.quiz-option:hover {
+  background: var(--bg-hover);
+  border-color: var(--primary-500);
+}
+
+.quiz-option.selected {
+  background: var(--primary-50);
+  border-color: var(--primary-600);
+  color: var(--primary-900);
+  font-weight: 700;
+}
+
+.quiz-option.correct {
+  background: #ecfdf5 !important;
+  border-color: #10b981 !important;
+  color: #065f46 !important;
+}
+
+.quiz-option.wrong {
+  background: #fef2f2 !important;
+  border-color: #ef4444 !important;
+  color: #991b1b !important;
+}
+
+.quiz-explanation {
+  margin-top: 12px;
+  padding: 10px 14px;
+  border-radius: var(--radius-md);
+  background: #eff6ff;
+  border-inline-start: 4px solid var(--primary-600);
+  font-size: 0.85rem;
+  color: #1e3a8a;
+}
+
+/* ==========================================================================
+   SMART ATTENDANCE QR & PIN GENERATOR FOR PROFESSOR
+   ========================================================================== */
+.attendance-qr-box {
+  background: linear-gradient(135deg, #1e3a8a, #0f172a);
+  color: #fff;
+  border-radius: var(--radius-lg);
+  padding: 24px;
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 14px;
+}
+
+.qr-code-graphic {
+  width: 140px;
+  height: 140px;
+  background: #fff;
+  padding: 10px;
+  border-radius: 12px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 10px 20px rgba(0, 0, 0, 0.3);
+}
+
+.session-pin-code {
+  font-family: 'Courier New', monospace;
+  font-size: 2.2rem;
+  font-weight: 900;
+  letter-spacing: 6px;
+  color: #fcd34d;
+  background: rgba(0, 0, 0, 0.3);
+  padding: 6px 20px;
+  border-radius: 8px;
+  border: 1px dashed rgba(255, 255, 255, 0.2);
 }
 
 /* ==========================================================================
@@ -1075,7 +1349,7 @@ body {
 }
 
 /* ==========================================================================
-   CERTIFICATES & OFFICIAL DOCUMENT PRINT LAYOUTS
+   DOCUMENT & TRANSCRIPT PRINT LAYOUT
    ========================================================================== */
 .document-paper {
   background: #ffffff;
@@ -1158,7 +1432,7 @@ body {
     background: #fff !important;
     color: #000 !important;
   }
-  .sidebar, .top-nav, .view-header, .view-actions, .modal-close-btn, .btn {
+  .sidebar, .top-nav, .view-header, .view-actions, .modal-close-btn, .btn, .login-screen-wrapper {
     display: none !important;
   }
   .view-container {
