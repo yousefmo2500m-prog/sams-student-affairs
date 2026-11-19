@@ -34,3 +34,4 @@
      javac -encoding UTF-8 sams/*.java
      java -Dfile.encoding=UTF-8 sams.Main
      ```
+<!-- Vercel Deployment Trigger: Thu Nov 19 16:54:49 UTC 2026 -->
