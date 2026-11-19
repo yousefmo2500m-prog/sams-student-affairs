@@ -1,138 +1,170 @@
 <!DOCTYPE html>
-<html lang="ar" dir="rtl">
+<html lang="ar" dir="rtl" id="rootHtml">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>نظام إدارة شئون الطلاب (SAMS) | المعهد العالي للحاسبات ونظم المعلومات الإدارية</title>
+  <title>SAMS - Student Affairs Management System | نظام شئون الطلاب</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700;800;900&family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="style.css">
 </head>
 <body>
 
-<div class="app-container">
+<div class="app-layout">
 
   <!-- =========================================================================
-       القائمة الجانبية الرسمية للمعهد (Institute Official Sidebar)
+       SIDEBAR NAVIGATION
        ========================================================================= -->
-  <aside class="sidebar" id="mainSidebar">
+  <aside class="sidebar" id="appSidebar">
     
-    <!-- شعار واسم النظام -->
-    <div class="sidebar-brand">
-      <div class="brand-icon">SAMS</div>
-      <div class="brand-info">
-        <h1>شئون الطلاب</h1>
-        <p>المعهد العالي للحاسبات - التجمع الأول</p>
+    <!-- Institute Branding -->
+    <div class="sidebar-header">
+      <div class="brand-badge">SAMS</div>
+      <div>
+        <div class="brand-title" data-i18n="brand_title">نظام إدارة شئون الطلاب</div>
+        <div class="brand-subtitle" data-i18n="brand_subtitle">المعهد العالي للحاسبات ونظم المعلومات</div>
       </div>
     </div>
 
-    <!-- بطاقة المستخدم الحالي -->
-    <div class="sidebar-user">
-      <div class="user-avatar" id="sidebarAvatar">👨‍🏫</div>
-      <div class="user-details">
-        <div class="user-name" id="sidebarUserName">أ.د / فاروق عبد العزيز</div>
-        <div class="user-role-badge" id="sidebarUserRole">أستاذ المقرر ورئيس القسم</div>
+    <!-- Active User & Role Switcher Card -->
+    <div class="user-role-card" onclick="openModal('switchUserModal')" title="تبديل الصلاحية / Switch Role">
+      <div class="role-avatar" id="sideUserAvatar">👨‍🏫</div>
+      <div class="role-meta">
+        <div class="role-name" id="sideUserName">أ.د / فاروق عبد العزيز</div>
+        <div class="role-pill" id="sideUserRole">أستاذ المقرر ورئيس القسم</div>
       </div>
+      <svg style="width: 14px; height: 14px; color: #94a3b8;" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"/>
+      </svg>
     </div>
 
-    <!-- روابط التنقل والعمليات الرئيسية (مطابقة للعمليات الـ 8 في التقرير الثالث) -->
-    <nav class="sidebar-nav" id="sidebarNavMenu">
-      <div class="nav-section-title">العمليات الأكاديمية الرئيسية</div>
-      
-      <a class="nav-item active" onclick="navigateSection('dashboard')">
-        <span class="nav-item-icon">🏠</span>
-        <span>لوحة المعلومات (Dashboard)</span>
+    <!-- Navigation Menu Items -->
+    <nav class="sidebar-nav" id="sidebarMenu">
+      <div class="nav-group-title" data-i18n="nav_academic_ops">العمليات الأكاديمية (Processes)</div>
+
+      <a class="nav-link active" onclick="switchView('dashboard')">
+        <svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6"/></svg>
+        <span data-i18n="nav_dashboard">لوحة التحكم والمؤشرات</span>
       </a>
 
-      <a class="nav-item" id="navItemStudents" onclick="navigateSection('students')">
-        <span class="nav-item-icon">👨‍🎓</span>
-        <span>بيانات وقيد الطلاب (Process 2.0)</span>
+      <a class="nav-link" id="navStudents" onclick="switchView('students')">
+        <svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M12 4.354a4 4 0 110 5.292M15 21H3v-1a6 6 0 0112 0v1zm0 0h6v-1a6 6 0 00-9-5.197M13 7a4 4 0 11-8 0 4 4 0 018 0z"/></svg>
+        <span data-i18n="nav_students">بيانات وقيد الطلاب (P 2.0)</span>
+        <span class="nav-badge blue">6</span>
       </a>
 
-      <a class="nav-item" id="navItemCourses" onclick="navigateSection('courses')">
-        <span class="nav-item-icon">📚</span>
-        <span>تسجيل المقررات (Process 3.0)</span>
+      <a class="nav-link" id="navCourses" onclick="switchView('courses')">
+        <svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.747 0 3.332.477 4.5 1.253v13C19.832 18.477 18.247 18 16.5 18c-1.746 0-3.332.477-4.5 1.253"/></svg>
+        <span data-i18n="nav_courses">تسجيل المقررات (P 3.0)</span>
       </a>
 
-      <a class="nav-item" id="navItemSchedule" onclick="navigateSection('schedule')">
-        <span class="nav-item-icon">📅</span>
-        <span>الجداول الدراسية والمواعيد</span>
+      <a class="nav-link" id="navSchedule" onclick="switchView('schedule')">
+        <svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"/></svg>
+        <span data-i18n="nav_schedule">الجدول الدراسي والمواعيد</span>
       </a>
 
-      <a class="nav-item" id="navItemAttendance" onclick="navigateSection('attendance')">
-        <span class="nav-item-icon">📋</span>
-        <span>الحضور والغياب والإنذار (Process 4.0)</span>
+      <a class="nav-link" id="navAttendance" onclick="switchView('attendance')">
+        <svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>
+        <span data-i18n="nav_attendance">الحضور والغياب والإنذار (P 4.0)</span>
+        <span class="nav-badge amber">إنذار</span>
       </a>
 
-      <a class="nav-item" id="navItemGrades" onclick="navigateSection('grades')">
-        <span class="nav-item-icon">🎯</span>
-        <span>رصد الدرجات و GPA (Process 5.0)</span>
+      <a class="nav-link" id="navGrades" onclick="switchView('grades')">
+        <svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z"/></svg>
+        <span data-i18n="nav_grades">الكنترول والدرجات و GPA (P 5.0)</span>
       </a>
 
-      <a class="nav-item" id="navItemFees" onclick="navigateSection('fees')">
-        <span class="nav-item-icon">💳</span>
-        <span>المصروفات والخزينة (Process 6.0)</span>
+      <a class="nav-link" id="navFees" onclick="switchView('fees')">
+        <svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M3 10h18M7 15h1m4 0h1m-7 4h12a3 3 0 003-3V8a3 3 0 00-3-3H6a3 3 0 00-3 3v8a3 3 0 003 3z"/></svg>
+        <span data-i18n="nav_fees">المصروفات والخزينة (P 6.0)</span>
       </a>
 
-      <a class="nav-item" id="navItemDocuments" onclick="navigateSection('documents')">
-        <span class="nav-item-icon">📜</span>
-        <span>إصدار الشهادات الرسمية (Process 7.0)</span>
+      <a class="nav-link" id="navDocuments" onclick="switchView('documents')">
+        <svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"/></svg>
+        <span data-i18n="nav_documents">إصدار الشهادات والوثائق (P 7.0)</span>
       </a>
 
-      <div class="nav-section-title">الإدارة والتحليل الهندسي</div>
-
-      <a class="nav-item" id="navItemReports" onclick="navigateSection('reports')">
-        <span class="nav-item-icon">📊</span>
-        <span>التقارير الإحصائية (Process 8.0)</span>
+      <a class="nav-link" id="navIdCard" onclick="switchView('id_card')">
+        <svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M10 6H5a2 2 0 00-2 2v9a2 2 0 002 2h14a2 2 0 002-2V8a2 2 0 00-2-2h-5m-4 0V5a2 2 0 114 0v1m-4 0a2 2 0 104 0m-5 8a2 2 0 100-4 2 2 0 000 4zm0 0c1.306 0 2.417.835 2.83 2M9 14a3.001 3.001 0 00-2.83 2M15 11h3m-3 4h2"/></svg>
+        <span data-i18n="nav_id_card">كارنيه الطالب الذكي (Smart ID)</span>
       </a>
 
-      <a class="nav-item" onclick="navigateSection('architecture')">
-        <span class="nav-item-icon">📐</span>
-        <span>مخططات DFD و ERD وقاموس البيانات</span>
+      <div class="nav-group-title" data-i18n="nav_engineering_mgmt">الهندسة والإدارة المركزية</div>
+
+      <a class="nav-link" id="navReports" onclick="switchView('reports')">
+        <svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M11 3.055A9.001 9.001 0 1020.945 13H11V3.055z"/><path stroke-linecap="round" stroke-linejoin="round" d="M20.488 9H15V3.512A9.025 9.025 0 0120.488 9z"/></svg>
+        <span data-i18n="nav_reports">التقارير الإحصائية (P 8.0)</span>
       </a>
 
-      <a class="nav-item" onclick="navigateSection('oop_view')">
-        <span class="nav-item-icon">☕</span>
-        <span>هيكلية Java OOP وكلاسات المشروع</span>
+      <a class="nav-link" onclick="switchView('architecture')">
+        <svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M4 5a1 1 0 011-1h14a1 1 0 011 1v2a1 1 0 01-1 1H5a1 1 0 01-1-1V5zM4 13a1 1 0 011-1h6a1 1 0 011 1v6a1 1 0 01-1 1H5a1 1 0 01-1-1v-6zM16 13a1 1 0 011-1h2a1 1 0 011 1v6a1 1 0 01-1 1h-2a1 1 0 01-1-1v-6z"/></svg>
+        <span data-i18n="nav_architecture">مخططات DFD و ERD وقاموس البيانات</span>
       </a>
 
-      <a class="nav-item" id="navItemUsers" onclick="navigateSection('users')">
-        <span class="nav-item-icon">🔐</span>
-        <span>المستخدمين والصلاحيات (Process 1.0)</span>
+      <a class="nav-link" onclick="switchView('oop')">
+        <svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M10 20l4-16m4 4l4 4-4 4M6 16l-4-4 4-4"/></svg>
+        <span data-i18n="nav_oop">كلاسات Java OOP وهيكلية الكود</span>
+      </a>
+
+      <a class="nav-link" id="navAudit" onclick="switchView('audit')">
+        <svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2m-6 9l2 2 4-4"/></svg>
+        <span data-i18n="nav_audit">سجل الحركات والأمان (Audit Log)</span>
       </a>
     </nav>
 
     <div class="sidebar-footer">
-      مادة تحليل وتصميم نظم المعلومات<br>إشراف: أ.د / فاروق عبد العزيز | 2026/2027
+      <span data-i18n="footer_credits">مادة تحليل وتصميم نظم المعلومات<br>إشراف: أ.د / فاروق عبد العزيز | 2026/2027</span>
     </div>
   </aside>
 
   <!-- =========================================================================
-       المنطقة الرئيسية (Main Content Wrapper)
+       MAIN CONTENT CONTAINER
        ========================================================================= -->
-  <div class="main-wrapper">
-    
-    <!-- الشريط العلوي (Top Header) -->
-    <header class="top-header">
-      <div class="header-left">
-        <div class="header-meta-tag">
-          <span>🏛️ وزارة التعليم العالي والبحث العلمي</span>
-          <span>|</span>
-          <span>العام الجامعي 2026/2027 (الفصل الثاني)</span>
+  <div class="main-area">
+
+    <!-- Top Navigation Bar -->
+    <header class="top-nav">
+      
+      <!-- Search Input -->
+      <div class="top-left">
+        <div class="search-wrapper">
+          <svg class="search-icon" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"/>
+          </svg>
+          <input type="text" id="globalSearchInput" class="search-input" placeholder="بحث شامل: كود الطالب، الاسم، المقرر..." oninput="handleGlobalSearch(event)" data-i18n-placeholder="search_placeholder">
         </div>
       </div>
 
-      <div class="header-right">
-        <!-- زر فتح نافذة تبديل الحسابات (الدكتور / الطالب / الشئون / الخزينة) -->
-        <button type="button" class="user-switch-btn" onclick="openModal('switchUserModal')">
+      <!-- Header Controls: Language, Theme, Role Switcher -->
+      <div class="top-right">
+        
+        <!-- Language Switcher Button (AR / EN) -->
+        <button type="button" class="action-btn lang-switch-btn" onclick="toggleLanguage()" title="Switch Language / تبديل اللغة">
+          <span id="langFlag">🇬🇧</span>
+          <span id="langLabel">English</span>
+        </button>
+
+        <!-- Dark / Light Theme Toggle -->
+        <button type="button" class="action-btn icon-only" onclick="toggleTheme()" title="تبديل الوضع الليلي / Dark Mode">
+          <svg id="themeIcon" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M20.354 15.354A9 9 0 018.646 3.646 9.003 9.003 0 0012 21a9.003 9.003 0 008.354-5.646z"/>
+          </svg>
+        </button>
+
+        <!-- Role Switcher Button -->
+        <button type="button" class="btn btn-secondary btn-sm" onclick="openModal('switchUserModal')">
           <span id="topUserIcon">👨‍🏫</span>
           <span id="topUserName">أ.د / فاروق عبد العزيز</span>
-          <span style="font-size: 0.75rem; color: var(--primary-600); margin-right: 4px;">[تبديل الحساب ▾]</span>
+          <span style="font-size: 0.75rem; color: var(--primary-600); margin-inline-start: 4px;">▼</span>
         </button>
+
       </div>
     </header>
 
-    <!-- مساحة المحتوى الديناميكية -->
-    <main class="content-body" id="mainContentContainer">
-      <!-- يتم تعبئتها ديناميكياً بـ JavaScript بحسب القسم النشط -->
+    <!-- Dynamic Content Body -->
+    <main class="view-container" id="contentView">
+      <!-- Injected dynamically via JS -->
     </main>
 
   </div>
@@ -140,170 +172,172 @@
 </div>
 
 <!-- =========================================================================
-     النوافذ المنبثقة التفاعلية (Modals)
+     MODALS & DIALOGS
      ========================================================================= -->
 
-<!-- Modal: تبديل المستخدم لتجربة كافة الأدوار والصلاحيات -->
+<!-- Modal: تبديل الحسابات وتجربة كافة الأدوار -->
 <div id="switchUserModal" class="modal-overlay">
-  <div class="modal-dialog" style="max-width: 520px;">
+  <div class="modal-dialog">
     <div class="modal-header">
-      <h3 class="modal-title">🔐 تسجيل الدخول وتبديل صلاحيات المستخدم</h3>
+      <h3 class="modal-title" data-i18n="modal_switch_user_title">🔐 تسجيل الدخول وتبديل صلاحيات المستخدم</h3>
       <button type="button" class="modal-close-btn" onclick="closeModal('switchUserModal')">&times;</button>
     </div>
-    <p style="font-size: 0.85rem; color: var(--text-muted); margin-bottom: 16px;">
-      اختر الحساب الذي ترغب في الدخول به لاختبار صلاحيات النظام والتحقق من قواعد العمل:
+    <p style="font-size: 0.85rem; color: var(--text-muted); margin-bottom: 16px;" data-i18n="modal_switch_user_desc">
+      اختر الحساب الذي ترغب في الدخول به لاختبار صلاحيات النظام والتحقق من قواعد العمل الصارمة:
     </p>
-    <div style="display: flex; flex-direction: column; gap: 8px;">
-      <button class="btn btn-secondary" style="justify-content: flex-start;" onclick="loginAs('dr_farouk')">
-        👨‍🏫 <strong>أ.د / فاروق عبد العزيز</strong> (أستاذ مقرر تحليل النظم ورئيس القسم)
+    <div style="display: flex; flex-direction: column; gap: 10px;">
+      <button class="btn btn-secondary" style="justify-content: flex-start; text-align: start;" onclick="switchUserAccount('dr_farouk')">
+        👨‍🏫 <div><strong>أ.د / فاروق عبد العزيز</strong><br><small style="color: var(--text-muted);">أستاذ مقرر تحليل النظم ورئيس القسم (Dean / Dept Head)</small></div>
       </button>
-      <button class="btn btn-secondary" style="justify-content: flex-start;" onclick="loginAs('202411586')">
-        👩‍🎓 <strong>رغدة ابراهيم عبد الخالق</strong> (طالبة بالفرقة 3 - معدل ممتاز 3.92 ومصروفات مسددة)
+      <button class="btn btn-secondary" style="justify-content: flex-start; text-align: start;" onclick="switchUserAccount('202411586')">
+        👩‍🎓 <div><strong>رغدة ابراهيم عبد الخالق</strong> (كود: 202411586)<br><small style="color: var(--accent-emerald); font-weight: bold;">طالبة بالفرقة 3 - معدل ممتاز 3.92 ومصروفات مسددة بالكامل</small></div>
       </button>
-      <button class="btn btn-secondary" style="justify-content: flex-start;" onclick="loginAs('202411531')">
-        👩‍🎓 <strong>كارولين عاطف عطاالله</strong> (طالبة بالفرقة 3 - معدل 3.85 وطلب شهادة قيد)
+      <button class="btn btn-secondary" style="justify-content: flex-start; text-align: start;" onclick="switchUserAccount('202411531')">
+        👩‍🎓 <div><strong>كارولين عاطف عطاالله</strong> (كود: 202411531)<br><small style="color: var(--text-muted);">طالبة بالفرقة 3 - معدل 3.85 ومصروفات مسددة بالكامل</small></div>
       </button>
-      <button class="btn btn-secondary" style="justify-content: flex-start; border-right: 4px solid var(--danger);" onclick="loginAs('202411601')">
-        ⚠️ <strong>أحمد محمد الشناوي</strong> (طالب متعثر - متجاوز لنسبة الغياب 25% وعليه متأخرات)
+      <button class="btn btn-secondary" style="justify-content: flex-start; text-align: start; border-inline-start: 4px solid var(--accent-rose);" onclick="switchUserAccount('202411601')">
+        ⚠️ <div><strong>أحمد محمد الشناوي</strong> (كود: 202411601)<br><small style="color: var(--accent-rose); font-weight: bold;">طالب متعثر - تجاوز نسبة الغياب 25% وعليه متأخرات مالية</small></div>
       </button>
-      <button class="btn btn-secondary" style="justify-content: flex-start;" onclick="loginAs('staff')">
-        💼 <strong>أ/ إيمان صبري</strong> (موظف شئون الطلاب - قيد الطلاب واعتماد وطباعة الشهادات)
+      <button class="btn btn-secondary" style="justify-content: flex-start; text-align: start;" onclick="switchUserAccount('staff')">
+        💼 <div><strong>أ/ إيمان صبري</strong> (موظف شئون الطلاب - Student Affairs Officer)<br><small style="color: var(--text-muted);">قيد الطلاب واعتماد وطباعة الشهادات الرسمية</small></div>
       </button>
-      <button class="btn btn-secondary" style="justify-content: flex-start;" onclick="loginAs('finance')">
-        💰 <strong>أ/ طارق السيد</strong> (مسئول الخزينة - تحصيل المصروفات وتوليد إيصالات السداد)
+      <button class="btn btn-secondary" style="justify-content: flex-start; text-align: start;" onclick="switchUserAccount('finance')">
+        💰 <div><strong>أ/ طارق السيد</strong> (مسئول الخزينة - Treasury & Finance Officer)<br><small style="color: var(--text-muted);">تحصيل المصروفات وإصدار إيصالات التوريد الرسمية</small></div>
       </button>
-      <button class="btn btn-secondary" style="justify-content: flex-start;" onclick="loginAs('admin')">
-        ⚙️ <strong>مدير النظام المركزي (Admin)</strong> (لوحة التحكم الشاملة وقواعد البيانات)
+      <button class="btn btn-secondary" style="justify-content: flex-start; text-align: start;" onclick="switchUserAccount('admin')">
+        ⚙️ <div><strong>مدير النظام المركزي (System Administrator)</strong><br><small style="color: var(--text-muted);">إدارة الخوادم والصلاحيات وقواعد البيانات</small></div>
       </button>
     </div>
   </div>
 </div>
 
-<!-- Modal: قيد طالب جديد (خوارزمية 1.2) -->
+<!-- Modal: قيد طالب جديد (خوارزمية 1.2) مع فحص الرقم القومي 14 رقم -->
 <div id="addStudentModal" class="modal-overlay">
   <div class="modal-dialog">
     <div class="modal-header">
-      <h3 class="modal-title">➕ قيد وتسجيل طالب جديد بالمعهد (خوارزمية 1.2)</h3>
+      <h3 class="modal-title" data-i18n="modal_add_student_title">➕ قيد طالب جديد (Process 2.0: Student Registration)</h3>
       <button type="button" class="modal-close-btn" onclick="closeModal('addStudentModal')">&times;</button>
     </div>
-    <form onsubmit="handleNewStudentSubmit(event)">
+    <form onsubmit="handleStudentRegistration(event)">
       <div class="form-grid">
         <div class="form-group">
-          <label>الاسم بالكامل رباعي *</label>
-          <input type="text" id="addStdName" class="form-control" required placeholder="مثال: يوسف عادل خليل">
+          <label class="form-label" data-i18n="form_fullname">الاسم بالكامل رباعي *</label>
+          <input type="text" id="regFullName" class="form-control" required placeholder="مثال: يوسف عادل خليل إبراهيم">
         </div>
         <div class="form-group">
-          <label>الرقم القومي (14 رقماً بالضبط) *</label>
-          <input type="text" id="addStdNatId" class="form-control" maxlength="14" minlength="14" required placeholder="30301010101234">
+          <label class="form-label" data-i18n="form_national_id">الرقم القومي (14 رقماً بالضبط) *</label>
+          <input type="text" id="regNationalId" class="form-control" maxlength="14" minlength="14" required placeholder="30305100101234" oninput="validateEgyptianNationalId(this)">
+          <small id="natIdHelp" style="font-size: 0.72rem; color: var(--text-muted);">يتم استخراج تاريخ الميلاد والنوع والمحافظة تلقائياً</small>
         </div>
         <div class="form-group">
-          <label>تاريخ الميلاد *</label>
-          <input type="date" id="addStdBirth" class="form-control" required value="2003-05-10">
+          <label class="form-label" data-i18n="form_birthdate">تاريخ الميلاد *</label>
+          <input type="date" id="regBirthDate" class="form-control" required value="2003-05-10">
         </div>
         <div class="form-group">
-          <label>النوع *</label>
-          <select id="addStdGender" class="form-control">
-            <option value="M">ذكر</option>
-            <option value="F">أنثى</option>
+          <label class="form-label" data-i18n="form_gender">النوع *</label>
+          <select id="regGender" class="form-control">
+            <option value="M">ذكر (Male)</option>
+            <option value="F">أنثى (Female)</option>
           </select>
         </div>
         <div class="form-group">
-          <label>رقم الهاتف المحمول</label>
-          <input type="text" id="addStdPhone" class="form-control" placeholder="01012345678">
+          <label class="form-label" data-i18n="form_phone">رقم الهاتف المحمول</label>
+          <input type="text" id="regPhone" class="form-control" placeholder="01012345678">
         </div>
         <div class="form-group">
-          <label>العنوان بالتفصيل</label>
-          <input type="text" id="addStdAddress" class="form-control" placeholder="القاهرة - التجمع الأول">
+          <label class="form-label" data-i18n="form_address">العنوان بالتفصيل</label>
+          <input type="text" id="regAddress" class="form-control" placeholder="القاهرة - التجمع الأول">
         </div>
       </div>
-      <div style="display: flex; justify-content: flex-end; gap: 10px; margin-top: 15px;">
-        <button type="button" class="btn btn-secondary" onclick="closeModal('addStudentModal')">إلغاء</button>
-        <button type="submit" class="btn btn-primary">حفظ وقيد الطالب في قاعدة البيانات</button>
+      <div style="display: flex; justify-content: flex-end; gap: 10px; margin-top: 20px;">
+        <button type="button" class="btn btn-secondary" onclick="closeModal('addStudentModal')" data-i18n="btn_cancel">إلغاء</button>
+        <button type="submit" class="btn btn-primary" data-i18n="btn_save_student">حفظ وقيد الطالب</button>
       </div>
     </form>
   </div>
 </div>
 
-<!-- Modal: رصد الدرجات وحساب الـ GPA (خوارزمية 1.5) -->
-<div id="gradeModal" class="modal-overlay">
+<!-- Modal: رصد الدرجات وحساب التقدير والـ GPA (Process 5.0) -->
+<div id="gradeEntryModal" class="modal-overlay">
   <div class="modal-dialog">
     <div class="modal-header">
-      <h3 class="modal-title">🎯 رصد درجات المقرر واحتساب المعدل التراكمي (خوارزمية 1.5)</h3>
-      <button type="button" class="modal-close-btn" onclick="closeModal('gradeModal')">&times;</button>
+      <h3 class="modal-title" data-i18n="modal_grade_title">🎯 رصد درجات المقرر واحتساب GPA (خوارزمية 1.5)</h3>
+      <button type="button" class="modal-close-btn" onclick="closeModal('gradeEntryModal')">&times;</button>
     </div>
     <form onsubmit="handleGradeSubmit(event)">
-      <input type="hidden" id="gradeStudentId">
-      <input type="hidden" id="gradeCourseCode">
+      <input type="hidden" id="gradeStdId">
+      <input type="hidden" id="gradeCrsCode">
 
-      <div style="background: #f8fafc; border: 1px solid var(--border-light); padding: 12px; border-radius: 8px; margin-bottom: 16px;">
-        <p><strong>اسم الطالب:</strong> <span id="gradeStdName">--</span> (كود: <code id="gradeStdCode">--</code>)</p>
-        <p><strong>المقرر:</strong> <span id="gradeCrsName">--</span></p>
+      <div style="background: var(--bg-subtle); border: 1px solid var(--border-color); padding: 14px; border-radius: var(--radius-md); margin-bottom: 16px;">
+        <p><strong><span data-i18n="label_student_name">اسم الطالب:</span></strong> <span id="gradeModalStdName">--</span> (<code id="gradeModalStdCode">--</code>)</p>
+        <p><strong><span data-i18n="label_course_name">المقرر:</span></strong> <span id="gradeModalCrsName">--</span></p>
       </div>
 
       <div class="form-grid">
         <div class="form-group">
-          <label>أعمال السنة (الحد الأقصى: 20)</label>
-          <input type="number" step="0.5" min="0" max="20" id="gradeCw" class="form-control" required oninput="recalcGradePreview()">
+          <label class="form-label" data-i18n="grade_classwork">أعمال السنة (الحد الأقصى: 20)</label>
+          <input type="number" step="0.5" min="0" max="20" id="gradeInputCw" class="form-control" required oninput="calcGradeLivePreview()">
         </div>
         <div class="form-group">
-          <label>الميدتيرم (الحد الأقصى: 20)</label>
-          <input type="number" step="0.5" min="0" max="20" id="gradeMt" class="form-control" required oninput="recalcGradePreview()">
+          <label class="form-label" data-i18n="grade_midterm">امتحان الميدتيرم (الحد الأقصى: 20)</label>
+          <input type="number" step="0.5" min="0" max="20" id="gradeInputMt" class="form-control" required oninput="calcGradeLivePreview()">
         </div>
         <div class="form-group">
-          <label>الامتحان النهائي (الحد الأقصى: 60)</label>
-          <input type="number" step="0.5" min="0" max="60" id="gradeFn" class="form-control" required oninput="recalcGradePreview()">
+          <label class="form-label" data-i18n="grade_final">الامتحان النهائي (الحد الأقصى: 60)</label>
+          <input type="number" step="0.5" min="0" max="60" id="gradeInputFn" class="form-control" required oninput="calcGradeLivePreview()">
         </div>
       </div>
 
-      <div style="background: #eff6ff; border: 1px solid #bfdbfe; border-radius: 8px; padding: 14px; margin-bottom: 18px;">
+      <!-- Live Calculation Preview -->
+      <div style="background: linear-gradient(135deg, rgba(37, 99, 235, 0.08), rgba(59, 130, 246, 0.04)); border: 1px solid var(--primary-200); border-radius: var(--radius-md); padding: 16px; margin: 18px 0;">
         <div style="display: flex; justify-content: space-around; text-align: center;">
           <div>
-            <small style="color: var(--text-muted);">المجموع من 100</small>
-            <div id="previewTotal" style="font-size: 1.4rem; font-weight: 900; color: var(--primary-700);">0</div>
+            <div style="font-size: 0.75rem; color: var(--text-muted);" data-i18n="calc_total">المجموع من 100</div>
+            <div id="previewTotalScore" style="font-size: 1.6rem; font-weight: 900; color: var(--primary-600);">0.0</div>
           </div>
           <div>
-            <small style="color: var(--text-muted);">التقدير الحرفي</small>
-            <div id="previewLetter" style="font-size: 1.4rem; font-weight: 900; color: var(--success);">-</div>
+            <div style="font-size: 0.75rem; color: var(--text-muted);" data-i18n="calc_letter">التقدير الحرفي</div>
+            <div id="previewLetterScore" style="font-size: 1.6rem; font-weight: 900; color: var(--accent-emerald);">-</div>
           </div>
           <div>
-            <small style="color: var(--text-muted);">النقاط (من 4.0)</small>
-            <div id="previewPoints" style="font-size: 1.4rem; font-weight: 900; color: var(--warning);">0.00</div>
+            <div style="font-size: 0.75rem; color: var(--text-muted);" data-i18n="calc_points">النقاط (من 4.00)</div>
+            <div id="previewPointsScore" style="font-size: 1.6rem; font-weight: 900; color: var(--accent-gold);">0.00</div>
           </div>
         </div>
       </div>
 
       <div style="display: flex; justify-content: flex-end; gap: 10px;">
-        <button type="button" class="btn btn-secondary" onclick="closeModal('gradeModal')">إلغاء</button>
-        <button type="submit" class="btn btn-primary">اعتماد وتحديث GPA الطالب</button>
+        <button type="button" class="btn btn-secondary" onclick="closeModal('gradeEntryModal')" data-i18n="btn_cancel">إلغاء</button>
+        <button type="submit" class="btn btn-primary" data-i18n="btn_save_grade">اعتماد ورصد الدرجة</button>
       </div>
     </form>
   </div>
 </div>
 
-<!-- Modal: تسجيل الحضور والغياب (خوارزمية 1.4) -->
-<div id="attendanceModal" class="modal-overlay">
+<!-- Modal: تسجيل الحضور وغياب المحاضرة (Process 4.0) -->
+<div id="attModal" class="modal-overlay">
   <div class="modal-dialog" style="max-width: 500px;">
     <div class="modal-header">
-      <h3 class="modal-title">📋 تسجيل حضور وغياب المحاضرة (خوارزمية 1.4)</h3>
-      <button type="button" class="modal-close-btn" onclick="closeModal('attendanceModal')">&times;</button>
+      <h3 class="modal-title" data-i18n="modal_attendance_title">📋 تسجيل حضور وغياب المحاضرة (خوارزمية 1.4)</h3>
+      <button type="button" class="modal-close-btn" onclick="closeModal('attModal')">&times;</button>
     </div>
     <form onsubmit="handleAttendanceSubmit(event)">
       <input type="hidden" id="attStdId">
       <input type="hidden" id="attCrsCode">
 
-      <div style="background: #f8fafc; padding: 12px; border-radius: 8px; margin-bottom: 16px;">
-        <p><strong>الطالب:</strong> <span id="attStdName">--</span></p>
-        <p><strong>المقرر:</strong> <span id="attCrsName">--</span></p>
+      <div style="background: var(--bg-subtle); padding: 12px; border-radius: var(--radius-md); margin-bottom: 14px;">
+        <p><strong><span data-i18n="label_student_name">الطالب:</span></strong> <span id="attModalStdName">--</span></p>
+        <p><strong><span data-i18n="label_course_name">المقرر:</span></strong> <span id="attModalCrsName">--</span></p>
       </div>
 
       <div class="form-group" style="margin-bottom: 14px;">
-        <label>تاريخ المحاضرة</label>
+        <label class="form-label" data-i18n="label_lecture_date">تاريخ المحاضرة</label>
         <input type="date" id="attLectureDate" class="form-control" required>
       </div>
 
       <div class="form-group" style="margin-bottom: 18px;">
-        <label>حالة حضور الطالب</label>
-        <select id="attStatusVal" class="form-control" required>
+        <label class="form-label" data-i18n="label_attendance_status">حالة حضور الطالب</label>
+        <select id="attStatusSelect" class="form-control" required>
           <option value="حاضر">حاضر (Present)</option>
           <option value="غائب">غائب (Absent)</option>
           <option value="بعذر">غائب بعذر رسمي (Excused)</option>
@@ -311,103 +345,96 @@
       </div>
 
       <div style="display: flex; justify-content: flex-end; gap: 10px;">
-        <button type="button" class="btn btn-secondary" onclick="closeModal('attendanceModal')">إلغاء</button>
-        <button type="submit" class="btn btn-success">حفظ السجل</button>
+        <button type="button" class="btn btn-secondary" onclick="closeModal('attModal')" data-i18n="btn_cancel">إلغاء</button>
+        <button type="submit" class="btn btn-success" data-i18n="btn_save_attendance">حفظ السجل</button>
       </div>
     </form>
   </div>
 </div>
 
-<!-- Modal: سداد المصروفات وتوليد الإيصال (خوارزمية 1.6) -->
+<!-- Modal: سداد المصروفات وتوليد إيصال الخزينة (Process 6.0) -->
 <div id="paymentModal" class="modal-overlay">
   <div class="modal-dialog" style="max-width: 520px;">
     <div class="modal-header">
-      <h3 class="modal-title">💳 توريد وسداد المصروفات الدراسية (خوارزمية 1.6)</h3>
+      <h3 class="modal-title" data-i18n="modal_payment_title">💳 توريد وسداد المصروفات الدراسية (خوارزمية 1.6)</h3>
       <button type="button" class="modal-close-btn" onclick="closeModal('paymentModal')">&times;</button>
     </div>
     <form onsubmit="handlePaymentSubmit(event)">
       <input type="hidden" id="payFeeId">
 
-      <div style="background: #f8fafc; padding: 12px; border-radius: 8px; margin-bottom: 16px;">
-        <p><strong>اسم الطالب:</strong> <span id="payStdName">--</span></p>
-        <p><strong>المتبقي المطلوب سداده:</strong> <span id="payRemAmount" style="color: var(--danger); font-weight: bold;">--</span> ج.م.</p>
+      <div style="background: var(--bg-subtle); padding: 12px; border-radius: var(--radius-md); margin-bottom: 16px;">
+        <p><strong><span data-i18n="label_student_name">اسم الطالب:</span></strong> <span id="payModalStdName">--</span></p>
+        <p><strong><span data-i18n="label_remaining_amount">المتبقي المطلوب سداده:</span></strong> <span id="payModalRemAmount" style="color: var(--accent-rose); font-weight: bold;">--</span> ج.م.</p>
       </div>
 
       <div class="form-group" style="margin-bottom: 14px;">
-        <label>المبلغ المراد سداده الآن (ج.م.) *</label>
-        <input type="number" step="50" min="50" id="payAmountVal" class="form-control" required>
+        <label class="form-label" data-i18n="label_pay_amount">المبلغ المراد سداده الآن (ج.م.) *</label>
+        <input type="number" step="50" min="50" id="payInputAmount" class="form-control" required>
       </div>
 
       <div class="form-group" style="margin-bottom: 18px;">
-        <label>طريقة السداد</label>
-        <select id="payMethodVal" class="form-control" required>
+        <label class="form-label" data-i18n="label_pay_method">طريقة السداد</label>
+        <select id="payInputMethod" class="form-control" required>
           <option value="نقدي (خزينة المعهد)">نقدي (خزينة المعهد)</option>
-          <option value="فيزا / بطاقة بنكية">فيزا / بطاقة بنكية (POS)</option>
+          <option value="فيزا / بطاقة بنكية (POS)">فيزا / بطاقة بنكية (POS)</option>
           <option value="تحويل بنكي / فوري">تحويل بنكي / فوري</option>
         </select>
       </div>
 
       <div style="display: flex; justify-content: flex-end; gap: 10px;">
-        <button type="button" class="btn btn-secondary" onclick="closeModal('paymentModal')">إلغاء</button>
-        <button type="submit" class="btn btn-primary">تأكيد التوريد وإصدار الإيصال</button>
+        <button type="button" class="btn btn-secondary" onclick="closeModal('paymentModal')" data-i18n="btn_cancel">إلغاء</button>
+        <button type="submit" class="btn btn-primary" data-i18n="btn_confirm_payment">تأكيد التوريد وتوليد الإيصال</button>
       </div>
     </form>
   </div>
 </div>
 
-<!-- Modal: طباعة الشهادة الرسمية المختومة (شهادة قيد / بيان درجات) -->
-<div id="certificateModal" class="modal-overlay">
-  <div class="modal-dialog" style="max-width: 800px;">
+<!-- Modal: معاينة وطباعة الشهادة الرسمية المختومة (عربي وإنجليزي) -->
+<div id="certModal" class="modal-overlay">
+  <div class="modal-dialog" style="max-width: 820px;">
     <div class="modal-header">
-      <h3 class="modal-title">🖨️ معاينة الشهادة الرسمية المعتمدة</h3>
-      <button type="button" class="modal-close-btn" onclick="closeModal('certificateModal')">&times;</button>
+      <h3 class="modal-title" data-i18n="modal_cert_title">🖨️ معاينة الشهادة الرسمية المعتمدة</h3>
+      <button type="button" class="modal-close-btn" onclick="closeModal('certModal')">&times;</button>
     </div>
 
-    <!-- ورقة الشهادة الرسمية -->
-    <div class="certificate-container" id="printableCert">
-      <div class="cert-header">
-        <div style="text-align: right;">
-          <h4 style="font-weight: 800; font-size: 1.05rem;">وزارة التعليم العالي والبحث العلمي</h4>
-          <h5 style="color: var(--primary-700); font-weight: 800;">المعهد العالي للحاسبات ونظم المعلومات الإدارية</h5>
-          <p style="font-size: 0.8rem; color: #64748b;">التجمع الأول - القاهرة الجديدة</p>
-          <p style="font-size: 0.8rem; color: #64748b;">إدارة شئون الطلاب والامتحانات</p>
+    <!-- Official Certificate Sheet (Printable) -->
+    <div class="document-paper" id="printCertSheet">
+      <div class="doc-watermark">SAMS OFFICIAL</div>
+      <div class="doc-header">
+        <div>
+          <h4 style="font-weight: 800; font-size: 1.05rem;" id="certMinistry">وزارة التعليم العالي والبحث العلمي</h4>
+          <h5 style="color: var(--primary-700); font-weight: 800;" id="certInstitute">المعهد العالي للحاسبات ونظم المعلومات الإدارية</h5>
+          <p style="font-size: 0.8rem; color: #64748b;" id="certLocation">التجمع الأول - القاهرة الجديدة</p>
+          <p style="font-size: 0.8rem; color: #64748b;" id="certAffairs">إدارة شئون الطلاب والامتحانات</p>
         </div>
         <div style="text-align: center;">
-          <div style="border: 2px solid var(--primary-800); padding: 4px 14px; border-radius: 8px; font-weight: 900; font-size: 1.5rem; color: var(--primary-800);">
+          <div style="border: 2px solid #1e3a8a; padding: 4px 14px; border-radius: 8px; font-weight: 900; font-size: 1.4rem; color: #1e3a8a;">
             SAMS
           </div>
-          <small style="color: #64748b; margin-top: 4px; display: block;">كود التوثيق: <span id="certDocCode">2026-CERT-990</span></small>
+          <small style="color: #64748b; margin-top: 4px; display: block;">كود التوثيق: <span id="certSheetDocCode">2026-CERT-990</span></small>
         </div>
-        <div style="text-align: left;">
-          <div style="border: 1px dashed #94a3b8; width: 85px; height: 100px; display: flex; align-items: center; justify-content: center; font-size: 0.75rem; color: #64748b;">
+        <div>
+          <div style="border: 1px dashed #94a3b8; width: 85px; height: 100px; display: flex; align-items: center; justify-content: center; font-size: 0.72rem; color: #64748b;">
             صورة الطالب
           </div>
         </div>
       </div>
 
-      <div class="cert-title-block">
-        <h2 id="certDocTitle">شهـــــادة قيـــــد رسميـــــة</h2>
-        <p style="font-size: 0.85rem; color: #64748b; margin-top: 4px;">للعام الأكاديمي 2026 / 2027 م - الفصل الدراسي الثاني</p>
+      <div style="text-align: center; margin: 20px 0;">
+        <h2 id="certSheetDocTitle" style="font-size: 1.5rem; font-weight: 900; text-decoration: underline;">شهـــــادة قيـــــد رسميـــــة</h2>
+        <p style="font-size: 0.85rem; color: #64748b; margin-top: 4px;" id="certSheetYear">للعام الأكاديمي 2026 / 2027 م - الفصل الدراسي الثاني</p>
       </div>
 
-      <div class="cert-text" id="certDocBody">
-        تشهد إدارة شئون الطلاب بالمعهد العالي للحاسبات ونظم المعلومات الإدارية بالتجمع الأول بأن الطالب/ة:
-        <strong id="certName" style="color: var(--primary-800); font-size: 1.15rem;">--</strong>، 
-        المقيد بالفرقة الدراسية: <strong id="certLevel">الثالثة</strong> (مجموعة: <strong id="certGroup">3</strong>)، 
-        قسم: <strong>نظم المعلومات الإدارية</strong>، والرقم القومي: <strong id="certNatId">--</strong>، 
-        والكود الجامعي: <strong id="certStdId">--</strong>، 
-        <br><br>
-        مقيد/ة بالدراسة بالمعهد للعام الجامعي 2026/2027، ومسدد/ة للرسوم الدراسية المقررة، وحالته الأكاديمية: <strong>مقيد ومنتظم بالدراسة</strong> بمعدل تراكمي قدره (<strong id="certGpa">--</strong> من 4.00).
-        <br><br>
-        وقد أُعطيت له/ا هذه الشهادة بناءً على طلبه/ا لتقديمها إلى <strong>جهة الاختصاص</strong> دون أدنى مسئولية على المعهد تجاه حقوق الغير.
+      <div class="doc-body" id="certSheetBody">
+        <!-- Injected dynamically in AR or EN -->
       </div>
 
-      <div class="cert-signatures">
+      <div class="doc-signatures">
         <div>
           <p><strong>الموظف المختص</strong></p>
           <p style="margin-top: 25px; font-style: italic;">أ/ إيمان صبري</p>
         </div>
-        <div class="stamp-seal">
+        <div class="doc-stamp">
           ختم شعار<br>المعهد المعتمد
         </div>
         <div>
@@ -421,14 +448,14 @@
       </div>
 
       <div style="border-top: 1px solid #cbd5e1; margin-top: 25px; padding-top: 8px; display: flex; justify-content: space-between; font-size: 0.75rem; color: #94a3b8;">
-        <span>تاريخ الاعتماد: <span id="certDate">2026-11-19</span></span>
+        <span>تاريخ الاعتماد: <span id="certSheetDate">2026-11-19</span></span>
         <span>رمز التحقق الإلكتروني المشفر: SAMS-VERIFIED-QR-2026</span>
       </div>
     </div>
 
     <div style="display: flex; justify-content: flex-end; gap: 10px; margin-top: 20px;">
-      <button type="button" class="btn btn-secondary" onclick="closeModal('certificateModal')">إغلاق</button>
-      <button type="button" class="btn btn-primary" onclick="window.print()">🖨️ طباعة الشهادة الآن</button>
+      <button type="button" class="btn btn-secondary" onclick="closeModal('certModal')" data-i18n="btn_close">إغلاق</button>
+      <button type="button" class="btn btn-primary" onclick="window.print()" data-i18n="btn_print_now">🖨️ طباعة الشهادة الآن</button>
     </div>
   </div>
 </div>
@@ -437,41 +464,40 @@
 <div id="receiptModal" class="modal-overlay">
   <div class="modal-dialog" style="max-width: 580px;">
     <div class="modal-header">
-      <h3 class="modal-title">🧾 إيصال توريد مصروفات دراسية رسمي</h3>
+      <h3 class="modal-title" data-i18n="modal_receipt_title">🧾 إيصال توريد مصروفات دراسية رسمي</h3>
       <button type="button" class="modal-close-btn" onclick="closeModal('receiptModal')">&times;</button>
     </div>
 
-    <div style="border: 2px dashed var(--primary-700); padding: 25px; background: #fff; border-radius: 8px; line-height: 2;">
-      <div style="display: flex; justify-content: space-between; border-bottom: 1px solid var(--border-light); padding-bottom: 10px; margin-bottom: 15px;">
+    <div style="border: 2px dashed #1e40af; padding: 25px; background: #fff; border-radius: 8px; line-height: 2; color: #0f172a;">
+      <div style="display: flex; justify-content: space-between; border-bottom: 1px solid #e2e8f0; padding-bottom: 10px; margin-bottom: 15px;">
         <div>
-          <h4>المعهد العالي للحاسبات - الخزينة</h4>
-          <small>رقم الإيصال: <strong id="recNoDisplay" style="color: var(--primary-700);">REC-2026-00101</strong></small>
+          <h4 style="font-weight: 800;">المعهد العالي للحاسبات - الخزينة</h4>
+          <small>رقم الإيصال: <strong id="recModalNo" style="color: #1e40af;">REC-2026-00101</strong></small>
         </div>
-        <div style="text-align: left;">
-          <small>التاريخ: <span id="recDateDisplay">--</span></small>
+        <div style="text-align: end;">
+          <small>التاريخ: <span id="recModalDate">--</span></small>
         </div>
       </div>
 
-      <p>وصلنا من الطالب/ة: <strong id="recNameDisplay">--</strong> (كود: <span id="recCodeDisplay">--</span>)</p>
-      <p>مبلغ وقدره: <strong id="recAmountDisplay" style="color: var(--success); font-size: 1.25rem;">--</strong> جنيه مصري فقط لا غير.</p>
+      <p>وصلنا من الطالب/ة: <strong id="recModalName">--</strong> (كود: <span id="recModalCode">--</span>)</p>
+      <p>مبلغ وقدره: <strong id="recModalAmount" style="color: #15803d; font-size: 1.25rem;">--</strong> جنيه مصري فقط لا غير.</p>
       <p>وذلك قيمة: <strong>مصروفات الفصل الدراسي الثاني (2026/2027)</strong></p>
-      <p>طريقة التوريد: <span id="recMethodDisplay">نقدي</span></p>
-      <p>الموقف المالي للمطالبة: <strong id="recStatusDisplay" style="color: var(--primary-700);">مسدد</strong></p>
+      <p>الموقف المالي للمطالبة: <strong id="recModalStatus" style="color: #1e40af;">مسدد</strong></p>
 
       <div style="display: flex; justify-content: space-between; margin-top: 25px; text-align: center;">
         <div>
           <p>أمين الخزينة المستلم</p>
           <p style="margin-top: 20px; font-weight: bold;">أ/ طارق السيد</p>
         </div>
-        <div style="border: 2px solid var(--success); border-radius: 50%; width: 75px; height: 75px; display: flex; align-items: center; justify-content: center; color: var(--success); font-weight: 800; font-size: 0.75rem;">
+        <div style="border: 2px solid #15803d; border-radius: 50%; width: 75px; height: 75px; display: flex; align-items: center; justify-content: center; color: #15803d; font-weight: 800; font-size: 0.72rem;">
           خزينة مسددة
         </div>
       </div>
     </div>
 
     <div style="display: flex; justify-content: flex-end; gap: 10px; margin-top: 20px;">
-      <button type="button" class="btn btn-secondary" onclick="closeModal('receiptModal')">إغلاق</button>
-      <button type="button" class="btn btn-primary" onclick="window.print()">🖨️ طباعة الإيصال</button>
+      <button type="button" class="btn btn-secondary" onclick="closeModal('receiptModal')" data-i18n="btn_close">إغلاق</button>
+      <button type="button" class="btn btn-primary" onclick="window.print()" data-i18n="btn_print_receipt">🖨️ طباعة الإيصال</button>
     </div>
   </div>
 </div>
