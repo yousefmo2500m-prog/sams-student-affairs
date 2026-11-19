@@ -3,402 +3,479 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>نظام إدارة شئون الطلاب (SAMS) - المعهد العالي للحاسبات ونظم المعلومات</title>
+  <title>نظام إدارة شئون الطلاب (SAMS) | المعهد العالي للحاسبات ونظم المعلومات الإدارية</title>
   <link rel="stylesheet" href="style.css">
 </head>
 <body>
 
-  <!-- شريط التجربة السريعة وتبديل الأدوار للدكتور وللطالب -->
-  <aside class="demo-bar" aria-label="شريط التجربة السريعة">
-    <div class="demo-title">
-      <span>⚡ لوحة التحكم بالتجربة (د/ فاروق - العرض العملي للمشروع):</span>
+<div class="app-container">
+
+  <!-- =========================================================================
+       القائمة الجانبية الرسمية للمعهد (Institute Official Sidebar)
+       ========================================================================= -->
+  <aside class="sidebar" id="mainSidebar">
+    
+    <!-- شعار واسم النظام -->
+    <div class="sidebar-brand">
+      <div class="brand-icon">SAMS</div>
+      <div class="brand-info">
+        <h1>شئون الطلاب</h1>
+        <p>المعهد العالي للحاسبات - التجمع الأول</p>
+      </div>
     </div>
-    <div class="demo-buttons">
-      <button type="button" class="demo-btn active" onclick="switchUserRole('Instructor', 'dr_farouk')">
-        👨‍🏫 د/ فاروق (أستاذ المقرر)
-      </button>
-      <button type="button" class="demo-btn" onclick="switchUserRole('Student', '202411586')">
-        👩‍🎓 رغدة ابراهيم (طالبة - ممتاز)
-      </button>
-      <button type="button" class="demo-btn" onclick="switchUserRole('Student', '202411531')">
-        👩‍🎓 كارولين عاطف (طالبة - طلب شهادة)
-      </button>
-      <button type="button" class="demo-btn" onclick="switchUserRole('Student', '202411601')">
-        ⚠️ أحمد الشناوي (إنذار غياب ورسوم)
-      </button>
-      <button type="button" class="demo-btn" onclick="switchUserRole('Staff', 'staff')">
-        💼 شئون الطلاب (اعتماد وطباعة)
-      </button>
-      <button type="button" class="demo-btn" onclick="switchUserRole('Finance', 'finance')">
-        💰 الخزينة والمالية (تحصيل)
-      </button>
-      <button type="button" class="demo-btn" onclick="switchUserRole('Admin', 'admin')">
-        ⚙️ مدير النظام (إحصائيات)
-      </button>
-      <button type="button" class="demo-btn" style="background: rgba(239, 68, 68, 0.3);" onclick="resetAllDemoData()">
-        🔄 استعادة البيانات الأصلية
-      </button>
+
+    <!-- بطاقة المستخدم الحالي -->
+    <div class="sidebar-user">
+      <div class="user-avatar" id="sidebarAvatar">👨‍🏫</div>
+      <div class="user-details">
+        <div class="user-name" id="sidebarUserName">أ.د / فاروق عبد العزيز</div>
+        <div class="user-role-badge" id="sidebarUserRole">أستاذ المقرر ورئيس القسم</div>
+      </div>
+    </div>
+
+    <!-- روابط التنقل والعمليات الرئيسية (مطابقة للعمليات الـ 8 في التقرير الثالث) -->
+    <nav class="sidebar-nav" id="sidebarNavMenu">
+      <div class="nav-section-title">العمليات الأكاديمية الرئيسية</div>
+      
+      <a class="nav-item active" onclick="navigateSection('dashboard')">
+        <span class="nav-item-icon">🏠</span>
+        <span>لوحة المعلومات (Dashboard)</span>
+      </a>
+
+      <a class="nav-item" id="navItemStudents" onclick="navigateSection('students')">
+        <span class="nav-item-icon">👨‍🎓</span>
+        <span>بيانات وقيد الطلاب (Process 2.0)</span>
+      </a>
+
+      <a class="nav-item" id="navItemCourses" onclick="navigateSection('courses')">
+        <span class="nav-item-icon">📚</span>
+        <span>تسجيل المقررات (Process 3.0)</span>
+      </a>
+
+      <a class="nav-item" id="navItemSchedule" onclick="navigateSection('schedule')">
+        <span class="nav-item-icon">📅</span>
+        <span>الجداول الدراسية والمواعيد</span>
+      </a>
+
+      <a class="nav-item" id="navItemAttendance" onclick="navigateSection('attendance')">
+        <span class="nav-item-icon">📋</span>
+        <span>الحضور والغياب والإنذار (Process 4.0)</span>
+      </a>
+
+      <a class="nav-item" id="navItemGrades" onclick="navigateSection('grades')">
+        <span class="nav-item-icon">🎯</span>
+        <span>رصد الدرجات و GPA (Process 5.0)</span>
+      </a>
+
+      <a class="nav-item" id="navItemFees" onclick="navigateSection('fees')">
+        <span class="nav-item-icon">💳</span>
+        <span>المصروفات والخزينة (Process 6.0)</span>
+      </a>
+
+      <a class="nav-item" id="navItemDocuments" onclick="navigateSection('documents')">
+        <span class="nav-item-icon">📜</span>
+        <span>إصدار الشهادات الرسمية (Process 7.0)</span>
+      </a>
+
+      <div class="nav-section-title">الإدارة والتحليل الهندسي</div>
+
+      <a class="nav-item" id="navItemReports" onclick="navigateSection('reports')">
+        <span class="nav-item-icon">📊</span>
+        <span>التقارير الإحصائية (Process 8.0)</span>
+      </a>
+
+      <a class="nav-item" onclick="navigateSection('architecture')">
+        <span class="nav-item-icon">📐</span>
+        <span>مخططات DFD و ERD وقاموس البيانات</span>
+      </a>
+
+      <a class="nav-item" onclick="navigateSection('oop_view')">
+        <span class="nav-item-icon">☕</span>
+        <span>هيكلية Java OOP وكلاسات المشروع</span>
+      </a>
+
+      <a class="nav-item" id="navItemUsers" onclick="navigateSection('users')">
+        <span class="nav-item-icon">🔐</span>
+        <span>المستخدمين والصلاحيات (Process 1.0)</span>
+      </a>
+    </nav>
+
+    <div class="sidebar-footer">
+      مادة تحليل وتصميم نظم المعلومات<br>إشراف: أ.د / فاروق عبد العزيز | 2026/2027
     </div>
   </aside>
 
-  <!-- الترويسة الأكاديمية الرسمية -->
-  <header class="main-header">
-    <div class="header-container">
-      <div class="institute-brand">
-        <div class="institute-logo">SAMS</div>
-        <div class="institute-names">
-          <h1>وزارة التعليم العالي والبحث العلمي</h1>
-          <h2>المعهد العالي للحاسبات ونظم المعلومات الإدارية - التجمع الأول</h2>
-          <p>مشروع مادة: تحليل وتصميم نظم المعلومات | إشراف: د/ فاروق</p>
-        </div>
-      </div>
-      <div class="header-meta">
-        <button type="button" class="btn btn-sm" style="background:#2563eb; color:#fff;" onclick="openSystemArchitectureModal('dfd')">📐 مخططات DFD والعمليات الـ 8</button>
-        <button type="button" class="btn btn-sm" style="background:#059669; color:#fff;" onclick="openSystemArchitectureModal('database')">🗄️ الجداول الـ 11 وقاعدة البيانات</button>
-        <button type="button" class="btn btn-sm" style="background:#d97706; color:#fff; font-weight:bold;" onclick="openSystemArchitectureModal('oop')">☕ هيكلية Java OOP</button>
-        <span class="badge badge-gold">الفصل الدراسي الثاني 2026/2027</span>
-        <span class="badge badge-primary" id="currentUserBadge">الدور الحالي: دكتور المادة</span>
-      </div>
-    </div>
-  </header>
-
-  <!-- المحتوى الرئيسي -->
-  <main class="main-content">
+  <!-- =========================================================================
+       المنطقة الرئيسية (Main Content Wrapper)
+       ========================================================================= -->
+  <div class="main-wrapper">
     
-    <!-- بطاقة ترحيب بالمستخدم الحالي -->
-    <div class="profile-banner">
-      <div class="profile-info">
-        <div class="profile-avatar" id="userAvatar">👨‍🏫</div>
-        <div class="profile-text">
-          <h2 id="userNameDisplay">د/ فاروق عبد العزيز</h2>
-          <p>
-            <span id="userRoleDetail">رئيس قسم نظم المعلومات وأستاذ المقرر</span>
-            <span id="userAcademicId">كود: INST-01</span>
-          </p>
+    <!-- الشريط العلوي (Top Header) -->
+    <header class="top-header">
+      <div class="header-left">
+        <div class="header-meta-tag">
+          <span>🏛️ وزارة التعليم العالي والبحث العلمي</span>
+          <span>|</span>
+          <span>العام الجامعي 2026/2027 (الفصل الثاني)</span>
         </div>
       </div>
-      <div>
-        <span class="badge badge-success" id="accountStatusBadge">الحساب مفعل ونشط</span>
+
+      <div class="header-right">
+        <!-- زر فتح نافذة تبديل الحسابات (الدكتور / الطالب / الشئون / الخزينة) -->
+        <button type="button" class="user-switch-btn" onclick="openModal('switchUserModal')">
+          <span id="topUserIcon">👨‍🏫</span>
+          <span id="topUserName">أ.د / فاروق عبد العزيز</span>
+          <span style="font-size: 0.75rem; color: var(--primary-600); margin-right: 4px;">[تبديل الحساب ▾]</span>
+        </button>
       </div>
+    </header>
+
+    <!-- مساحة المحتوى الديناميكية -->
+    <main class="content-body" id="mainContentContainer">
+      <!-- يتم تعبئتها ديناميكياً بـ JavaScript بحسب القسم النشط -->
+    </main>
+
+  </div>
+
+</div>
+
+<!-- =========================================================================
+     النوافذ المنبثقة التفاعلية (Modals)
+     ========================================================================= -->
+
+<!-- Modal: تبديل المستخدم لتجربة كافة الأدوار والصلاحيات -->
+<div id="switchUserModal" class="modal-overlay">
+  <div class="modal-dialog" style="max-width: 520px;">
+    <div class="modal-header">
+      <h3 class="modal-title">🔐 تسجيل الدخول وتبديل صلاحيات المستخدم</h3>
+      <button type="button" class="modal-close-btn" onclick="closeModal('switchUserModal')">&times;</button>
+    </div>
+    <p style="font-size: 0.85rem; color: var(--text-muted); margin-bottom: 16px;">
+      اختر الحساب الذي ترغب في الدخول به لاختبار صلاحيات النظام والتحقق من قواعد العمل:
+    </p>
+    <div style="display: flex; flex-direction: column; gap: 8px;">
+      <button class="btn btn-secondary" style="justify-content: flex-start;" onclick="loginAs('dr_farouk')">
+        👨‍🏫 <strong>أ.د / فاروق عبد العزيز</strong> (أستاذ مقرر تحليل النظم ورئيس القسم)
+      </button>
+      <button class="btn btn-secondary" style="justify-content: flex-start;" onclick="loginAs('202411586')">
+        👩‍🎓 <strong>رغدة ابراهيم عبد الخالق</strong> (طالبة بالفرقة 3 - معدل ممتاز 3.92 ومصروفات مسددة)
+      </button>
+      <button class="btn btn-secondary" style="justify-content: flex-start;" onclick="loginAs('202411531')">
+        👩‍🎓 <strong>كارولين عاطف عطاالله</strong> (طالبة بالفرقة 3 - معدل 3.85 وطلب شهادة قيد)
+      </button>
+      <button class="btn btn-secondary" style="justify-content: flex-start; border-right: 4px solid var(--danger);" onclick="loginAs('202411601')">
+        ⚠️ <strong>أحمد محمد الشناوي</strong> (طالب متعثر - متجاوز لنسبة الغياب 25% وعليه متأخرات)
+      </button>
+      <button class="btn btn-secondary" style="justify-content: flex-start;" onclick="loginAs('staff')">
+        💼 <strong>أ/ إيمان صبري</strong> (موظف شئون الطلاب - قيد الطلاب واعتماد وطباعة الشهادات)
+      </button>
+      <button class="btn btn-secondary" style="justify-content: flex-start;" onclick="loginAs('finance')">
+        💰 <strong>أ/ طارق السيد</strong> (مسئول الخزينة - تحصيل المصروفات وتوليد إيصالات السداد)
+      </button>
+      <button class="btn btn-secondary" style="justify-content: flex-start;" onclick="loginAs('admin')">
+        ⚙️ <strong>مدير النظام المركزي (Admin)</strong> (لوحة التحكم الشاملة وقواعد البيانات)
+      </button>
+    </div>
+  </div>
+</div>
+
+<!-- Modal: قيد طالب جديد (خوارزمية 1.2) -->
+<div id="addStudentModal" class="modal-overlay">
+  <div class="modal-dialog">
+    <div class="modal-header">
+      <h3 class="modal-title">➕ قيد وتسجيل طالب جديد بالمعهد (خوارزمية 1.2)</h3>
+      <button type="button" class="modal-close-btn" onclick="closeModal('addStudentModal')">&times;</button>
+    </div>
+    <form onsubmit="handleNewStudentSubmit(event)">
+      <div class="form-grid">
+        <div class="form-group">
+          <label>الاسم بالكامل رباعي *</label>
+          <input type="text" id="addStdName" class="form-control" required placeholder="مثال: يوسف عادل خليل">
+        </div>
+        <div class="form-group">
+          <label>الرقم القومي (14 رقماً بالضبط) *</label>
+          <input type="text" id="addStdNatId" class="form-control" maxlength="14" minlength="14" required placeholder="30301010101234">
+        </div>
+        <div class="form-group">
+          <label>تاريخ الميلاد *</label>
+          <input type="date" id="addStdBirth" class="form-control" required value="2003-05-10">
+        </div>
+        <div class="form-group">
+          <label>النوع *</label>
+          <select id="addStdGender" class="form-control">
+            <option value="M">ذكر</option>
+            <option value="F">أنثى</option>
+          </select>
+        </div>
+        <div class="form-group">
+          <label>رقم الهاتف المحمول</label>
+          <input type="text" id="addStdPhone" class="form-control" placeholder="01012345678">
+        </div>
+        <div class="form-group">
+          <label>العنوان بالتفصيل</label>
+          <input type="text" id="addStdAddress" class="form-control" placeholder="القاهرة - التجمع الأول">
+        </div>
+      </div>
+      <div style="display: flex; justify-content: flex-end; gap: 10px; margin-top: 15px;">
+        <button type="button" class="btn btn-secondary" onclick="closeModal('addStudentModal')">إلغاء</button>
+        <button type="submit" class="btn btn-primary">حفظ وقيد الطالب في قاعدة البيانات</button>
+      </div>
+    </form>
+  </div>
+</div>
+
+<!-- Modal: رصد الدرجات وحساب الـ GPA (خوارزمية 1.5) -->
+<div id="gradeModal" class="modal-overlay">
+  <div class="modal-dialog">
+    <div class="modal-header">
+      <h3 class="modal-title">🎯 رصد درجات المقرر واحتساب المعدل التراكمي (خوارزمية 1.5)</h3>
+      <button type="button" class="modal-close-btn" onclick="closeModal('gradeModal')">&times;</button>
+    </div>
+    <form onsubmit="handleGradeSubmit(event)">
+      <input type="hidden" id="gradeStudentId">
+      <input type="hidden" id="gradeCourseCode">
+
+      <div style="background: #f8fafc; border: 1px solid var(--border-light); padding: 12px; border-radius: 8px; margin-bottom: 16px;">
+        <p><strong>اسم الطالب:</strong> <span id="gradeStdName">--</span> (كود: <code id="gradeStdCode">--</code>)</p>
+        <p><strong>المقرر:</strong> <span id="gradeCrsName">--</span></p>
+      </div>
+
+      <div class="form-grid">
+        <div class="form-group">
+          <label>أعمال السنة (الحد الأقصى: 20)</label>
+          <input type="number" step="0.5" min="0" max="20" id="gradeCw" class="form-control" required oninput="recalcGradePreview()">
+        </div>
+        <div class="form-group">
+          <label>الميدتيرم (الحد الأقصى: 20)</label>
+          <input type="number" step="0.5" min="0" max="20" id="gradeMt" class="form-control" required oninput="recalcGradePreview()">
+        </div>
+        <div class="form-group">
+          <label>الامتحان النهائي (الحد الأقصى: 60)</label>
+          <input type="number" step="0.5" min="0" max="60" id="gradeFn" class="form-control" required oninput="recalcGradePreview()">
+        </div>
+      </div>
+
+      <div style="background: #eff6ff; border: 1px solid #bfdbfe; border-radius: 8px; padding: 14px; margin-bottom: 18px;">
+        <div style="display: flex; justify-content: space-around; text-align: center;">
+          <div>
+            <small style="color: var(--text-muted);">المجموع من 100</small>
+            <div id="previewTotal" style="font-size: 1.4rem; font-weight: 900; color: var(--primary-700);">0</div>
+          </div>
+          <div>
+            <small style="color: var(--text-muted);">التقدير الحرفي</small>
+            <div id="previewLetter" style="font-size: 1.4rem; font-weight: 900; color: var(--success);">-</div>
+          </div>
+          <div>
+            <small style="color: var(--text-muted);">النقاط (من 4.0)</small>
+            <div id="previewPoints" style="font-size: 1.4rem; font-weight: 900; color: var(--warning);">0.00</div>
+          </div>
+        </div>
+      </div>
+
+      <div style="display: flex; justify-content: flex-end; gap: 10px;">
+        <button type="button" class="btn btn-secondary" onclick="closeModal('gradeModal')">إلغاء</button>
+        <button type="submit" class="btn btn-primary">اعتماد وتحديث GPA الطالب</button>
+      </div>
+    </form>
+  </div>
+</div>
+
+<!-- Modal: تسجيل الحضور والغياب (خوارزمية 1.4) -->
+<div id="attendanceModal" class="modal-overlay">
+  <div class="modal-dialog" style="max-width: 500px;">
+    <div class="modal-header">
+      <h3 class="modal-title">📋 تسجيل حضور وغياب المحاضرة (خوارزمية 1.4)</h3>
+      <button type="button" class="modal-close-btn" onclick="closeModal('attendanceModal')">&times;</button>
+    </div>
+    <form onsubmit="handleAttendanceSubmit(event)">
+      <input type="hidden" id="attStdId">
+      <input type="hidden" id="attCrsCode">
+
+      <div style="background: #f8fafc; padding: 12px; border-radius: 8px; margin-bottom: 16px;">
+        <p><strong>الطالب:</strong> <span id="attStdName">--</span></p>
+        <p><strong>المقرر:</strong> <span id="attCrsName">--</span></p>
+      </div>
+
+      <div class="form-group" style="margin-bottom: 14px;">
+        <label>تاريخ المحاضرة</label>
+        <input type="date" id="attLectureDate" class="form-control" required>
+      </div>
+
+      <div class="form-group" style="margin-bottom: 18px;">
+        <label>حالة حضور الطالب</label>
+        <select id="attStatusVal" class="form-control" required>
+          <option value="حاضر">حاضر (Present)</option>
+          <option value="غائب">غائب (Absent)</option>
+          <option value="بعذر">غائب بعذر رسمي (Excused)</option>
+        </select>
+      </div>
+
+      <div style="display: flex; justify-content: flex-end; gap: 10px;">
+        <button type="button" class="btn btn-secondary" onclick="closeModal('attendanceModal')">إلغاء</button>
+        <button type="submit" class="btn btn-success">حفظ السجل</button>
+      </div>
+    </form>
+  </div>
+</div>
+
+<!-- Modal: سداد المصروفات وتوليد الإيصال (خوارزمية 1.6) -->
+<div id="paymentModal" class="modal-overlay">
+  <div class="modal-dialog" style="max-width: 520px;">
+    <div class="modal-header">
+      <h3 class="modal-title">💳 توريد وسداد المصروفات الدراسية (خوارزمية 1.6)</h3>
+      <button type="button" class="modal-close-btn" onclick="closeModal('paymentModal')">&times;</button>
+    </div>
+    <form onsubmit="handlePaymentSubmit(event)">
+      <input type="hidden" id="payFeeId">
+
+      <div style="background: #f8fafc; padding: 12px; border-radius: 8px; margin-bottom: 16px;">
+        <p><strong>اسم الطالب:</strong> <span id="payStdName">--</span></p>
+        <p><strong>المتبقي المطلوب سداده:</strong> <span id="payRemAmount" style="color: var(--danger); font-weight: bold;">--</span> ج.م.</p>
+      </div>
+
+      <div class="form-group" style="margin-bottom: 14px;">
+        <label>المبلغ المراد سداده الآن (ج.م.) *</label>
+        <input type="number" step="50" min="50" id="payAmountVal" class="form-control" required>
+      </div>
+
+      <div class="form-group" style="margin-bottom: 18px;">
+        <label>طريقة السداد</label>
+        <select id="payMethodVal" class="form-control" required>
+          <option value="نقدي (خزينة المعهد)">نقدي (خزينة المعهد)</option>
+          <option value="فيزا / بطاقة بنكية">فيزا / بطاقة بنكية (POS)</option>
+          <option value="تحويل بنكي / فوري">تحويل بنكي / فوري</option>
+        </select>
+      </div>
+
+      <div style="display: flex; justify-content: flex-end; gap: 10px;">
+        <button type="button" class="btn btn-secondary" onclick="closeModal('paymentModal')">إلغاء</button>
+        <button type="submit" class="btn btn-primary">تأكيد التوريد وإصدار الإيصال</button>
+      </div>
+    </form>
+  </div>
+</div>
+
+<!-- Modal: طباعة الشهادة الرسمية المختومة (شهادة قيد / بيان درجات) -->
+<div id="certificateModal" class="modal-overlay">
+  <div class="modal-dialog" style="max-width: 800px;">
+    <div class="modal-header">
+      <h3 class="modal-title">🖨️ معاينة الشهادة الرسمية المعتمدة</h3>
+      <button type="button" class="modal-close-btn" onclick="closeModal('certificateModal')">&times;</button>
     </div>
 
-    <!-- شريط تحذيري رسمي عند تجاوز نسبة الغياب 25% (يظهر للطالب المتعثر أحمد الشناوي) -->
-    <div id="absenceWarningBanner" class="absence-alert" style="display: none;">
-      <div class="absence-alert-content">
-        <span style="font-size: 1.8rem;">🚨</span>
+    <!-- ورقة الشهادة الرسمية -->
+    <div class="certificate-container" id="printableCert">
+      <div class="cert-header">
+        <div style="text-align: right;">
+          <h4 style="font-weight: 800; font-size: 1.05rem;">وزارة التعليم العالي والبحث العلمي</h4>
+          <h5 style="color: var(--primary-700); font-weight: 800;">المعهد العالي للحاسبات ونظم المعلومات الإدارية</h5>
+          <p style="font-size: 0.8rem; color: #64748b;">التجمع الأول - القاهرة الجديدة</p>
+          <p style="font-size: 0.8rem; color: #64748b;">إدارة شئون الطلاب والامتحانات</p>
+        </div>
+        <div style="text-align: center;">
+          <div style="border: 2px solid var(--primary-800); padding: 4px 14px; border-radius: 8px; font-weight: 900; font-size: 1.5rem; color: var(--primary-800);">
+            SAMS
+          </div>
+          <small style="color: #64748b; margin-top: 4px; display: block;">كود التوثيق: <span id="certDocCode">2026-CERT-990</span></small>
+        </div>
+        <div style="text-align: left;">
+          <div style="border: 1px dashed #94a3b8; width: 85px; height: 100px; display: flex; align-items: center; justify-content: center; font-size: 0.75rem; color: #64748b;">
+            صورة الطالب
+          </div>
+        </div>
+      </div>
+
+      <div class="cert-title-block">
+        <h2 id="certDocTitle">شهـــــادة قيـــــد رسميـــــة</h2>
+        <p style="font-size: 0.85rem; color: #64748b; margin-top: 4px;">للعام الأكاديمي 2026 / 2027 م - الفصل الدراسي الثاني</p>
+      </div>
+
+      <div class="cert-text" id="certDocBody">
+        تشهد إدارة شئون الطلاب بالمعهد العالي للحاسبات ونظم المعلومات الإدارية بالتجمع الأول بأن الطالب/ة:
+        <strong id="certName" style="color: var(--primary-800); font-size: 1.15rem;">--</strong>، 
+        المقيد بالفرقة الدراسية: <strong id="certLevel">الثالثة</strong> (مجموعة: <strong id="certGroup">3</strong>)، 
+        قسم: <strong>نظم المعلومات الإدارية</strong>، والرقم القومي: <strong id="certNatId">--</strong>، 
+        والكود الجامعي: <strong id="certStdId">--</strong>، 
+        <br><br>
+        مقيد/ة بالدراسة بالمعهد للعام الجامعي 2026/2027، ومسدد/ة للرسوم الدراسية المقررة، وحالته الأكاديمية: <strong>مقيد ومنتظم بالدراسة</strong> بمعدل تراكمي قدره (<strong id="certGpa">--</strong> من 4.00).
+        <br><br>
+        وقد أُعطيت له/ا هذه الشهادة بناءً على طلبه/ا لتقديمها إلى <strong>جهة الاختصاص</strong> دون أدنى مسئولية على المعهد تجاه حقوق الغير.
+      </div>
+
+      <div class="cert-signatures">
         <div>
-          <h4>إنذار أكاديمي رسمي: تجاوز نسبة الغياب المسموحة (أكثر من 25%)</h4>
-          <p>تنص اللائحة على حرمان الطالب من دخول الامتحان النهائي حال تجاوز نسبة الغياب 25%، يرجى التوجه فوراً لإدارة شئون الطلاب لتقديم الأعذار المقبولة.</p>
+          <p><strong>الموظف المختص</strong></p>
+          <p style="margin-top: 25px; font-style: italic;">أ/ إيمان صبري</p>
+        </div>
+        <div class="stamp-seal">
+          ختم شعار<br>المعهد المعتمد
+        </div>
+        <div>
+          <p><strong>مدير إدارة شئون الطلاب</strong></p>
+          <p style="margin-top: 25px; font-style: italic;">أ/ محمد عبد الوهاب</p>
+        </div>
+        <div>
+          <p><strong>عميد المعهد</strong></p>
+          <p style="margin-top: 25px; font-style: italic;">أ.د / فاروق عبد العزيز</p>
         </div>
       </div>
-      <button type="button" class="btn btn-danger btn-sm" onclick="showAttendanceDetailsModal()">عرض سجل الغياب</button>
-    </div>
 
-    <!-- إحصائيات سريعة متغيرة حسب الدور -->
-    <div class="stats-grid" id="statsGridContainer">
-      <!-- يتم تعبئتها ديناميكياً بـ JavaScript -->
-    </div>
-
-    <!-- أزرار التبويب الخاصة بكل شاشة -->
-    <div class="tabs-nav" id="roleTabsNav">
-      <!-- يتم تعبئتها ديناميكياً -->
-    </div>
-
-    <!-- منطقة عرض محتويات التبويبات -->
-    <div id="tabContentArea">
-      <!-- محتوى الشاشات التفاعلية -->
-    </div>
-
-  </main>
-
-  <!-- تذييل الصفحة -->
-  <footer>
-    <p>نظام إدارة شئون الطلاب (SAMS) © 2026/2027 | إعداد الطالبتين: <strong>كارولين عاطف عطاالله</strong> (202411531) & <strong>رغدة ابراهيم عبد الخالق</strong> (202411586) | الفرقة الثالثة - مجموعة 3</p>
-  </footer>
-
-  <!-- ========================================================================= -->
-  <!-- النوافذ المنبثقة (Modals) للعمليات والطباعة -->
-  <!-- ========================================================================= -->
-
-  <!-- Modal 1: رصد الدرجات وحساب GPA (خوارزمية 1.5) -->
-  <div id="gradeModal" class="modal-overlay">
-    <div class="modal-card">
-      <div class="modal-header">
-        <h3 class="modal-title">📝 رصد درجات المقرر واحتساب المعدل التراكمي</h3>
-        <button type="button" class="close-modal-btn" onclick="closeModal('gradeModal')">&times;</button>
+      <div style="border-top: 1px solid #cbd5e1; margin-top: 25px; padding-top: 8px; display: flex; justify-content: space-between; font-size: 0.75rem; color: #94a3b8;">
+        <span>تاريخ الاعتماد: <span id="certDate">2026-11-19</span></span>
+        <span>رمز التحقق الإلكتروني المشفر: SAMS-VERIFIED-QR-2026</span>
       </div>
-      <form id="gradeForm" onsubmit="submitGradeForm(event)">
-        <input type="hidden" id="gradeStudentId">
-        <input type="hidden" id="gradeCourseCode">
-        
-        <div style="background: #f8fafc; padding: 12px; border-radius: 8px; margin-bottom: 16px;">
-          <p><strong>اسم الطالب:</strong> <span id="gradeStudentName">--</span></p>
-          <p><strong>المقرر الدراسي:</strong> <span id="gradeCourseName">--</span></p>
-        </div>
+    </div>
 
-        <div class="form-grid">
-          <div class="form-group">
-            <label>أعمال السنة (الحد الأقصى: 20 درجة)</label>
-            <input type="number" step="0.5" min="0" max="20" id="gradeCoursework" class="form-control" required oninput="calcLiveGradeTotal()">
-          </div>
-          <div class="form-group">
-            <label>اختبار الميدتيرم (الحد الأقصى: 20 درجة)</label>
-            <input type="number" step="0.5" min="0" max="20" id="gradeMidterm" class="form-control" required oninput="calcLiveGradeTotal()">
-          </div>
-          <div class="form-group">
-            <label>الامتحان النهائي (الحد الأقصى: 60 درجة)</label>
-            <input type="number" step="0.5" min="0" max="60" id="gradeFinalExam" class="form-control" required oninput="calcLiveGradeTotal()">
-          </div>
-        </div>
-
-        <!-- معاينة حية للمجموع والتقدير والنقاط -->
-        <div style="background: #eff6ff; border: 1px solid #bfdbfe; border-radius: 8px; padding: 14px; margin-bottom: 18px;">
-          <div style="display: flex; justify-content: space-around; text-align: center;">
-            <div>
-              <small style="color: #64748b;">المجموع الكلي</small>
-              <div id="liveTotalDisplay" style="font-size: 1.4rem; font-weight: 800; color: #1e3a8a;">0 / 100</div>
-            </div>
-            <div>
-              <small style="color: #64748b;">التقدير بالحروف</small>
-              <div id="liveLetterDisplay" style="font-size: 1.4rem; font-weight: 800; color: #059669;">-</div>
-            </div>
-            <div>
-              <small style="color: #64748b;">النقاط (من 4.0)</small>
-              <div id="livePointsDisplay" style="font-size: 1.4rem; font-weight: 800; color: #d97706;">0.00</div>
-            </div>
-          </div>
-        </div>
-
-        <div style="display: flex; justify-content: flex-end; gap: 10px;">
-          <button type="button" class="btn" style="background:#e2e8f0;" onclick="closeModal('gradeModal')">إلغاء</button>
-          <button type="submit" class="btn btn-primary">حفظ واعتماد النتيجة وGPA</button>
-        </div>
-      </form>
+    <div style="display: flex; justify-content: flex-end; gap: 10px; margin-top: 20px;">
+      <button type="button" class="btn btn-secondary" onclick="closeModal('certificateModal')">إغلاق</button>
+      <button type="button" class="btn btn-primary" onclick="window.print()">🖨️ طباعة الشهادة الآن</button>
     </div>
   </div>
+</div>
 
-  <!-- Modal 2: تسجيل الحضور والغياب (خوارزمية 1.4) -->
-  <div id="attendanceModal" class="modal-overlay">
-    <div class="modal-card">
-      <div class="modal-header">
-        <h3 class="modal-title">📋 تسجيل حضور وغياب المحاضرة</h3>
-        <button type="button" class="close-modal-btn" onclick="closeModal('attendanceModal')">&times;</button>
-      </div>
-      <form id="attendanceForm" onsubmit="submitAttendanceForm(event)">
-        <input type="hidden" id="attStudentId">
-        <input type="hidden" id="attCourseCode">
-        
-        <div style="background: #f8fafc; padding: 12px; border-radius: 8px; margin-bottom: 16px;">
-          <p><strong>اسم الطالب:</strong> <span id="attStudentName">--</span></p>
-          <p><strong>المقرر:</strong> <span id="attCourseName">--</span></p>
-        </div>
-
-        <div class="form-grid">
-          <div class="form-group">
-            <label>تاريخ المحاضرة</label>
-            <input type="date" id="attDate" class="form-control" required>
-          </div>
-          <div class="form-group">
-            <label>حالة الحضور</label>
-            <select id="attStatus" class="form-control" required>
-              <option value="حاضر">حاضر</option>
-              <option value="غائب">غائب</option>
-              <option value="بعذر">غائب بعذر مقبول</option>
-            </select>
-          </div>
-        </div>
-
-        <div style="display: flex; justify-content: flex-end; gap: 10px; margin-top: 15px;">
-          <button type="button" class="btn" style="background:#e2e8f0;" onclick="closeModal('attendanceModal')">إلغاء</button>
-          <button type="submit" class="btn btn-success">تسجيل الحضور</button>
-        </div>
-      </form>
+<!-- Modal: طباعة إيصال السداد الرسمي -->
+<div id="receiptModal" class="modal-overlay">
+  <div class="modal-dialog" style="max-width: 580px;">
+    <div class="modal-header">
+      <h3 class="modal-title">🧾 إيصال توريد مصروفات دراسية رسمي</h3>
+      <button type="button" class="modal-close-btn" onclick="closeModal('receiptModal')">&times;</button>
     </div>
-  </div>
 
-  <!-- Modal 3: سداد المصروفات وتوليد الإيصال (خوارزمية 1.6) -->
-  <div id="paymentModal" class="modal-overlay">
-    <div class="modal-card">
-      <div class="modal-header">
-        <h3 class="modal-title">💳 تسجيل وتوريد المصروفات الدراسية</h3>
-        <button type="button" class="close-modal-btn" onclick="closeModal('paymentModal')">&times;</button>
-      </div>
-      <form id="paymentForm" onsubmit="submitPaymentForm(event)">
-        <input type="hidden" id="payFeeId">
-        
-        <div style="background: #f8fafc; padding: 12px; border-radius: 8px; margin-bottom: 16px;">
-          <p><strong>اسم الطالب:</strong> <span id="payStudentName">--</span></p>
-          <p><strong>المبلغ المتبقي المطلوب:</strong> <span id="payRemainingAmount" style="color: #dc2626; font-weight: bold;">--</span> ج.م.</p>
+    <div style="border: 2px dashed var(--primary-700); padding: 25px; background: #fff; border-radius: 8px; line-height: 2;">
+      <div style="display: flex; justify-content: space-between; border-bottom: 1px solid var(--border-light); padding-bottom: 10px; margin-bottom: 15px;">
+        <div>
+          <h4>المعهد العالي للحاسبات - الخزينة</h4>
+          <small>رقم الإيصال: <strong id="recNoDisplay" style="color: var(--primary-700);">REC-2026-00101</strong></small>
         </div>
-
-        <div class="form-grid">
-          <div class="form-group">
-            <label>المبلغ المراد سداده الآن (ج.م.)</label>
-            <input type="number" step="100" min="100" id="payAmount" class="form-control" required>
-          </div>
-          <div class="form-group">
-            <label>طريقة السداد</label>
-            <select id="payMethod" class="form-control" required>
-              <option value="نقدي (خزينة المعهد)">نقدي (خزينة المعهد)</option>
-              <option value="فيزا / بطاقة بنكية">فيزا / بطاقة بنكية (POS)</option>
-              <option value="تحويل بنكي / فوري">تحويل بنكي / فوري</option>
-            </select>
-          </div>
-        </div>
-
-        <div style="display: flex; justify-content: flex-end; gap: 10px; margin-top: 15px;">
-          <button type="button" class="btn" style="background:#e2e8f0;" onclick="closeModal('paymentModal')">إلغاء</button>
-          <button type="submit" class="btn btn-primary">تأكيد السداد وتوليد الإيصال</button>
-        </div>
-      </form>
-    </div>
-  </div>
-
-  <!-- Modal 4: معاينة وطباعة الشهادة الرسمية المختومة (شهادة قيد / بيان درجات) -->
-  <div id="certificateModal" class="modal-overlay">
-    <div class="modal-card" style="max-width: 780px;">
-      <div class="modal-header">
-        <h3 class="modal-title">🖨️ معاينة المستند الرسمي المعتمد للطباعة</h3>
-        <button type="button" class="close-modal-btn" onclick="closeModal('certificateModal')">&times;</button>
-      </div>
-      
-      <!-- ورقة الشهادة الرسمية -->
-      <div id="certificatePrintArea" class="certificate-sheet">
-        <div class="cert-header">
-          <div style="text-align: right;">
-            <h4>وزارة التعليم العالي والبحث العلمي</h4>
-            <h5>المعهد العالي للحاسبات ونظم المعلومات الإدارية</h5>
-            <p style="font-size: 0.8rem;">التجمع الأول - القاهرة الجديدة</p>
-            <p style="font-size: 0.8rem;">إدارة شئون الطلاب والامتحانات</p>
-          </div>
-          <div style="text-align: center;">
-            <div style="font-size: 1.8rem; font-weight: 900; color: #1e3a8a; border: 2px solid #1e3a8a; padding: 4px 12px; border-radius: 6px;">SAMS</div>
-            <small style="color: #64748b;">رقم القيد المركزي: <span id="certDocNumber">2026-CERT-982</span></small>
-          </div>
-          <div style="text-align: left;">
-            <div style="border: 1px dashed #94a3b8; width: 85px; height: 100px; display: flex; align-items: center; justify-content: center; font-size: 0.75rem; color: #64748b;">
-              صورة الطالب
-            </div>
-          </div>
-        </div>
-
-        <div class="cert-title">
-          <h2 id="certMainTitle">شهـــــادة قيـــــد رسميــــة</h2>
-          <p style="font-size: 0.85rem; color: #64748b; margin-top: 5px;">للعام الجامعي 2026 / 2027 م - الفصل الدراسي الثاني</p>
-        </div>
-
-        <div class="cert-body" id="certBodyContent">
-          تشهد إدارة شئون الطلاب بالمعهد العالي للحاسبات ونظم المعلومات الإدارية بالتجمع الأول بأن الطالب/ة:
-          <strong id="certStudentName" style="color:#1e3a8a; font-size: 1.15rem;">--</strong>، 
-          المقيد بالفرقة: <strong id="certStudentLevel">الثالثة</strong> (مجموعة: <strong id="certStudentGroup">3</strong>)، 
-          قسم: <strong>نظم المعلومات الإدارية</strong>، والرقم القومي: <strong id="certNationalId">--</strong>، 
-          والرقم الجامعي (الكود): <strong id="certStudentCode">--</strong>، 
-          <br><br>
-          مقيد/ة بالدراسة بالمعهد للعام الأكاديمي 2026/2027، ومسجل/ة في المقررات الدراسية المعتمدة وفق اللائحة، وحالته الأكاديمية: <strong>مقيد ومنتظم بالدراسة</strong> بمعدل تراكمي قدره (<strong id="certStudentGPA">--</strong> من 4.00).
-          <br><br>
-          وقد أُعطيت له/ا هذه الشهادة بناءً على طلبه/ا لتقديمها إلى <strong>من يهمه الأمر</strong> دون أدنى مسئولية على المعهد تجاه حقوق الغير.
-        </div>
-
-        <div class="cert-signatures">
-          <div>
-            <p><strong>الموظف المختص</strong></p>
-            <p style="margin-top: 25px; font-style: italic;">أ/ إيمان صبري</p>
-          </div>
-          <div class="stamp-box">
-            ختم شعار<br>المعهد المعتمد
-          </div>
-          <div>
-            <p><strong>مدير إدارة شئون الطلاب</strong></p>
-            <p style="margin-top: 25px; font-style: italic;">أ/ محمد عبد الوهاب</p>
-          </div>
-          <div>
-            <p><strong>عميد المعهد</strong></p>
-            <p style="margin-top: 25px; font-style: italic;">أ.د / فاروق عبد العزيز</p>
-          </div>
-        </div>
-
-        <div style="border-top: 1px solid #cbd5e1; margin-top: 25px; padding-top: 8px; display: flex; justify-content: space-between; font-size: 0.75rem; color: #94a3b8;">
-          <span>تاريخ الإصدار والاعتماد: <span id="certIssueDate">2026-11-19</span></span>
-          <span>رمز التحقق الإلكتروني: QR-SAMS-VERIFIED-2026</span>
+        <div style="text-align: left;">
+          <small>التاريخ: <span id="recDateDisplay">--</span></small>
         </div>
       </div>
 
-      <div style="display: flex; justify-content: flex-end; gap: 10px; margin-top: 20px;">
-        <button type="button" class="btn" style="background:#e2e8f0;" onclick="closeModal('certificateModal')">إغلاق</button>
-        <button type="button" class="btn btn-primary" onclick="window.print()">🖨️ طباعة الشهادة الرسمية الآن</button>
+      <p>وصلنا من الطالب/ة: <strong id="recNameDisplay">--</strong> (كود: <span id="recCodeDisplay">--</span>)</p>
+      <p>مبلغ وقدره: <strong id="recAmountDisplay" style="color: var(--success); font-size: 1.25rem;">--</strong> جنيه مصري فقط لا غير.</p>
+      <p>وذلك قيمة: <strong>مصروفات الفصل الدراسي الثاني (2026/2027)</strong></p>
+      <p>طريقة التوريد: <span id="recMethodDisplay">نقدي</span></p>
+      <p>الموقف المالي للمطالبة: <strong id="recStatusDisplay" style="color: var(--primary-700);">مسدد</strong></p>
+
+      <div style="display: flex; justify-content: space-between; margin-top: 25px; text-align: center;">
+        <div>
+          <p>أمين الخزينة المستلم</p>
+          <p style="margin-top: 20px; font-weight: bold;">أ/ طارق السيد</p>
+        </div>
+        <div style="border: 2px solid var(--success); border-radius: 50%; width: 75px; height: 75px; display: flex; align-items: center; justify-content: center; color: var(--success); font-weight: 800; font-size: 0.75rem;">
+          خزينة مسددة
+        </div>
       </div>
     </div>
-  </div>
 
-  <!-- Modal 5: طباعة إيصال السداد الرسمي للخزينة -->
-  <div id="receiptModal" class="modal-overlay">
-    <div class="modal-card" style="max-width: 580px;">
-      <div class="modal-header">
-        <h3 class="modal-title">🧾 إيصال تحصيل مصروفات دراسية رسمي</h3>
-        <button type="button" class="close-modal-btn" onclick="closeModal('receiptModal')">&times;</button>
-      </div>
-
-      <div id="receiptPrintArea" style="border: 2px dashed #1e3a8a; padding: 25px; background: #fff; border-radius: 8px;">
-        <div style="display: flex; justify-content: space-between; border-bottom: 1px solid #cbd5e1; padding-bottom: 10px; margin-bottom: 15px;">
-          <div>
-            <h4>المعهد العالي للحاسبات - الخزينة</h4>
-            <small>إيصال سداد رقم: <strong id="recNumber" style="color: #1e3a8a;">REC-2026-00101</strong></small>
-          </div>
-          <div style="text-align: left;">
-            <small>التاريخ: <span id="recDate">--</span></small>
-          </div>
-        </div>
-
-        <div style="line-height: 2; font-size: 0.95rem;">
-          <p>وصلنا من الطالب/ة: <strong id="recStudentName">--</strong> (كود: <span id="recStudentId">--</span>)</p>
-          <p>مبلغ وقدره: <strong id="recAmount" style="color: #059669; font-size: 1.2rem;">--</strong> جنيه مصري لا غير.</p>
-          <p>وذلك عن: <strong>مصروفات الفصل الدراسي الثاني (2026/2027)</strong></p>
-          <p>طريقة الدفع: <span id="recMethod">نقدي</span></p>
-          <p>الموقف المالي للمطالبة: <strong id="recFeeStatus" style="color: #1e3a8a;">مسدد بالكامل</strong></p>
-        </div>
-
-        <div style="display: flex; justify-content: space-between; margin-top: 30px; text-align: center;">
-          <div>
-            <p>أمين الخزينة المستلم</p>
-            <p style="margin-top: 20px; font-weight: bold;">أ/ طارق السيد</p>
-          </div>
-          <div style="border: 1px solid #10b981; border-radius: 50%; width: 75px; height: 75px; display: flex; align-items: center; justify-content: center; color: #10b981; font-weight: bold; font-size: 0.75rem;">
-            خزينة مسددة
-          </div>
-        </div>
-      </div>
-
-      <div style="display: flex; justify-content: flex-end; gap: 10px; margin-top: 20px;">
-        <button type="button" class="btn" style="background:#e2e8f0;" onclick="closeModal('receiptModal')">إغلاق</button>
-        <button type="button" class="btn btn-primary" onclick="window.print()">🖨️ طباعة الإيصال</button>
-      </div>
+    <div style="display: flex; justify-content: flex-end; gap: 10px; margin-top: 20px;">
+      <button type="button" class="btn btn-secondary" onclick="closeModal('receiptModal')">إغلاق</button>
+      <button type="button" class="btn btn-primary" onclick="window.print()">🖨️ طباعة الإيصال</button>
     </div>
   </div>
+</div>
 
-  <!-- Modal 6: نافذة التوثيق الهندسي ومخططات التقارير الثلاثة (DFD, 11 Tables, OOP) -->
-  <div id="architectureModal" class="modal-overlay">
-    <div class="modal-card" style="max-width: 900px;">
-      <div class="modal-header">
-        <h3 class="modal-title" id="archModalTitle">📐 التوثيق الهندسي للنظام</h3>
-        <button type="button" class="close-modal-btn" onclick="closeModal('architectureModal')">&times;</button>
-      </div>
-
-      <div style="display: flex; gap: 8px; margin-bottom: 16px; border-bottom: 2px solid #e2e8f0; padding-bottom: 8px;">
-        <button type="button" class="btn btn-sm" id="btnArchDfd" onclick="switchArchTab('dfd')">📐 مخططات DFD والـ 8 عمليات</button>
-        <button type="button" class="btn btn-sm" id="btnArchDb" onclick="switchArchTab('database')">🗄️ الجداول الـ 11 (قاموس البيانات)</button>
-        <button type="button" class="btn btn-sm" id="btnArchOop" onclick="switchArchTab('oop')">☕ كلاسات Java OOP الأربعة</button>
-      </div>
-
-      <div id="archModalBody" style="line-height: 1.8; font-size: 0.95rem;">
-        <!-- يتم تعبئتها ديناميكياً -->
-      </div>
-
-      <div style="display: flex; justify-content: flex-end; margin-top: 20px;">
-        <button type="button" class="btn" style="background:#e2e8f0;" onclick="closeModal('architectureModal')">إغلاق</button>
-      </div>
-    </div>
-  </div>
-
-  <script src="app.js"></script>
+<script src="app.js"></script>
 </body>
 </html>
